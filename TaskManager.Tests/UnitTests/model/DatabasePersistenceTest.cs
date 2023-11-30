@@ -29,5 +29,13 @@ namespace TaskManager.Tests.UnitTests.model
 
             Assert.Contains(task, Sut.Read());
         }
+
+        [Fact]
+        public void Save_ShouldThrowArgumentNullException_OnNullValue()
+        {
+            Assert.Throws<ArgumentNullException>(() => {
+                Sut.Save(null);
+            });
+        }
     }
 }
