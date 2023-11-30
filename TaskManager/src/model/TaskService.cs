@@ -19,5 +19,10 @@ namespace TaskManager.src.model
         {
             Persistence.Delete(taskToDelete);
         }
+
+        public void UpdateTask(Task taskToUpdate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

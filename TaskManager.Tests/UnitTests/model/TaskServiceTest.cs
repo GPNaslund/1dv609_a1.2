@@ -32,5 +32,13 @@ namespace TaskManager.Tests.UnitTests.model
             MockPersistence.Verify(obj => obj.Delete(It.IsAny<Task>()), Times.Once());
         }
 
+        [Fact]
+        public void UpdateTask_ShouldCallPersistenceToUpdateTheTask()
+        {
+            Sut.UpdateTask(new Task("A", "B", DateTime.Now));
+
+            MockPersistence.Verify(obj => obj.Update(It.IsAny<Task>()), Times.Once());
+        }
+
     }
 }

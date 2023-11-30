@@ -5,5 +5,7 @@ namespace TaskManager.src.model
         public void Save(Task taskToSave);
 
         public void Delete(Task taskToDelete);
+
+        public void Update(Task taskToUpdate);
     }
 }
