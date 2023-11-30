@@ -35,5 +35,12 @@ namespace TaskManager.Tests.UnitTests.model
                 Task sut = new ("Name", "Description", DateTime.Now.AddDays(-1));
             });
         }
+
+        [Fact]
+        public void ToString_ShouldReturnAStringRepresentationOfTheTask()
+        {
+            Task sut = new Task("A", "B", DateTime.Now);
+            Assert.IsType<string>(sut.ToString());
+        }
     }
 }
