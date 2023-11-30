@@ -29,6 +29,11 @@ namespace TaskManager.src.model
 
         public void Update()
         {
+            /*
+                EF Core tracks entities (in this case task objects)
+                which means changes to an entity (in this case done in the controller)
+                are allready tracked, and just needs to be saved to persist.
+            */
             Context.SaveChanges();
         }
     }
