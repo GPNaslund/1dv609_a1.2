@@ -1,3 +1,5 @@
+using TaskManager.src.model.exceptions;
+
 namespace TaskManager.src.model
 {
     public class TaskService
@@ -32,9 +34,20 @@ namespace TaskManager.src.model
 
         public List<Task> ListTasksBy(ListByCommand command)
         {
-            List<Task> tasks = Persistence.Read();
-            
-            return [.. tasks.OrderBy(task => task.DueDate)];
+           List<Task> tasks = Persistence.Read();
+            switch (command)
+            {
+                case ListByCommand.List_By_Due_Date:
+                    return [.. tasks.OrderBy(task => task.DueDate)];
+                case ListByCommand.List_Incomplete_Tasks:
+                    return tasks.Where(task => task.Status == TaskStatus.Not_Completed).ToList();
+                case ListByCommand.List_Completed_Tasks:
+                    return tasks.Where(task => task.Status == TaskStatus.Completed).ToList();
+                case ListByCommand.List_Expired_Tasks:
+                    return tasks.Where(task => task.DueDate.CompareTo(DateTime.Now) <= 0).ToList();
+                default:
+                    throw new ListByCommandNotImplementedException();
+            }
         }
     }
 }
