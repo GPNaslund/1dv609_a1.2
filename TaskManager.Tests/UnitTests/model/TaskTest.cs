@@ -5,7 +5,7 @@ namespace TaskManager.Tests.UnitTests.model
     public class TaskTest
     {
         [Fact]
-        public void Constructor_ShouldThrowArgumentException_OnEmptyName()
+        public void SetName_ShouldThrowArgumentException_OnEmptyName()
         {
             Assert.Throws<ArgumentException>(() => {
                 Task sut = new("", "Description", DateTime.Now);
@@ -13,7 +13,7 @@ namespace TaskManager.Tests.UnitTests.model
         }
 
         [Fact]
-        public void Constructor_ShouldThrowArgumentNullException_OnNull()
+        public void SetName_ShouldThrowArgumentNullException_OnNull()
         {
             Assert.Throws<ArgumentNullException>(() => {
                 Task sut = new(null, "Description", DateTime.Now);
