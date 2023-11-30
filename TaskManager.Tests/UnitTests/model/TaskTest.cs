@@ -7,7 +7,8 @@ namespace TaskManager.Tests.UnitTests.model
         [Fact]
         public void SetName_ShouldThrowArgumentException_OnEmptyName()
         {
-            Assert.Throws<ArgumentException>(() => {
+            Assert.Throws<ArgumentException>(() =>
+            {
                 Task sut = new("", "Description", DateTime.Now);
             });
         }
@@ -15,7 +16,8 @@ namespace TaskManager.Tests.UnitTests.model
         [Fact]
         public void SetName_ShouldThrowArgumentNullException_OnNull()
         {
-            Assert.Throws<ArgumentNullException>(() => {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
                 Task sut = new(null, "Description", DateTime.Now);
             });
         }
@@ -23,17 +25,26 @@ namespace TaskManager.Tests.UnitTests.model
         [Fact]
         public void SetDescription_ShouldThrowArgumentNullException_OnNull()
         {
-            Assert.Throws<ArgumentNullException>(() => {
-                Task sut = new ("Name", null, DateTime.Now);
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                Task sut = new("Name", null, DateTime.Now);
             });
         }
 
         [Fact]
         public void SetDueDate_ShouldThrowArgumentException_WhenDueDateIsBeforeCreationDate()
         {
-            Assert.Throws<ArgumentException>(() => {
-                Task sut = new ("Name", "Description", DateTime.Now.AddDays(-1));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Task sut = new("Name", "Description", DateTime.Now.AddDays(-1));
             });
+        }
+
+        [Fact]
+        public void SetDueDate_ShouldNotThrowArgumentException_WhenDueDateIsSameAsCreationDate()
+        {
+
+            Task sut = new("Name", "Description", DateTime.Now);
         }
 
         [Fact]
