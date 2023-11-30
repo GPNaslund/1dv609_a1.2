@@ -46,7 +46,7 @@ namespace TaskManager.src.model
                 case ListByCommand.List_Expired_Tasks:
                     return tasks.Where(task => task.DueDate.CompareTo(DateTime.Now) <= 0).ToList();
                 default:
-                    throw new ListByCommandNotImplementedException();
+                    throw new ListByCommandNotImplementedException("List by command not implemented");
             }
         }
     }
