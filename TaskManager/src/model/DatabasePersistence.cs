@@ -23,7 +23,8 @@ namespace TaskManager.src.model
 
         public void Delete(Task taskToDelete)
         {
-            
+            Context.Tasks.Remove(taskToDelete);
+            Context.SaveChanges();
         }
     }
 }
