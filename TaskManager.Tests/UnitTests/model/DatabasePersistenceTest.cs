@@ -31,7 +31,6 @@ namespace TaskManager.Tests.UnitTests.model
         [Fact]
         public void Save_ShouldSaveTaskToPersistence()
         {
-
             Task task = CreateTestTask();
 
             Sut.Save(task);
@@ -55,6 +54,19 @@ namespace TaskManager.Tests.UnitTests.model
             Sut.Save(task);
             Sut.Delete(task);
             Assert.DoesNotContain(task, Sut.Read());
+        }
+
+        [Fact]
+        public void Update_ShouldSaveChangesToPersistence()
+        {
+            Task task = CreateTestTask();
+            task.Name = "New";
+            task.Description = "New";
+
+            Sut.Update();
+
+            Assert.Contains(task, Sut.Read());
+
         }
 
         private Task CreateTestTask(string name = "A", string description = "B")

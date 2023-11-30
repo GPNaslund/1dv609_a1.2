@@ -26,5 +26,10 @@ namespace TaskManager.src.model
             Context.Tasks.Remove(taskToDelete);
             Context.SaveChanges();
         }
+
+        public void Update()
+        {
+            
+        }
     }
 }
