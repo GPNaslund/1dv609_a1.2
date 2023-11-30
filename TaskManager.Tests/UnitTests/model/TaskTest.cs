@@ -27,5 +27,7 @@ namespace TaskManager.Tests.UnitTests.model
                 Task sut = new ("Name", null, DateTime.Now);
             });
         }
+
+        
     }
 }

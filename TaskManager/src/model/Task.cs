@@ -8,11 +8,19 @@ namespace TaskManager.src.model
         public string Name 
         {
             get => _name;
-            set => ValidateName(value);
+            set => _name = ValidateName(value);
+        }
+
+        private string _description;
+        public string Description
+        {
+            get => _description;
+            set => _description = value ?? throw new ArgumentNullException();
         }
         public Task(string name, string description, DateTime dueDate)
         {
             Name = name;
+            Description = description;
         }
 
         private string ValidateName(string name)
