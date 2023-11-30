@@ -20,6 +20,14 @@ namespace TaskManager.Tests.UnitTests.model
         }
 
         [Fact]
+        public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
+        {
+            Assert.Throws<ArgumentNullException>(() => {
+                DatabasePersistence Sut = new(null);
+            });
+        }
+
+        [Fact]
         public void Save_ShouldSaveTaskToPersistence()
         {
 
