@@ -54,7 +54,7 @@ namespace TaskManager.src.model
 
         private DateTime ValidateDueDate(DateTime dueDate)
         {
-            if (DateTime.Compare(dueDate, CreationDate) < 0)
+            if (DateTime.Compare(dueDate.Date, CreationDate.Date) < 0)
             {
                 throw new ArgumentException("Due date cannot be before todays date");
             }
