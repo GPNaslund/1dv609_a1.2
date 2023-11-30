@@ -9,6 +9,8 @@ namespace TaskManager.Tests.UnitTests.model
         private readonly DatabasePersistence Sut;
         private readonly AppDatabaseContext Context;
 
+        private readonly Task TestTask;
+
         public DatabasePerisstenceTest()
         {
             var options = new DbContextOptionsBuilder<AppDatabaseContext>()
@@ -17,6 +19,7 @@ namespace TaskManager.Tests.UnitTests.model
 
             Context = new AppDatabaseContext(options);
             Sut = new(Context);
+            TestTask = new("A", "B", DateTime.Now);
         }
 
         [Fact]
@@ -31,11 +34,9 @@ namespace TaskManager.Tests.UnitTests.model
         [Fact]
         public void Save_ShouldSaveTaskToPersistence()
         {
-            Task task = CreateTestTask();
+            Sut.Save(TestTask);
 
-            Sut.Save(task);
-
-            Assert.Contains(task, Sut.Read());
+            Assert.Contains(TestTask, Sut.Read());
         }
 
         [Fact]
@@ -50,30 +51,23 @@ namespace TaskManager.Tests.UnitTests.model
         [Fact]
         public void Delete_ShouldDeleteInstanceSuccessfully()
         {
-            Task task = CreateTestTask();
-            Sut.Save(task);
-            Sut.Delete(task);
-            Assert.DoesNotContain(task, Sut.Read());
+            Sut.Save(TestTask);
+            Sut.Delete(TestTask);
+            Assert.DoesNotContain(TestTask, Sut.Read());
         }
 
         [Fact]
         public void Update_ShouldSaveChangesToPersistence()
         {
-            Task task = CreateTestTask();
-            Sut.Save(task);
-            
-            task.Name = "New";
-            task.Description = "New";
+            Sut.Save(TestTask);
+
+            TestTask.Name = "New";
+            TestTask.Description = "New";
 
             Sut.Update();
 
-            Assert.Contains(task, Sut.Read());
+            Assert.Contains(TestTask, Sut.Read());
 
-        }
-
-        private Task CreateTestTask(string name = "A", string description = "B")
-        {
-            return new Task(name, description, DateTime.Now);
         }
 
     }
