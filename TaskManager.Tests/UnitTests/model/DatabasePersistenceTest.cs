@@ -6,17 +6,23 @@ namespace TaskManager.Tests.UnitTests.model
 {
     public class DatabasePerisstenceTest
     {
+        private readonly DatabasePersistence Sut;
+        private AppDatabaseContext context;
+
+        public DatabasePerisstenceTest()
+        {
+            var options = new DbContextOptionsBuilder<AppDatabaseContext>()
+                    .UseInMemoryDatabase(databaseName: "TestDb")
+                    .Options;
+
+            AppDatabaseContext context = new AppDatabaseContext(options);
+            Sut = new(context);
+        }
         [Fact]
         public void Save_ShouldSaveTaskToPersistence()
         {
-            var options = new DbContextOptionsBuilder<AppDatabaseContext>()
-                                .UseInMemoryDatabase(databaseName: "TestDb")
-                                .Options;
-
-            AppDatabaseContext context = new AppDatabaseContext(options);
 
             Task task = new("A", "B", DateTime.Now);
-            DatabasePersistence Sut = new(context);
 
             Sut.Save(task);
 
