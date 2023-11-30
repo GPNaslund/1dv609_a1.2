@@ -25,11 +25,18 @@ namespace TaskManager.src.model
             get => _dueDate;
             set => throw new ArgumentException();
         }
+
+        private DateTime _creationDate;
+        public DateTime CreationDate
+        {
+            get => _creationDate;
+        }
         public Task(string name, string description, DateTime dueDate)
         {
             Name = name;
             Description = description;
             DueDate = dueDate;
+            _creationDate = DateTime.Now;
         }
 
         private string ValidateName(string name)
@@ -46,6 +53,15 @@ namespace TaskManager.src.model
         {
             ArgumentNullException.ThrowIfNull(description);
             return description;
+        }
+
+        private DateTime ValidateDueDate(DateTime dueDate)
+        {
+            if (DateTime.Compare(dueDate, CreationDate) < 0)
+            {
+                throw new ArgumentException("Due date cannot be before todays date");
+            }
+            return dueDate;
         }
     }
 }
