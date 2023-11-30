@@ -28,6 +28,13 @@ namespace TaskManager.src.model
         {
             get => _creationDate;
         }
+
+        private string _status;
+        public string Status {
+            get => "";
+            set => _status = "";
+        }
+
         public Task(string name, string description, DateTime dueDate)
         {
             Name = name;
