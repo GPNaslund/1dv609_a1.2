@@ -23,7 +23,7 @@ namespace TaskManager.src.model
         public DateTime DueDate
         {
             get => _dueDate;
-            set => throw new ArgumentException();
+            set => _dueDate = ValidateDueDate(value);
         }
 
         private DateTime _creationDate;
@@ -35,8 +35,8 @@ namespace TaskManager.src.model
         {
             Name = name;
             Description = description;
-            DueDate = dueDate;
             _creationDate = DateTime.Now;
+            DueDate = dueDate;
         }
 
         private string ValidateName(string name)
