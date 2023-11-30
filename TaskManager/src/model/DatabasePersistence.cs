@@ -20,5 +20,10 @@ namespace TaskManager.src.model
         {
             return Context.Tasks.ToList();
         }
+
+        public void Delete(Task taskToDelete)
+        {
+            
+        }
     }
 }

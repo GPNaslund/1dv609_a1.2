@@ -45,5 +45,14 @@ namespace TaskManager.Tests.UnitTests.model
                 Sut.Save(null);
             });
         }
+
+        [Fact]
+        public void Delete_ShouldDeleteInstanceSuccessfully()
+        {
+            Task task = new("A", "B", DateTime.Now);
+            Sut.Save(task);
+            Sut.Delete(task);
+            Assert.DoesNotContain(task, Sut.Read());
+        }
     }
 }
