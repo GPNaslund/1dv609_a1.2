@@ -14,5 +14,10 @@ namespace TaskManager.src.model
             Persistence.Save(taskToSave);
             return taskToSave;
         }
+
+        public Task DeleteTask(Task taskToDelete)
+        {
+            return null;
+        }
     }
 }
