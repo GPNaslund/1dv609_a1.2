@@ -22,7 +22,8 @@ namespace TaskManager.Tests.UnitTests.model
         [Fact]
         public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
         {
-            Assert.Throws<ArgumentNullException>(() => {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
                 DatabasePersistence Sut = new(null);
             });
         }
@@ -31,7 +32,7 @@ namespace TaskManager.Tests.UnitTests.model
         public void Save_ShouldSaveTaskToPersistence()
         {
 
-            Task task = new("A", "B", DateTime.Now);
+            Task task = CreateTestTask();
 
             Sut.Save(task);
 
@@ -41,7 +42,8 @@ namespace TaskManager.Tests.UnitTests.model
         [Fact]
         public void Save_ShouldThrowArgumentNullException_OnNullValue()
         {
-            Assert.Throws<ArgumentNullException>(() => {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
                 Sut.Save(null);
             });
         }
@@ -49,10 +51,16 @@ namespace TaskManager.Tests.UnitTests.model
         [Fact]
         public void Delete_ShouldDeleteInstanceSuccessfully()
         {
-            Task task = new("A", "B", DateTime.Now);
+            Task task = CreateTestTask();
             Sut.Save(task);
             Sut.Delete(task);
             Assert.DoesNotContain(task, Sut.Read());
         }
+
+        private Task CreateTestTask(string name = "A", string description = "B")
+        {
+            return new Task(name, description, DateTime.Now);
+        }
+
     }
 }
