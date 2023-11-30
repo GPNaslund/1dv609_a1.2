@@ -15,9 +15,9 @@ namespace TaskManager.src.model
             return taskToSave;
         }
 
-        public Task DeleteTask(Task taskToDelete)
+        public void DeleteTask(Task taskToDelete)
         {
-            return null;
+            Persistence.Delete(taskToDelete);
         }
     }
 }
