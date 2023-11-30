@@ -29,7 +29,7 @@ namespace TaskManager.src.model
 
         public void Update()
         {
-            
+            Context.SaveChanges();
         }
     }
 }

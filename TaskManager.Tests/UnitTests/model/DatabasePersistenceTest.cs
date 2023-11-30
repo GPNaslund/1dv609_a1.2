@@ -60,6 +60,8 @@ namespace TaskManager.Tests.UnitTests.model
         public void Update_ShouldSaveChangesToPersistence()
         {
             Task task = CreateTestTask();
+            Sut.Save(task);
+            
             task.Name = "New";
             task.Description = "New";
 
