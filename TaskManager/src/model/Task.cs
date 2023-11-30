@@ -17,6 +17,7 @@ namespace TaskManager.src.model
 
         private string ValidateName(string name)
         {
+            ArgumentNullException.ThrowIfNull(name);
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("A tasks name cannot be empty!");
