@@ -12,7 +12,7 @@ namespace TaskManager.src.model
         }
         public Task(string name, string description, DateTime dueDate)
         {
-            throw new ArgumentException();
+            Name = name;
         }
 
         private string ValidateName(string name)
