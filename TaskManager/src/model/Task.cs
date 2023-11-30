@@ -1,3 +1,5 @@
+using TaskStatus = TaskManager.src.model.TaskStatus;
+
 namespace TaskManager.src.model
 {
     public class Task
@@ -29,10 +31,10 @@ namespace TaskManager.src.model
             get => _creationDate;
         }
 
-        private string _status;
-        public string Status {
-            get => "";
-            set => _status = "";
+        private TaskStatus _status;
+        public TaskStatus Status {
+            get => _status;
+            set => _status = ValidateTaskStatus(value);
         }
 
         public Task(string name, string description, DateTime dueDate)
@@ -41,6 +43,8 @@ namespace TaskManager.src.model
             Description = description;
             _creationDate = DateTime.Now;
             DueDate = dueDate;
+            _status = TaskStatus.Not_Completed;
+
         }
 
         private string ValidateName(string name)
@@ -66,6 +70,12 @@ namespace TaskManager.src.model
                 throw new ArgumentException("Due date cannot be before todays date");
             }
             return dueDate;
+        }
+
+        private TaskStatus ValidateTaskStatus(TaskStatus status)
+        {
+            ArgumentNullException.ThrowIfNull(status);
+            return status;
         }
 
         public override string ToString()

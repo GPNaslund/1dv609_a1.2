@@ -55,13 +55,5 @@ namespace TaskManager.Tests.UnitTests.model
             Assert.IsType<string>(sut.ToString());
         }
 
-        [Fact]
-        public void SetStatus_ShouldThrowArgumentNullException_OnNullValue()
-        {
-            Task sut = new("A", "B", DateTime.Now);
-            Assert.Throws<ArgumentNullException>(() => {
-                sut.Status = null;
-            });
-        }
     }
 }
