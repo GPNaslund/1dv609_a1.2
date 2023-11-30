@@ -4,12 +4,15 @@ namespace TaskManager.Tests.UnitTests.model
 {
     public class TaskTest
     {
-        [Fact]
-        public void Constructor_ShouldThrowArgumentException_OnEmptyName()
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void Constructor_ShouldThrowArgumentException_OnInvalidName(string name)
         {
             Assert.Throws<ArgumentException>(() => {
-                Task sut = new("", "Description", DateTime.Now);
+                Task sut = new(name, "Description", DateTime.Now);
             });
         }
+
     }
 }
