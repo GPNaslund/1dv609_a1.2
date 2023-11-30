@@ -43,5 +43,12 @@ namespace TaskManager.Tests.UnitTests.model
             MockPersistence.Verify(obj => obj.Update(TestTask), Times.Once());
         }
 
+        [Fact]
+        public void GetAllTasks_ShouldCallPersistenceToGetAllTasks()
+        {
+            Sut.GetAllTasks();
+
+            MockPersistence.Verify(obj => obj.Read(), Times.Once());
+        }
     }
 }

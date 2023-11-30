@@ -7,5 +7,7 @@ namespace TaskManager.src.model
         public void Delete(Task taskToDelete);
 
         public void Update(Task taskToUpdate);
+
+        public List<Task> Read();
     }
 }

@@ -24,5 +24,10 @@ namespace TaskManager.src.model
         {
             Persistence.Update(taskToUpdate);
         }
+
+        public List<Task> GetAllTasks()
+        {
+            return null;
+        }
     }
 }
