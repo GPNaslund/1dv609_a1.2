@@ -20,6 +20,14 @@ namespace TaskManager.Tests.UnitTests.model
         }
 
         [Fact]
+        public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
+        {
+            Assert.Throws<ArgumentNullException>(() => {
+                TaskService Sut = new(null);
+            });
+        }
+
+        [Fact]
         public void CreateTask_ShouldCreateTaskAndCallPersistenceToSaveTheTask()
         {
             Task result = Sut.CreateTask(TestTask.Name, TestTask.Description, TestTask.DueDate);
