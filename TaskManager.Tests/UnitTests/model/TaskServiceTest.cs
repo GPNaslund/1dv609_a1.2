@@ -9,35 +9,38 @@ namespace TaskManager.Tests.UnitTests.model
         private readonly Mock<TaskPersistence> MockPersistence;
         private readonly TaskService Sut;
 
+        private readonly Task TestTask;
+
         public TaskServiceTest()
         {
             MockPersistence = new Mock<TaskPersistence>();
             Sut = new TaskService(MockPersistence.Object);
+            TestTask = new Task("A", "B", DateTime.Now);
         }
 
         [Fact]
         public void CreateTask_ShouldCreateTaskAndCallPersistenceToSaveTheTask()
         {
-            Task result = Sut.CreateTask("A", "B", DateTime.Now);
+            Task result = Sut.CreateTask(TestTask.Name, TestTask.Description, TestTask.DueDate);
 
-            Assert.Equal(new Task("A", "B", DateTime.Now), result);
-            MockPersistence.Verify(obj => obj.Save(It.IsAny<Task>()), Times.Once());
+            Assert.Equal(TestTask, result);
+            MockPersistence.Verify(obj => obj.Save(TestTask), Times.Once());
         }
 
         [Fact]
         public void DeleteTask_ShouldCallPersistenceToDeleteTheTask()
         {
-            Sut.DeleteTask(new Task("A", "B", DateTime.Now));
+            Sut.DeleteTask(TestTask);
 
-            MockPersistence.Verify(obj => obj.Delete(It.IsAny<Task>()), Times.Once());
+            MockPersistence.Verify(obj => obj.Delete(TestTask), Times.Once());
         }
 
         [Fact]
         public void UpdateTask_ShouldCallPersistenceToUpdateTheTask()
         {
-            Sut.UpdateTask(new Task("A", "B", DateTime.Now));
+            Sut.UpdateTask(TestTask);
 
-            MockPersistence.Verify(obj => obj.Update(It.IsAny<Task>()), Times.Once());
+            MockPersistence.Verify(obj => obj.Update(TestTask), Times.Once());
         }
 
     }
