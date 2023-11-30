@@ -6,6 +6,7 @@ namespace TaskManager.src.model
 
         public DatabasePersistence(AppDatabaseContext dbContext)
         {
+            ArgumentNullException.ThrowIfNull(dbContext);
             Context = dbContext;
         }
         public void Save(Task taskToSave)
