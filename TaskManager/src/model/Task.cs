@@ -15,7 +15,7 @@ namespace TaskManager.src.model
         public string Description
         {
             get => _description;
-            set => _description = value ?? throw new ArgumentNullException();
+            set => _description = ValidateDescription(value);
         }
         public Task(string name, string description, DateTime dueDate)
         {
@@ -31,6 +31,12 @@ namespace TaskManager.src.model
                 throw new ArgumentException("A tasks name cannot be empty!");
             }
             return name;
+        }
+
+        private string ValidateDescription(string description)
+        {
+            ArgumentNullException.ThrowIfNull(description);
+            return description;
         }
     }
 }
