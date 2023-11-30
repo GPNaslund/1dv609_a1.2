@@ -22,7 +22,7 @@ namespace TaskManager.src.model
 
         public void UpdateTask(Task taskToUpdate)
         {
-            throw new NotImplementedException();
+            Persistence.Update(taskToUpdate);
         }
     }
 }
