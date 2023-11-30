@@ -8,6 +8,7 @@ namespace TaskManager.src.model
 
         public TaskService(TaskPersistence persistence)
         {
+            ArgumentNullException.ThrowIfNull(persistence);
             Persistence = persistence;
         }
         public Task CreateTask(string name, string description, DateTime dueDate)
