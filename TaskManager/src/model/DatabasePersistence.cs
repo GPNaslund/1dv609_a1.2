@@ -10,6 +10,7 @@ namespace TaskManager.src.model
         }
         public void Save(Task taskToSave)
         {
+            ArgumentNullException.ThrowIfNull(taskToSave);
             Context.Tasks.Add(taskToSave);
             Context.SaveChanges();
         }
