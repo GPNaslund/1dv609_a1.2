@@ -45,6 +45,7 @@ namespace TaskManager.Tests.UnitTests.model
         {
 
             Task sut = new("Name", "Description", DateTime.Now);
+            Assert.NotNull(sut);
         }
 
         [Fact]
