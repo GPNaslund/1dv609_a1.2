@@ -27,7 +27,7 @@ namespace TaskManager.src.model
 
         public List<Task> GetAllTasks()
         {
-            return null;
+            return Persistence.Read();
         }
     }
 }
