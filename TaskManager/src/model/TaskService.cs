@@ -4,7 +4,7 @@ namespace TaskManager.src.model
     {
         public Task CreateTask(string name, string description, DateTime dueDate)
         {
-            return null;
+            return new Task(name, description, dueDate);
         }
     }
 }

@@ -82,5 +82,21 @@ namespace TaskManager.src.model
         {
             return $"Name: {Name}, Description: {Description}, Due Date: {DueDate}";
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || !GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+
+            Task other = (Task)obj;
+
+            return Name == other.Name &&
+                   Description == other.Description &&
+                   DueDate.Date == other.DueDate.Date &&
+                   CreationDate.Date == other.CreationDate.Date &&
+                   Status == other.Status;
+        }
     }
 }
