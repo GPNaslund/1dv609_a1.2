@@ -63,7 +63,7 @@ namespace TaskManager.src.model
 
         public override string ToString()
         {
-            return "";
+            return $"Name: {Name}, Description: {Description}, Due Date: {DueDate}";
         }
     }
 }
