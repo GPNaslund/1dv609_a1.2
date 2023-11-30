@@ -60,5 +60,10 @@ namespace TaskManager.src.model
             }
             return dueDate;
         }
+
+        public override string ToString()
+        {
+            return "";
+        }
     }
 }

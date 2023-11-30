@@ -39,7 +39,7 @@ namespace TaskManager.Tests.UnitTests.model
         [Fact]
         public void ToString_ShouldReturnAStringRepresentationOfTheTask()
         {
-            Task sut = new Task("A", "B", DateTime.Now);
+            Task sut = new Task("A", "B", DateTime.Now.AddDays(1));
             Assert.IsType<string>(sut.ToString());
         }
     }
