@@ -7,18 +7,18 @@ namespace TaskManager.Tests.UnitTests.model
     public class TaskServiceTest
     {
         private readonly Mock<TaskPersistence> MockPersistence;
+        private readonly TaskService Sut;
 
         public TaskServiceTest()
         {
             MockPersistence = new Mock<TaskPersistence>();
+            Sut = new TaskService(MockPersistence.Object);
         }
 
         [Fact]
         public void CreateTask_ShouldCreateTaskAndCallPersistenceToSaveTheTask()
         {
-            TaskService sut = new TaskService(MockPersistence.Object);
-
-            Task result = sut.CreateTask("A", "B", DateTime.Now);
+            Task result = Sut.CreateTask("A", "B", DateTime.Now);
 
             Assert.Equal(new Task("A", "B", DateTime.Now), result);
             MockPersistence.Verify(obj => obj.Save(It.IsAny<Task>()), Times.Once());
@@ -27,11 +27,10 @@ namespace TaskManager.Tests.UnitTests.model
         [Fact]
         public void DeleteTask_ShouldCallPersistenceToDeleteTheTask()
         {
-            TaskService Sut = new TaskService(MockPersistence.Object);
-
             Sut.DeleteTask(new Task("A", "B", DateTime.Now));
 
             MockPersistence.Verify(obj => obj.Delete(It.IsAny<Task>()), Times.Once());
         }
+
     }
 }
