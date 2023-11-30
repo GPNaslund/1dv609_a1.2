@@ -19,5 +19,13 @@ namespace TaskManager.Tests.UnitTests.model
                 Task sut = new(null, "Description", DateTime.Now);
             });
         }
+
+        [Fact]
+        public void SetDescription_ShouldThrowArgumentNullException_OnNull()
+        {
+            Assert.Throws<ArgumentNullException>(() => {
+                Task sut = new ("Name", null, DateTime.Now);
+            });
+        }
     }
 }
