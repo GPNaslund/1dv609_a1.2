@@ -37,6 +37,8 @@ namespace TaskManager.src.model
             set => _status = ValidateTaskStatus(value);
         }
 
+        public int Id { get; set; }
+
         public Task(string name, string description, DateTime dueDate)
         {
             Name = name;
