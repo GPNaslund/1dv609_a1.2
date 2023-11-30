@@ -4,9 +4,26 @@ namespace TaskManager.src.model
 {
     public class Task
     {
+        private string _name;
+        public string Name 
+        {
+            get => _name;
+            set => ValidateName(value);
+        }
         public Task(string name, string description, DateTime dueDate)
         {
             throw new ArgumentException();
+        }
+
+        private string ValidateName(string name)
+        {
+            ArgumentNullException.ThrowIfNull(name);
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("A tasks name cannot be empty!");
+            }
+            return name;
         }
     }
 }
