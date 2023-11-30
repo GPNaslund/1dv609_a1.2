@@ -1,4 +1,5 @@
 using Task = TaskManager.src.model.Task;
+using TaskStatus = TaskManager.src.model.TaskStatus;
 
 namespace TaskManager.Tests.UnitTests.model
 {
@@ -55,5 +56,15 @@ namespace TaskManager.Tests.UnitTests.model
             Assert.IsType<string>(sut.ToString());
         }
 
+        [Theory]
+        [InlineData(TaskStatus.Not_Completed)]
+        [InlineData(TaskStatus.Completed)]
+        [InlineData(TaskStatus.In_Progress)]
+        public void SetStatus_ShouldBeAbleToChangeStatusOfTask(TaskStatus newStatus)
+        {
+            Task sut = new("A", "B", DateTime.Now);
+            sut.Status = newStatus;
+            Assert.Equal(newStatus, sut.Status);
+        }
     }
 }
