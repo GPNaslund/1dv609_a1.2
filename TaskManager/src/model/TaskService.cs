@@ -29,5 +29,10 @@ namespace TaskManager.src.model
         {
             return Persistence.Read();
         }
+
+        public List<Task> ListTasksBy(ListByCommand command)
+        {
+            return null;
+        }
     }
 }

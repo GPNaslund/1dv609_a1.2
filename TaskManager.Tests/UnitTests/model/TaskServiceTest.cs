@@ -50,5 +50,16 @@ namespace TaskManager.Tests.UnitTests.model
 
             MockPersistence.Verify(obj => obj.Read(), Times.Once());
         }
+
+        [Fact]
+        public void ListTasksBy_ShouldReturnAllTasksListed_SpecificToListByCommand()
+        {
+            List<Task> result = Sut.ListTasksBy(ListByCommand.List_By_Due_Date);
+
+            for (int i = 0; i < result.Count - 1; i++)
+                    {
+                        Assert.True(result[i].DueDate <= result[i + 1].DueDate);
+                    }
+        }
     }
 }
