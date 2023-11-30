@@ -28,6 +28,12 @@ namespace TaskManager.Tests.UnitTests.model
             });
         }
 
-        
+        [Fact]
+        public void SetDueDate_ShouldThrowArgumentException_WhenDueDateIsBeforeCreationDate()
+        {
+            Assert.Throws<ArgumentException>(() => {
+                Task sut = new ("Name", "Description", DateTime.Now.AddDays(-1));
+            });
+        }
     }
 }
