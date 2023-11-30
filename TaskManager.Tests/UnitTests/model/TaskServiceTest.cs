@@ -1,6 +1,7 @@
 using Moq;
 using TaskManager.src.model;
 using Task = TaskManager.src.model.Task;
+using TaskStatus = TaskManager.src.model.TaskStatus;
 
 namespace TaskManager.Tests.UnitTests.model
 {
@@ -54,12 +55,20 @@ namespace TaskManager.Tests.UnitTests.model
         [Fact]
         public void ListTasksBy_ShouldReturnAllTasksListed_SpecificToListByCommand()
         {
+            List<Task> unsortedTasks = new List<Task>{
+                new ("2 days after tomorrow", "2 days after tomorrow", DateTime.Today.AddDays(3)),
+                new ("Today", "Today", DateTime.Today),
+                new ("1 day after tomorrow", "1 day after tomorrow", DateTime.Today.AddDays(2)),
+                new ("Tomorrow", "Tomorrow", DateTime.Today.AddDays(1))
+            };
+            MockPersistence.Setup(m => m.Read()).Returns(unsortedTasks);
+
             List<Task> result = Sut.ListTasksBy(ListByCommand.List_By_Due_Date);
 
             for (int i = 0; i < result.Count - 1; i++)
-                    {
-                        Assert.True(result[i].DueDate <= result[i + 1].DueDate);
-                    }
+            {
+                Assert.True(result[i].DueDate <= result[i + 1].DueDate);
+            }
         }
     }
 }

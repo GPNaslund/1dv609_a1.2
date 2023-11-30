@@ -32,7 +32,9 @@ namespace TaskManager.src.model
 
         public List<Task> ListTasksBy(ListByCommand command)
         {
-            return null;
+            List<Task> tasks = Persistence.Read();
+            
+            return [.. tasks.OrderBy(task => task.DueDate)];
         }
     }
 }
