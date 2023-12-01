@@ -5,15 +5,17 @@ namespace TaskManager.src.controller
 {
     public class EditTaskController
     {
+        private readonly ITaskService TaskService;
         public EditTaskController(View view, ITaskService service)
         {
             ArgumentNullException.ThrowIfNull(view);
             ArgumentNullException.ThrowIfNull(service);
+            TaskService = service;
         }
 
         public void Initialize()
         {
-            
+            TaskService.GetAllTasks();
         }
     }
 }
