@@ -7,6 +7,16 @@ namespace TaskManager.Tests.UnitTests.controller
 {
     public class ViewAllTasksControllerTest
     {
+        private readonly ViewAllTasksController Sut;
+        private readonly Mock<View> MockView;
+        private readonly Mock<ITaskService> MockTaskService;
+
+        public ViewAllTasksControllerTest()
+        {
+            MockView = new Mock<View>();
+            MockTaskService = new Mock<ITaskService>();
+            Sut = new(MockView.Object, MockTaskService.Object);
+        }
         [Fact]
         public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
         {
@@ -18,10 +28,6 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldDisplayHeader()
         {
-            Mock<View> MockView = new Mock<View>();
-            Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
-            ViewAllTasksController Sut = new (MockView.Object, MockTaskService.Object);
-
             Sut.Initialize();
 
             MockView.Verify(obj => obj.DisplayHeader(), Times.AtLeastOnce());
@@ -30,10 +36,6 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldCallTaskService()
         {
-            Mock<View> MockView = new Mock<View>();
-            Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
-            ViewAllTasksController Sut = new (MockView.Object, MockTaskService.Object);
-
             Sut.Initialize();
 
             MockTaskService.Verify(obj => obj.GetAllTasks(), Times.AtLeastOnce());
