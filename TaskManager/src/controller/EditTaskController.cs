@@ -28,8 +28,7 @@ namespace TaskManager.src.controller
             }
             Task selectedTask = TaskService.GetAllTasks()[selectedIndex - 1];
             string userChoice = View.GetInput("Your choice: ");
-            HandleMenuChoice(userChoice, selectedTask);
-            return UserCommand.Unkown;
+            return HandleMenuChoice(userChoice, selectedTask);
         }
 
         private int PromptUserToSelectTask()
@@ -67,27 +66,29 @@ namespace TaskManager.src.controller
             }
         }
 
-        private void HandleMenuChoice(string choice, Task chosenTask)
+        private UserCommand HandleMenuChoice(string choice, Task chosenTask)
         {
             switch (choice)
             {
                 case "1":
                     EditName(chosenTask);
-                    return;
+                    return UserCommand.Edit_Task;
                 case "2":
                     EditDescription(chosenTask);
-                    return;
+                    return UserCommand.Edit_Task;
                 case "3":
                     EditDueDate(chosenTask);
-                    return;
+                    return UserCommand.Edit_Task;
                 case "4":
                     EditStatus(chosenTask);
-                    return;
+                    return UserCommand.Edit_Task;
                 case "5":
                     DeleteTask(chosenTask);
-                    return;
+                    return UserCommand.Edit_Task;
+                case "0":
+                    return UserCommand.Main_Menu;
                 default:
-                    return;
+                    return UserCommand.Edit_Task;
             }
         }
 
