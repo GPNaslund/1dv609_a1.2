@@ -132,6 +132,21 @@ namespace TaskManager.Tests.UnitTests.controller
             MockTaskService.Verify(obj => obj.DeleteTask(It.IsAny<Task>()), Times.Once());
         }
 
+        [Fact]
+        public void Initialize_DeleteTask_ShouldReprompt_OnInvalidValue()
+        {
+            SelectTaskInput(["1"]);
+            SetupTaskService_ReturnTasks(1);
+
+            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("5");
+            Queue<string> deletionInputs = new Queue<string>(new[] {null, "y"});
+            MockView.Setup(obj => obj.GetInput("Are you sure? y/n")).Returns(() => deletionInputs.Dequeue());
+
+            Sut.Initialize();
+
+            MockTaskService.Verify(obj => obj.DeleteTask(It.IsAny<Task>()), Times.Once());
+        }
+
         private void TestEditStatus(string[] statusInputs)
         {
             SelectTaskInput(["1"]);

@@ -189,10 +189,25 @@ namespace TaskManager.src.controller
 
         private void DeleteTask(Task taskToDelete)
         {
-            string userChoice = View.GetInput("Are you sure? y/n");
-            if (userChoice.ToLower() == "y")
+            while (true)
             {
-                TaskService.DeleteTask(taskToDelete);
+                string userChoice = View.GetInput("Are you sure? y/n");
+                switch (userChoice)
+                {
+                    case "y":
+                        TaskService.DeleteTask(taskToDelete);
+                        View.DisplayMessage("Task deleted succesfully!");
+                        return;
+                    case "n":
+                        return;
+                    default:
+                        View.DisplayMessage("Input must be y or n, try again!");
+                        break;
+                }
+                {
+
+                }
+
             }
         }
     }
