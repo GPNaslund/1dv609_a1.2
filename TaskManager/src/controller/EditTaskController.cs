@@ -84,11 +84,7 @@ namespace TaskManager.src.controller
                     EditStatus(chosenTask);
                     return;
                 case "5":
-                    string userChoice = View.GetInput("Are you sure? y/n");
-                    if (userChoice.ToLower() == "y")
-                    {
-                        TaskService.DeleteTask(chosenTask);
-                    }
+                    DeleteTask(chosenTask);
                     return;
                 default:
                     return;
@@ -189,7 +185,15 @@ namespace TaskManager.src.controller
                         break;
                 }
             }
+        }
 
+        private void DeleteTask(Task taskToDelete)
+        {
+            string userChoice = View.GetInput("Are you sure? y/n");
+            if (userChoice.ToLower() == "y")
+            {
+                TaskService.DeleteTask(taskToDelete);
+            }
         }
     }
 }
