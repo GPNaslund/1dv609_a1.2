@@ -22,7 +22,7 @@ namespace TaskManager.Tests.UnitTests.controller
             Mock<View> MockView = new Mock<View>();
             MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns("1");
             Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
-            MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([]);
+            MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([new Task("A", "B", DateTime.Now)]);
 
             EditTaskController Sut = new EditTaskController(MockView.Object, MockTaskService.Object);
 
@@ -37,7 +37,7 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             Mock<View> MockView = new Mock<View>();
             Queue<string> allInput = new Queue<string>(new[] {"a", "10", "1"});
-            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns(() => allInput.Dequeue());
+            MockView.Setup(obj => obj.GetInput("Select task: ")).Returns(() => allInput.Dequeue());
             Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
             MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([new Task("A", "B", DateTime.Now)]);
 

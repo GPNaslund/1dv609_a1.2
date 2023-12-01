@@ -30,8 +30,31 @@ namespace TaskManager.src.controller
                 View.DisplayMessage(i + 1 + ". " + allTasks[i].ToString());
             }
             View.DisplayMessage("0. Go Back");
-            string newInput = View.GetInput("Select task: ");
-            return int.Parse(newInput);
+            while (true)
+            {
+                string newInput = View.GetInput("Select task: ");
+                if (ValidateTaskSelectInput(allTasks, newInput))
+                {
+                    return int.Parse(newInput);
+                }
+            }
+        }
+
+        private bool ValidateTaskSelectInput(List<Task> allTasks, string userInput)
+        {
+            try
+            {
+                int convertedInput = int.Parse(userInput);
+                if (convertedInput >= 0 && convertedInput <= allTasks.Count)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
