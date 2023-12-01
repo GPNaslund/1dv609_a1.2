@@ -20,6 +20,7 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             Mock<View> MockView = new Mock<View>();
             Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
+            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns("0");
 
             ListTasksController Sut = new(MockView.Object, MockTaskService.Object);
 
@@ -29,18 +30,22 @@ namespace TaskManager.Tests.UnitTests.controller
             MockView.Verify(obj => obj.DisplayMenu(), Times.AtLeastOnce());
         }
 
-        [Fact]
-        public void Initialize_ShouldCallServiceWithListByCommand_BasedOnUserInput()
+        [Theory]
+        [InlineData("1", ListByCommand.List_By_Due_Date)]
+        [InlineData("2", ListByCommand.List_Incomplete_Tasks)]
+        [InlineData("3", ListByCommand.List_Completed_Tasks)]
+        [InlineData("4", ListByCommand.List_Expired_Tasks)]
+        public void Initialize_ShouldCallServiceWithListByCommand_BasedOnUserInput(string input, ListByCommand command)
         {
             Mock<View> MockView = new Mock<View>();
             Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
-            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns("1");
+            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns(input);
 
             ListTasksController Sut = new(MockView.Object, MockTaskService.Object);
 
             Sut.Initialize();
 
-            MockTaskService.Verify(obj => obj.ListTasksBy(ListByCommand.List_By_Due_Date));
+            MockTaskService.Verify(obj => obj.ListTasksBy(command));
         }
     }
 }

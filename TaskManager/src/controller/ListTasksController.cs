@@ -20,7 +20,32 @@ namespace TaskManager.src.controller
         {
             View.DisplayHeader();
             View.DisplayMenu();
-            TaskService.ListTasksBy(ListByCommand.List_By_Due_Date);
+            string userInput = View.GetInput("Your choice: ");
+            HandleUserInput(userInput);
+
+        }
+
+        private UserCommand HandleUserInput(string input)
+        {
+            switch (input)
+            {
+                case "1":
+                    TaskService.ListTasksBy(ListByCommand.List_By_Due_Date);
+                    return UserCommand.Unkown;
+                case "2":
+                    TaskService.ListTasksBy(ListByCommand.List_Incomplete_Tasks);
+                    return UserCommand.Unkown;
+                case "3":
+                    TaskService.ListTasksBy(ListByCommand.List_Completed_Tasks);
+                    return UserCommand.Unkown;
+                case "4":
+                    TaskService.ListTasksBy(ListByCommand.List_Expired_Tasks);
+                    return UserCommand.Unkown;
+                case "0":
+                    return UserCommand.Main_Menu;
+                default:
+                    throw new ArgumentException();
+            }
         }
     }
 }
