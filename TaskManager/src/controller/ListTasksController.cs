@@ -55,18 +55,27 @@ namespace TaskManager.src.controller
 
         private void DisplayTaskList(ListByCommand command)
         {
-            List<Task> tasks = TaskService.ListTasksBy(command);
-            if (tasks.Count == 0)
+            try
             {
-                View.DisplayMessage("No tasks fullfilled the list criteria..");
-            }
-            else
-            {
-                foreach (Task task in tasks)
+                List<Task> tasks = TaskService.ListTasksBy(command);
+                if (tasks.Count == 0)
                 {
-                    View.DisplayMessage(task.ToString());
+                    View.DisplayMessage("No tasks fullfilled the list criteria..");
+                }
+                else
+                {
+                    foreach (Task task in tasks)
+                    {
+                        View.DisplayMessage(task.ToString());
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                View.DisplayMessage("Failed to get list of tasks!");
+                View.DisplayMessage(e.Message);
+            }
+            
         }
     }
 }
