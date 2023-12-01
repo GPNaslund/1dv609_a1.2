@@ -19,12 +19,22 @@ namespace TaskManager.src.controller
         public UserCommand Initialize()
         {
             View.DisplayHeader();
-            List<Task> allTasks = TaskService.GetAllTasks();
-            foreach (Task task in allTasks)
+            try 
             {
-                View.DisplayMessage(task.ToString());
+
+                List<Task> allTasks = TaskService.GetAllTasks();
+                foreach (Task task in allTasks)
+                {
+                    View.DisplayMessage(task.ToString());
+                }
+                return UserCommand.Main_Menu;
             }
-            return UserCommand.Main_Menu;
+            catch (Exception e)
+            {
+                View.DisplayMessage("Failed to get tasks!");
+                View.DisplayMessage(e.Message);
+                return UserCommand.Main_Menu;
+            }
         }
     }
 }
