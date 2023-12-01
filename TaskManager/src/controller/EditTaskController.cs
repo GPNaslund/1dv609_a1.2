@@ -1,6 +1,7 @@
 using TaskManager.src.model;
 using View = TaskManager.src.view.View;
 using Task = TaskManager.src.model.Task;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace TaskManager.src.controller
 {
@@ -25,6 +26,8 @@ namespace TaskManager.src.controller
                 return UserCommand.Main_Menu;
             }
             Task selectedTask = TaskService.GetAllTasks()[selectedIndex - 1];
+            string userChoice = View.GetInput("Your choice: ");
+            HandleMenuChoice(userChoice, selectedTask);
             return UserCommand.Unkown;
         }
 
@@ -60,6 +63,20 @@ namespace TaskManager.src.controller
             catch
             {
                 return false;
+            }
+        }
+
+        private void HandleMenuChoice(string choice, Task chosenTask)
+        {
+            switch(choice)
+            {
+                case "1":
+                    string newName = View.GetInput("New name: ");
+                    chosenTask.Name = newName;
+                    TaskService.UpdateTask(chosenTask);
+                    return;
+                default:
+                    return;
             }
         }
     }
