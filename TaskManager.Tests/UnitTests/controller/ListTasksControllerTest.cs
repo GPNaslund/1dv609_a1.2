@@ -54,5 +54,16 @@ namespace TaskManager.Tests.UnitTests.controller
 
             MockTaskService.Verify(obj => obj.ListTasksBy(command));
         }
+
+        [Fact]
+        public void Initialize_ShouldRepromptForTypeOfListing_OnInvalidValue()
+        {
+            Queue<string> allChoices = new Queue<string>(new[] { "ö", "1" });
+            MockView.Setup(m => m.GetInput("Your choice: ")).Returns(() => allChoices.Dequeue());
+
+            Sut.Initialize();
+
+            MockTaskService.Verify(obj => obj.ListTasksBy(It.IsAny<ListByCommand>()), Times.Once());
+        }
     }
 }
