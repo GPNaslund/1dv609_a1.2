@@ -103,9 +103,23 @@ namespace TaskManager.src.controller
 
         private void EditDescription(Task chosenTask)
         {
-            string newDescription = View.GetInput("New description: ");
-            chosenTask.Description = newDescription;
-            TaskService.UpdateTask(chosenTask);
+            while (true)
+            {
+                try
+                {
+                    string newDescription = View.GetInput("New description: ");
+                    chosenTask.Description = newDescription;
+                    TaskService.UpdateTask(chosenTask);
+                    return;
+                }
+                catch (Exception e)
+                {
+                    View.DisplayMessage("Could not edit description!");
+                    View.DisplayMessage(e.Message);
+                    View.DisplayMessage("Try again!");
+                }
+
+            }
         }
     }
 }
