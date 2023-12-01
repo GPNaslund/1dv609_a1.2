@@ -16,7 +16,6 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             MockView = new Mock<View>();
             MockTaskService = new Mock<ITaskService>();
-            MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([]);
             Sut = new(MockView.Object, MockTaskService.Object);
         }
         [Fact]
@@ -30,6 +29,8 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldDisplayHeader()
         {
+            MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([]);
+
             Sut.Initialize();
 
             MockView.Verify(obj => obj.DisplayHeader(), Times.AtLeastOnce());
@@ -38,24 +39,35 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldCallTaskService()
         {
+            MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([]);
+            
             Sut.Initialize();
 
             MockTaskService.Verify(obj => obj.GetAllTasks(), Times.AtLeastOnce());
         }
 
-        [Fact]
-        public void Initialize_ShouldDisplayTasksReturnedByService()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(10)]
+        public void Initialize_ShouldDisplayTasksReturnedByService(int amountOfTasks)
         {
-            List<Task> tasksToReturn = [
-                new Task("A", "B", DateTime.Now),
-                new Task("A", "B", DateTime.Now),
-                new Task("A", "B", DateTime.Now),
-            ];
+            List<Task> tasksToReturn = GenerateTasks(amountOfTasks);
             MockTaskService.Setup(obj => obj.GetAllTasks()).Returns(tasksToReturn);
 
             Sut.Initialize();
 
-            MockView.Verify(obj => obj.DisplayMessage(It.IsAny<string>()), Times.AtLeast(3));
+            MockView.Verify(obj => obj.DisplayMessage(It.IsAny<string>()), Times.Exactly(amountOfTasks));
+        }
+
+        private List<Task> GenerateTasks(int amountOfTasks)
+        {
+            List<Task> tasksToReturn = [];
+            for (int i = 0; i < amountOfTasks; i++)
+            {
+                tasksToReturn.Add(new Task("A", "B", DateTime.Now));
+            }
+            return tasksToReturn;
         }
     }
 }
