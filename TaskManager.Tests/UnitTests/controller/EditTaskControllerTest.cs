@@ -77,6 +77,21 @@ namespace TaskManager.Tests.UnitTests.controller
             MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
         }
 
+        [Fact]
+        public void Initialize_ShouldRepromptUserForName_IfInvalidInput()
+        {
+            SetupViewSelectTaskInput(["1"]);
+            SetupServiceGetTasks_ReturnAmountOfTasks(1);
+
+            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("1");
+            Queue<string> nameInputs = new Queue<string>(new[] { "", "C" });
+            MockView.Setup(obj => obj.GetInput("New name: ")).Returns(() => nameInputs.Dequeue());
+
+            Sut.Initialize();
+
+            MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
+        }
+
         private void SetupViewSelectTaskInput(string[] inputs)
         {
             Queue<string> allInputs = new Queue<string>();
