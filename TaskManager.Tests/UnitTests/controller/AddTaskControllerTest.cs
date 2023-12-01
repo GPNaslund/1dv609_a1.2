@@ -32,5 +32,24 @@ namespace TaskManager.Tests.UnitTests.controller
 
             MockTaskService.Verify(obj => obj.CreateTask("A", "B", DateTime.Now.Date), Times.AtLeastOnce());
         }
+
+        [Fact]
+        public void Initialize_ShouldReprompt_OnInvalidTaskData()
+        {
+            Mock<View> MockView = new Mock<View>();
+            Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
+
+            Queue<string> nameInputs = new Queue<string>(new[] { "", "A" });
+            MockView.Setup(obj => obj.GetInput("Enter the name: ")).Returns(() => nameInputs.Dequeue());
+            MockView.Setup(m => m.GetInput("Enter the description: ")).Returns("B");
+            Queue<string> dateInputs = new Queue<string>(new[] {DateTime.Now.AddDays(-1).ToString("yyMMdd"), DateTime.Now.ToString("yyMMdd")});
+            MockView.Setup(obj => obj.GetInput("Enter due date (yymmdd): ")).Returns(() => dateInputs.Dequeue());
+
+            AddTaskController Sut = new(MockView.Object, MockTaskService.Object);
+
+            Sut.Initialize();
+
+            MockTaskService.Verify(obj => obj.CreateTask(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.AtLeast(2));
+        }
     }
 }
