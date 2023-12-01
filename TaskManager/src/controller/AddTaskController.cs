@@ -23,7 +23,7 @@ namespace TaskManager.src.controller
                 try
                 {
                     PromptAndCreateNewTask();
-                    return UserCommand.Unkown;
+                    return UserCommand.Main_Menu;
                 }
                 catch (Exception e)
                 {
