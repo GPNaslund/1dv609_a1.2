@@ -52,8 +52,7 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldReprompt_OnFaultyInput()
         {
-            Queue<string> allInputs = new Queue<string>(new[] { "a", "1" });
-            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns(() => allInputs.Dequeue());
+            SetupViewWithMultipleInputs(["a", "1"]);
 
             Sut.Initialize();
 
@@ -63,12 +62,17 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldDisplayMessage_OnFaultyInput()
         {
-            Queue<string> allInputs = new Queue<string>(new[] { "a", "1" });
-            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns(() => allInputs.Dequeue());
+            SetupViewWithMultipleInputs(["a", "1"]);
 
             Sut.Initialize();
 
             MockView.Verify(obj => obj.DisplayMessage(It.IsAny<string>()), Times.AtLeastOnce());
+        }
+
+        private void SetupViewWithMultipleInputs(string[] inputs)
+        {
+            Queue<string> allInputs = new Queue<string>(inputs);
+            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns(() => allInputs.Dequeue());
         }
     }
 }
