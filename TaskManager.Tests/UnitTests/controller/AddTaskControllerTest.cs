@@ -67,7 +67,7 @@ namespace TaskManager.Tests.UnitTests.controller
 
             Sut.Initialize();
 
-            MockView.Verify(obj => obj.DisplayMessage(It.IsAny<string>()), Times.Once());
+            MockView.Verify(obj => obj.DisplayMessage(It.IsAny<string>()), Times.AtLeastOnce());
         }
     }
 }

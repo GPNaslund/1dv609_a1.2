@@ -27,7 +27,8 @@ namespace TaskManager.src.controller
                 }
                 catch (Exception e)
                 {
-                    View.DisplayMessage("Task creation failed!");
+                    View.DisplayMessage("Task creation failed");
+                    View.DisplayMessage(e.Message);
                 }
             }
         }
