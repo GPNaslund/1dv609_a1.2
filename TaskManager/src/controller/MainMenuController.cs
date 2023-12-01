@@ -21,6 +21,10 @@ namespace TaskManager.src.controller
             {
                 string input = View.GetInput("Your choice: ");
                 result = HandleInput(input);
+                if (result == UserCommand.Unkown)
+                {
+                    View.DisplayMessage("Input must be a number presented in the menu, try again!");
+                }
             }
             return result;
         }
