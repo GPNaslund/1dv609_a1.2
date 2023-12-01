@@ -24,7 +24,7 @@ namespace TaskManager.src.controller
             {
                 View.DisplayMessage(task.ToString());
             }
-            return UserCommand.Unkown;
+            return UserCommand.Main_Menu;
         }
     }
 }
