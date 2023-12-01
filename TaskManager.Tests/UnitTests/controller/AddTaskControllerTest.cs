@@ -41,15 +41,7 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldReprompt_OnInvalidTaskData()
         {
-            MockTaskService.Setup(obj => obj.CreateTask("", "B", It.IsAny<DateTime>())).Throws(new ArgumentException());
-
-            Queue<string> nameInputs = new Queue<string>(new[] { "", "A" });
-            MockView.Setup(obj => obj.GetInput("Enter the name: ")).Returns(() => nameInputs.Dequeue());
-            MockView.Setup(obj => obj.GetInput("Enter the description: ")).Returns("B");
-            Queue<string> dateInputs = new Queue<string>(new[] {DateTime.Now.AddDays(-1).ToString("yyMMdd"), DateTime.Now.ToString("yyMMdd")});
-            MockView.Setup(obj => obj.GetInput("Enter due date (yymmdd): ")).Returns(() => dateInputs.Dequeue());
-
-            Sut.Initialize();
+            TestInvalidInput();
 
             MockTaskService.Verify(obj => obj.CreateTask(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.AtLeast(2));
         }
@@ -57,17 +49,22 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldDisplayMessage_OnInvalidTaskData()
         {
+            TestInvalidInput();
+
+            MockView.Verify(obj => obj.DisplayMessage(It.IsAny<string>()), Times.AtLeastOnce());
+        }
+
+        private void TestInvalidInput()
+        {
             MockTaskService.Setup(obj => obj.CreateTask("", "B", It.IsAny<DateTime>())).Throws(new ArgumentException());
 
             Queue<string> nameInputs = new Queue<string>(new[] { "", "A" });
             MockView.Setup(obj => obj.GetInput("Enter the name: ")).Returns(() => nameInputs.Dequeue());
             MockView.Setup(obj => obj.GetInput("Enter the description: ")).Returns("B");
-            Queue<string> dateInputs = new Queue<string>(new[] {DateTime.Now.AddDays(-1).ToString("yyMMdd"), DateTime.Now.ToString("yyMMdd")});
+            Queue<string> dateInputs = new Queue<string>(new[] { DateTime.Now.AddDays(-1).ToString("yyMMdd"), DateTime.Now.ToString("yyMMdd") });
             MockView.Setup(obj => obj.GetInput("Enter due date (yymmdd): ")).Returns(() => dateInputs.Dequeue());
 
             Sut.Initialize();
-
-            MockView.Verify(obj => obj.DisplayMessage(It.IsAny<string>()), Times.AtLeastOnce());
         }
     }
 }
