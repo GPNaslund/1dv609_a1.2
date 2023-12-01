@@ -22,6 +22,8 @@ namespace TaskManager.src.controller
             {
                 try
                 {
+                    View.DisplayHeader();
+                    View.DisplayMenu();
                     PromptAndCreateNewTask();
                     return UserCommand.Main_Menu;
                 }
