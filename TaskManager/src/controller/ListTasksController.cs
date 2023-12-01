@@ -1,4 +1,5 @@
 using View = TaskManager.src.view.View;
+using Task = TaskManager.src.model.Task;
 
 using TaskManager.src.model;
 
@@ -33,7 +34,14 @@ namespace TaskManager.src.controller
             switch (input)
             {
                 case "1":
-                    TaskService.ListTasksBy(ListByCommand.List_By_Due_Date);
+                    List<Task> tasks = TaskService.ListTasksBy(ListByCommand.List_By_Due_Date);
+                    if (tasks != null)
+                    {
+                        foreach (Task task in tasks)
+                    {
+                        View.DisplayMessage(task.ToString());
+                    }
+                    }
                     return UserCommand.Unkown;
                 case "2":
                     TaskService.ListTasksBy(ListByCommand.List_Incomplete_Tasks);
