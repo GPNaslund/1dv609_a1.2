@@ -76,6 +76,19 @@ namespace TaskManager.Tests.UnitTests.controller
             TestEditName(["", "C"]);
         }
 
+        [Fact]
+        public void Initialize_ShouldAllowUserTo_EditDescription_Successfully()
+        {
+            SetupViewSelectTaskInput(["1"]);
+            SetupServiceGetTasks_ReturnAmountOfTasks(1);
+
+            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("2");
+
+            Sut.Initialize();
+
+            MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
+        }
+
         private void TestEditName(string[] nameInputs)
         {
             SetupViewSelectTaskInput(["1"]);
