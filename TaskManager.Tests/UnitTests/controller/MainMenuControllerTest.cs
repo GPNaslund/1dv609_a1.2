@@ -59,5 +59,16 @@ namespace TaskManager.Tests.UnitTests.controller
 
             MockView.Verify(obj => obj.GetInput(It.IsAny<string>()), Times.AtLeast(2));
         }
+
+        [Fact]
+        public void Initialize_ShouldDisplayMessage_OnFaultyInput()
+        {
+            Queue<string> allInputs = new Queue<string>(new[] { "a", "1" });
+            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns(() => allInputs.Dequeue());
+
+            Sut.Initialize();
+
+            MockView.Verify(obj => obj.DisplayMessage(It.IsAny<string>()), Times.AtLeastOnce());
+        }
     }
 }

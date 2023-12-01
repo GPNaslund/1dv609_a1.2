@@ -7,5 +7,7 @@ namespace TaskManager.src.view
         public void DisplayHeader();
 
         public string GetInput(string prompt);
+
+        public void DisplayMessage(string message);
     }
 }
