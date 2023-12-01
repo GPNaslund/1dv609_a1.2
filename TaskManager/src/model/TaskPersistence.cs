@@ -6,7 +6,7 @@ namespace TaskManager.src.model
 
         public void Delete(Task taskToDelete);
 
-        public void Update(Task taskToUpdate);
+        public void Update(Task taskToUpdatea);
 
         public List<Task> Read();
     }

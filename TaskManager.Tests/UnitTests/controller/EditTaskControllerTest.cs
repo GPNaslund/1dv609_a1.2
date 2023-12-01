@@ -63,6 +63,20 @@ namespace TaskManager.Tests.UnitTests.controller
             Assert.Equal(UserCommand.Main_Menu, result);
         }
 
+        [Fact]
+        public void Initialize_ShouldAllowUserTo_EditName_Successfully()
+        {
+            SetupViewSelectTaskInput(["1"]);
+            SetupServiceGetTasks_ReturnAmountOfTasks(1);
+
+            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("1");
+            MockView.Setup(obj => obj.GetInput("New name: ")).Returns("C");
+
+            Sut.Initialize();
+
+            MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
+        }
+
         private void SetupViewSelectTaskInput(string[] inputs)
         {
             Queue<string> allInputs = new Queue<string>();
