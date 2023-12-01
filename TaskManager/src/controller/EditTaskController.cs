@@ -3,6 +3,7 @@ using View = TaskManager.src.view.View;
 using Task = TaskManager.src.model.Task;
 using TaskStatus = TaskManager.src.model.TaskStatus;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace TaskManager.src.controller
 {
@@ -166,24 +167,33 @@ namespace TaskManager.src.controller
             }
             while (true)
             {
-                string userSelection = View.GetInput("Select new status: ");
-                switch (userSelection)
+                try
                 {
-                    case "1":
-                        chosenTask.Status = TaskStatus.Not_Completed;
-                        TaskService.UpdateTask(chosenTask);
-                        return;
-                    case "2":
-                        chosenTask.Status = TaskStatus.In_Progress;
-                        TaskService.UpdateTask(chosenTask);
-                        return;
-                    case "3":
-                        chosenTask.Status = TaskStatus.Completed;
-                        TaskService.UpdateTask(chosenTask);
-                        return;
-                    default:
-                        View.DisplayMessage("Input must be one of the options, try again!");
-                        break;
+                    string userSelection = View.GetInput("Select new status: ");
+                    switch (userSelection)
+                    {
+                        case "1":
+                            chosenTask.Status = TaskStatus.Not_Completed;
+                            TaskService.UpdateTask(chosenTask);
+                            return;
+                        case "2":
+                            chosenTask.Status = TaskStatus.In_Progress;
+                            TaskService.UpdateTask(chosenTask);
+                            return;
+                        case "3":
+                            chosenTask.Status = TaskStatus.Completed;
+                            TaskService.UpdateTask(chosenTask);
+                            return;
+                        default:
+                            View.DisplayMessage("Input must be one of the options, try again!");
+                            break;
+                    }
+                }
+                catch (Exception e)
+                {
+                    View.DisplayMessage("Could not update status.");
+                    View.DisplayMessage(e.Message);
+                    View.DisplayMessage("Try again!");
                 }
             }
         }
@@ -192,21 +202,27 @@ namespace TaskManager.src.controller
         {
             while (true)
             {
-                string userChoice = View.GetInput("Are you sure? y/n");
-                switch (userChoice)
+                try
                 {
-                    case "y":
-                        TaskService.DeleteTask(taskToDelete);
-                        View.DisplayMessage("Task deleted succesfully!");
-                        return;
-                    case "n":
-                        return;
-                    default:
-                        View.DisplayMessage("Input must be y or n, try again!");
-                        break;
+                    string userChoice = View.GetInput("Are you sure? y/n");
+                    switch (userChoice)
+                    {
+                        case "y":
+                            TaskService.DeleteTask(taskToDelete);
+                            View.DisplayMessage("Task deleted succesfully!");
+                            return;
+                        case "n":
+                            return;
+                        default:
+                            View.DisplayMessage("Input must be y or n, try again!");
+                            break;
+                    }
                 }
+                catch (Exception e)
                 {
-
+                    View.DisplayMessage("Could not delete task!");
+                    View.DisplayMessage(e.Message);
+                    View.DisplayMessage("Try again!");
                 }
 
             }

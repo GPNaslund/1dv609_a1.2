@@ -226,7 +226,6 @@ namespace TaskManager.Tests.UnitTests.controller
             Sut.Initialize();
 
             MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
-
         }
 
         private void SelectTaskInput(string[] inputs)
