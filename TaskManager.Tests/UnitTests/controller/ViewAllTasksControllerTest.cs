@@ -16,6 +16,7 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             MockView = new Mock<View>();
             MockTaskService = new Mock<ITaskService>();
+            MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([]);
             Sut = new(MockView.Object, MockTaskService.Object);
         }
         [Fact]
@@ -29,7 +30,6 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldDisplayHeader()
         {
-            MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([]);
 
             Sut.Initialize();
 
@@ -39,7 +39,6 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldCallTaskService()
         {
-            MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([]);
 
             Sut.Initialize();
 
@@ -73,8 +72,6 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldReturnMainMenuUserCommand_WhenDone()
         {
-            MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([]);
-
             UserCommand result = Sut.Initialize();
 
             Assert.Equal(UserCommand.Main_Menu, result);
