@@ -118,6 +118,20 @@ namespace TaskManager.Tests.UnitTests.controller
             TestEditStatus([null, "1"]);
         }
 
+        [Fact]
+        public void Initialize_ShouldAllowUserTo_DeleteTask_Successfully()
+        {
+            SelectTaskInput(["1"]);
+            SetupTaskService_ReturnTasks(1);
+
+            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("5");
+            MockView.Setup(obj => obj.GetInput("Are you sure? y/n")).Returns("y");
+
+            Sut.Initialize();
+
+            MockTaskService.Verify(obj => obj.DeleteTask(It.IsAny<Task>()), Times.Once());
+        }
+
         private void TestEditStatus(string[] statusInputs)
         {
             SelectTaskInput(["1"]);
