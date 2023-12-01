@@ -65,6 +65,18 @@ namespace TaskManager.Tests.UnitTests.controller
         }
 
         [Fact]
+        public void Initialize_ShouldReturnUserCommandMainMenu_OnBackInput_FromEditActionMenu()
+        {
+            SelectTaskInput(["1"]);
+            SetupTaskService_ReturnTasks(1);
+            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("0");
+
+            UserCommand result = Sut.Initialize();
+
+            Assert.Equal(UserCommand.Main_Menu, result);
+        }
+
+        [Fact]
         public void Initialize_ShouldAllowUserTo_EditName_Successfully()
         {
             TestEditName(["C"]);
