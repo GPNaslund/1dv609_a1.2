@@ -75,6 +75,19 @@ namespace TaskManager.Tests.UnitTests.controller
         }
 
         [Fact]
+        public void Initialize_ShouldRepromptForEditActionInput_Until_UserCommandMainMenu()
+        {
+            SelectTaskInput(["1"]);
+            SetupTaskService_ReturnTasks(1);
+            NavigateEditActionMenu([null, "a", "5", "0"]);
+            MockView.Setup(obj => obj.GetInput("Are you sure? y/n")).Returns("n");
+
+            UserCommand result = Sut.Initialize();
+
+            Assert.Equal(UserCommand.Main_Menu, result);
+        }
+
+        [Fact]
         public void Initialize_ShouldAllowUserTo_EditName_Successfully()
         {
             TestEditName(["C"]);
