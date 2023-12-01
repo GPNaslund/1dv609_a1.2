@@ -91,34 +91,37 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldAllowUserTo_EditDueDate_Successfully()
         {
-            SetupViewSelectTaskInput(["1"]);
-            SetupServiceGetTasks_ReturnAmountOfTasks(1);
-
-            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("3");
             string dateInput = DateTime.Now.ToString("yyMMdd");
-            MockView.Setup(obj => obj.GetInput("New due date (yymmdd): ")).Returns(dateInput);
+            TestEditDueDate([dateInput]);
 
-            Sut.Initialize();
-
-            MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
             MockView.Verify(obj => obj.GetInput("New due date (yymmdd): "), Times.Once());
         }
 
         [Fact]
         public void Initialize_EditDueDate_ShouldRepromptForDueDate_OnInvalidValue()
         {
+            string dateInput = DateTime.Now.ToString("yyMMdd");
+            TestEditDueDate([null, dateInput]);
+            
+            MockView.Verify(obj => obj.GetInput("New due date (yymmdd): "), Times.Exactly(2));
+        }
+
+        private void TestEditDueDate(string[] descriptionInputs)
+        {
             SetupViewSelectTaskInput(["1"]);
             SetupServiceGetTasks_ReturnAmountOfTasks(1);
 
             MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("3");
-            string dateInput = DateTime.Now.ToString("yyMMdd");
-            Queue<string> allDateInputs = new Queue<string>(new[] { null, dateInput });
+            Queue<string> allDateInputs = new Queue<string>();
+            foreach (string description in descriptionInputs)
+            {
+                allDateInputs.Enqueue(description);
+            }
             MockView.Setup(obj => obj.GetInput("New due date (yymmdd): ")).Returns(() => allDateInputs.Dequeue());
 
             Sut.Initialize();
 
             MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
-            MockView.Verify(obj => obj.GetInput("New due date (yymmdd): "), Times.Exactly(2));
         }
 
         private void TestEditDescription(string[] descriptionInputs)
