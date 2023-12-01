@@ -73,6 +73,9 @@ namespace TaskManager.src.controller
                 case "1":
                     EditName(chosenTask);
                     return;
+                case "2":
+                    TaskService.UpdateTask(chosenTask);
+                    return;
                 default:
                     return;
             }
