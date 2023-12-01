@@ -28,6 +28,17 @@ namespace TaskManager.Tests.UnitTests.controller
         }
 
         [Fact]
+        public void Initialize_ShouldDisplayHeaderAndMenu()
+        {
+            MockViewStandardSetUp();
+
+            Sut.Initialize();
+
+            MockView.Verify(obj => obj.DisplayHeader(), Times.AtLeastOnce());
+            MockView.Verify(obj => obj.DisplayMenu(), Times.AtLeastOnce());
+        }
+
+        [Fact]
         public void Initialize_ShouldCollectDataForNewTask_Successfully()
         {
             MockViewStandardSetUp();
