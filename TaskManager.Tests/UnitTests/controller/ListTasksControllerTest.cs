@@ -16,6 +16,7 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             MockView = new Mock<View>();
             MockTaskService = new Mock<ITaskService>();
+            MockTaskService.Setup(obj => obj.ListTasksBy(It.IsAny<ListByCommand>())).Returns([]);
             Sut = new(MockView.Object, MockTaskService.Object);
         }
         [Fact]
@@ -69,17 +70,40 @@ namespace TaskManager.Tests.UnitTests.controller
             MockTaskService.Verify(obj => obj.ListTasksBy(It.IsAny<ListByCommand>()), Times.Once());
         }
 
-        [Fact]
-        public void Initialize_ShouldDisplayTheTasksReturnedByService_Correctly()
+        [Theory]
+        [InlineData("1", 0)]
+        [InlineData("1", 1)]
+        [InlineData("1", 10)]
+        [InlineData("2", 0)]
+        [InlineData("2", 1)]
+        [InlineData("2", 10)]
+        [InlineData("3", 0)]
+        [InlineData("3", 1)]
+        [InlineData("3", 10)]
+        [InlineData("4", 0)]
+        [InlineData("4", 1)]
+        [InlineData("4", 10)]
+        public void Initialize_ShouldDisplayTheTasksReturnedByService_Correctly(string input, int amountOfTasks)
         {
-            List<Task> allTasks = [new Task("A", "B", DateTime.Now)];
+            List<Task> allTasks = GenerateTasks(amountOfTasks);
             MockTaskService.Setup(obj => obj.ListTasksBy(It.IsAny<ListByCommand>())).Returns(allTasks);
-            Queue<string> allInputs = new Queue<string>(new [] { "1", "0" });
+            Queue<string> allInputs = new Queue<string>(new [] { input, "0" });
             MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns(() => allInputs.Dequeue());
 
             Sut.Initialize();
+            
+            int amountOfPrints = amountOfTasks == 0 ? 1 : amountOfTasks;
+            MockView.Verify(obj => obj.DisplayMessage(It.IsAny<string>()), Times.AtLeast(amountOfPrints));
+        }
 
-            MockView.Verify(obj => obj.DisplayMessage(It.IsAny<string>()), Times.Once());
+        private List<Task> GenerateTasks(int amount)
+        {
+            List<Task> allTasks = [];
+            for (int i = 0; i < amount; i++)
+            {
+                allTasks.Add(new Task("A", "B", DateTime.Now));
+            }
+            return allTasks;
         }
     }
 }

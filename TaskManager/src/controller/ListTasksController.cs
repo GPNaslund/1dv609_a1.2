@@ -34,28 +34,38 @@ namespace TaskManager.src.controller
             switch (input)
             {
                 case "1":
-                    List<Task> tasks = TaskService.ListTasksBy(ListByCommand.List_By_Due_Date);
-                    if (tasks != null)
-                    {
-                        foreach (Task task in tasks)
-                    {
-                        View.DisplayMessage(task.ToString());
-                    }
-                    }
+                    DisplayTaskList(ListByCommand.List_By_Due_Date);
                     return UserCommand.Unkown;
                 case "2":
-                    TaskService.ListTasksBy(ListByCommand.List_Incomplete_Tasks);
+                    DisplayTaskList(ListByCommand.List_Incomplete_Tasks);
                     return UserCommand.Unkown;
                 case "3":
-                    TaskService.ListTasksBy(ListByCommand.List_Completed_Tasks);
+                    DisplayTaskList(ListByCommand.List_Completed_Tasks);
                     return UserCommand.Unkown;
                 case "4":
-                    TaskService.ListTasksBy(ListByCommand.List_Expired_Tasks);
+                    DisplayTaskList(ListByCommand.List_Expired_Tasks);
                     return UserCommand.Unkown;
                 case "0":
                     return UserCommand.Main_Menu;
                 default:
+                    View.DisplayMessage("Invalid input: " + input + ". Try again!");
                     return UserCommand.Unkown;
+            }
+        }
+
+        private void DisplayTaskList(ListByCommand command)
+        {
+            List<Task> tasks = TaskService.ListTasksBy(command);
+            if (tasks.Count == 0)
+            {
+                View.DisplayMessage("No tasks fullfilled the list criteria..");
+            }
+            else
+            {
+                foreach (Task task in tasks)
+                {
+                    View.DisplayMessage(task.ToString());
+                }
             }
         }
     }
