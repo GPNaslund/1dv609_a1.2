@@ -83,7 +83,7 @@ namespace TaskManager.Tests.UnitTests.controller
         }
 
         [Fact]
-        public void Initialize_ShouldRepromptForDescription_EditDescription_OnInvalidValue()
+        public void Initialize_EditDescription_ShouldRepromptForDescription_OnInvalidValue()
         {
             TestEditDescription([null, "D"]);
         }
