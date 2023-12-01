@@ -78,9 +78,7 @@ namespace TaskManager.src.controller
                     EditDescription(chosenTask);
                     return;
                 case "3":
-                    string dateInput = View.GetInput("New due date (yymmdd): ");
-                    chosenTask.DueDate = DateTime.ParseExact(dateInput, "yyMMdd", CultureInfo.InvariantCulture);
-                    TaskService.UpdateTask(chosenTask);
+                    EditDueDate(chosenTask);
                     return;
                 default:
                     return;
@@ -126,6 +124,13 @@ namespace TaskManager.src.controller
                 }
 
             }
+        }
+
+        private void EditDueDate(Task chosenTask)
+        {
+            string dateInput = View.GetInput("New due date (yymmdd): ");
+            chosenTask.DueDate = DateTime.ParseExact(dateInput, "yyMMdd", CultureInfo.InvariantCulture);
+            TaskService.UpdateTask(chosenTask);
         }
     }
 }
