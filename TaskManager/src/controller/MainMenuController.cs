@@ -13,7 +13,9 @@ namespace TaskManager.src.controller
 
         public void Initialize()
         {
+            View.DisplayHeader();
             View.DisplayMenu();
+            View.GetInput("Your choice: ");
         }
     }
 }

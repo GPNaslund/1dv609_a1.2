@@ -18,11 +18,14 @@ namespace TaskManager.Tests.UnitTests.controller
         public void Initialize_ShouldCallViewMethods()
         {
             Mock<View> MockView = new Mock<View>();
+            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns("1");
             MainMenuController Sut = new(MockView.Object);
 
             Sut.Initialize();
 
+            MockView.Verify(obj => obj.DisplayHeader(), Times.AtLeastOnce());
             MockView.Verify(obj => obj.DisplayMenu(), Times.AtLeastOnce());
+            MockView.Verify(obj => obj.GetInput(It.IsAny<string>()), Times.AtLeastOnce());
         }
     }
 }
