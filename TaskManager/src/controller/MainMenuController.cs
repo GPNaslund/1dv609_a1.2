@@ -6,7 +6,7 @@ namespace TaskManager.src.controller
     {
         public MainMenuController(View view)
         {
-
+            ArgumentNullException.ThrowIfNull(view);
         }
     }
 }
