@@ -1,4 +1,4 @@
-using View = TaskManager.src.view.view;
+using View = TaskManager.src.view.View;
 
 namespace TaskManager.src.controller
 {

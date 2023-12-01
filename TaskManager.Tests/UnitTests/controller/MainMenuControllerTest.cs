@@ -1,6 +1,6 @@
 using Moq;
 using TaskManager.src.controller;
-using View = TaskManager.src.view.view;
+using View = TaskManager.src.view.View;
 
 namespace TaskManager.Tests.UnitTests.controller
 {

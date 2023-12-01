@@ -1,6 +1,6 @@
 namespace TaskManager.src.view
 {
-    public interface view
+    public interface View
     {
         public void DisplayMenu();
 
