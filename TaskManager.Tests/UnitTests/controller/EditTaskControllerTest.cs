@@ -88,6 +88,22 @@ namespace TaskManager.Tests.UnitTests.controller
             TestEditDescription([null, "D"]);
         }
 
+        [Fact]
+        public void Initialize_ShouldAllowUserTo_EditDueDate_Successfully()
+        {
+            SetupViewSelectTaskInput(["1"]);
+            SetupServiceGetTasks_ReturnAmountOfTasks(1);
+
+            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("3");
+            MockView.Setup(obj => obj.GetInput("New due date (yymmdd): ")).Returns(DateTime.Now.ToString("yyMMdd"));
+
+            Sut.Initialize();
+
+            MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
+            MockView.Verify(obj => obj.GetInput("New due date (yymmdd): "), Times.Once());
+
+        }
+
         private void TestEditDescription(string[] descriptionInputs)
         {
             SetupViewSelectTaskInput(["1"]);
