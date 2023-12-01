@@ -21,7 +21,8 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
         {
-            Assert.Throws<ArgumentNullException>(() => {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
                 EditTaskController Sut = new(null, null);
             });
         }
@@ -66,30 +67,32 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldAllowUserTo_EditName_Successfully()
         {
-            SetupViewSelectTaskInput(["1"]);
-            SetupServiceGetTasks_ReturnAmountOfTasks(1);
-
-            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("1");
-            MockView.Setup(obj => obj.GetInput("New name: ")).Returns("C");
-
-            Sut.Initialize();
-
-            MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
+            TestEditName(["C"]);
         }
 
         [Fact]
-        public void Initialize_ShouldRepromptUserForName_IfInvalidInput()
+        public void Initialize_EditName_ShouldRepromptUserForName_IfInvalidInput()
+        {
+            TestEditName(["", "C"]);
+        }
+
+        private void TestEditName(string[] nameInputs)
         {
             SetupViewSelectTaskInput(["1"]);
             SetupServiceGetTasks_ReturnAmountOfTasks(1);
 
             MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("1");
-            Queue<string> nameInputs = new Queue<string>(new[] { "", "C" });
-            MockView.Setup(obj => obj.GetInput("New name: ")).Returns(() => nameInputs.Dequeue());
+            Queue<string> allNameInputs = new Queue<string>();
+            foreach (string nameInput in nameInputs)
+            {
+                allNameInputs.Enqueue(nameInput);
+            }
+            MockView.Setup(obj => obj.GetInput("New name: ")).Returns(() => allNameInputs.Dequeue());
 
             Sut.Initialize();
 
             MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
+
         }
 
         private void SetupViewSelectTaskInput(string[] inputs)
