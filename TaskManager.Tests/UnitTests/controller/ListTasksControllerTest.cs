@@ -3,7 +3,6 @@ using Task = TaskManager.src.model.Task;
 using Moq;
 using TaskManager.src.controller;
 using TaskManager.src.model;
-using Xunit.Sdk;
 
 namespace TaskManager.Tests.UnitTests.controller
 {
