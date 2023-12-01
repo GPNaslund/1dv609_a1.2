@@ -128,9 +128,22 @@ namespace TaskManager.src.controller
 
         private void EditDueDate(Task chosenTask)
         {
-            string dateInput = View.GetInput("New due date (yymmdd): ");
-            chosenTask.DueDate = DateTime.ParseExact(dateInput, "yyMMdd", CultureInfo.InvariantCulture);
-            TaskService.UpdateTask(chosenTask);
+            while (true)
+            {
+                try
+                {
+                    string dateInput = View.GetInput("New due date (yymmdd): ");
+                    chosenTask.DueDate = DateTime.ParseExact(dateInput, "yyMMdd", CultureInfo.InvariantCulture);
+                    TaskService.UpdateTask(chosenTask);
+                    return;
+                }
+                catch (Exception e)
+                {
+                    View.DisplayMessage("Could not update due date!");
+                    View.DisplayMessage(e.Message);
+                    View.DisplayMessage("Try again!");
+                }
+            }
         }
     }
 }

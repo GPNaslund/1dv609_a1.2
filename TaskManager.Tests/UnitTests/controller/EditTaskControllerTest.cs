@@ -118,7 +118,7 @@ namespace TaskManager.Tests.UnitTests.controller
             Sut.Initialize();
 
             MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
-            MockView.Verify(obj => obj.GetInput("New due date (yymmdd): "), Times.Once());
+            MockView.Verify(obj => obj.GetInput("New due date (yymmdd): "), Times.Exactly(2));
         }
 
         private void TestEditDescription(string[] descriptionInputs)
