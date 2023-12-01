@@ -17,6 +17,7 @@ namespace TaskManager.Tests.UnitTests.controller
             MockTaskService = new Mock<ITaskService>();
             Sut = new(MockView.Object, MockTaskService.Object);
         }
+        
         [Fact]
         public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
         {
@@ -29,9 +30,7 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldCollectDataForNewTask_Successfully()
         {
-            MockView.Setup(obj => obj.GetInput("Enter the name: ")).Returns("A");
-            MockView.Setup(obj => obj.GetInput("Enter the description: ")).Returns("B");
-            MockView.Setup(obj => obj.GetInput("Enter due date (yymmdd): ")).Returns(DateTime.Now.ToString("yyMMdd"));
+            MockViewStandardSetUp();
 
             Sut.Initialize();
 
@@ -70,13 +69,18 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldReturnMainMenuUserCommand_WhenDone()
         {
-            MockView.Setup(obj => obj.GetInput("Enter the name: ")).Returns("A");
-            MockView.Setup(obj => obj.GetInput("Enter the description: ")).Returns("B");
-            MockView.Setup(obj => obj.GetInput("Enter due date (yymmdd): ")).Returns(DateTime.Now.ToString("yyMMdd"));
+            MockViewStandardSetUp();
 
             UserCommand result = Sut.Initialize();
 
             Assert.Equal(UserCommand.Main_Menu, result);
+        }
+
+        private void MockViewStandardSetUp()
+        {
+            MockView.Setup(obj => obj.GetInput("Enter the name: ")).Returns("A");
+            MockView.Setup(obj => obj.GetInput("Enter the description: ")).Returns("B");
+            MockView.Setup(obj => obj.GetInput("Enter due date (yymmdd): ")).Returns(DateTime.Now.ToString("yyMMdd"));
         }
     }
 }
