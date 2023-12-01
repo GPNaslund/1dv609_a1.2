@@ -40,7 +40,7 @@ namespace TaskManager.Tests.UnitTests.controller
         public void Initialize_ShouldCallTaskService()
         {
             MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([]);
-            
+
             Sut.Initialize();
 
             MockTaskService.Verify(obj => obj.GetAllTasks(), Times.AtLeastOnce());
@@ -68,6 +68,16 @@ namespace TaskManager.Tests.UnitTests.controller
                 tasksToReturn.Add(new Task("A", "B", DateTime.Now));
             }
             return tasksToReturn;
+        }
+
+        [Fact]
+        public void Initialize_ShouldReturnMainMenuUserCommand_WhenDone()
+        {
+            MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([]);
+
+            UserCommand result = Sut.Initialize();
+
+            Assert.Equal(UserCommand.Main_Menu, result);
         }
     }
 }

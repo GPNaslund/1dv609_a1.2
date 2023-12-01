@@ -16,7 +16,7 @@ namespace TaskManager.src.controller
             View = view;
         }
 
-        public void Initialize()
+        public UserCommand Initialize()
         {
             View.DisplayHeader();
             List<Task> allTasks = TaskService.GetAllTasks();
@@ -24,6 +24,7 @@ namespace TaskManager.src.controller
             {
                 View.DisplayMessage(task.ToString());
             }
+            return UserCommand.Unkown;
         }
     }
 }
