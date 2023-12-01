@@ -45,8 +45,6 @@ namespace TaskManager.Tests.UnitTests.controller
             SelectTaskInput(["a", "10", "1"]);
             SetupTaskService_ReturnTasks(1);
 
-            EditTaskController Sut = new EditTaskController(MockView.Object, MockTaskService.Object);
-
             Sut.Initialize();
 
             MockTaskService.Verify(obj => obj.GetAllTasks(), Times.AtLeastOnce());
@@ -69,7 +67,7 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
-            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("0");
+            NavigateEditActionMenu(["0"]);
 
             UserCommand result = Sut.Initialize();
 
@@ -136,7 +134,7 @@ namespace TaskManager.Tests.UnitTests.controller
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
 
-            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("5");
+            NavigateEditActionMenu(["5"]);
             MockView.Setup(obj => obj.GetInput("Are you sure? y/n")).Returns("y");
 
             Sut.Initialize();
@@ -150,7 +148,7 @@ namespace TaskManager.Tests.UnitTests.controller
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
 
-            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("5");
+            NavigateEditActionMenu(["5"]);
             Queue<string> deletionInputs = new Queue<string>(new[] {null, "y"});
             MockView.Setup(obj => obj.GetInput("Are you sure? y/n")).Returns(() => deletionInputs.Dequeue());
 
@@ -164,7 +162,7 @@ namespace TaskManager.Tests.UnitTests.controller
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
             
-            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("4");
+            NavigateEditActionMenu(["4"]);
             Queue<string> allStatusInputs = new Queue<string>();
             foreach (string input in statusInputs)
             {
@@ -181,8 +179,7 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
-
-            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("3");
+            NavigateEditActionMenu(["3"]);
             Queue<string> allDateInputs = new Queue<string>();
             foreach (string description in descriptionInputs)
             {
@@ -200,7 +197,7 @@ namespace TaskManager.Tests.UnitTests.controller
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
 
-            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("2");
+            NavigateEditActionMenu(["2"]);
             Queue<string> allDescriptionInputs = new Queue<string>();
             foreach (string description in descriptionInputs)
             {
@@ -218,7 +215,7 @@ namespace TaskManager.Tests.UnitTests.controller
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
 
-            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("1");
+            NavigateEditActionMenu(["1"]);
             Queue<string> allNameInputs = new Queue<string>();
             foreach (string nameInput in nameInputs)
             {
@@ -251,6 +248,16 @@ namespace TaskManager.Tests.UnitTests.controller
             }
 
             MockTaskService.Setup(obj => obj.GetAllTasks()).Returns(allTasks);
+        }
+
+        private void NavigateEditActionMenu(string[] menuInputs)
+        {
+            Queue<string> allInputs = new Queue<string>();
+            foreach (string input in menuInputs)
+            {
+                allInputs.Enqueue(input);
+            }
+            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns(() => allInputs.Dequeue());
         }
 
 
