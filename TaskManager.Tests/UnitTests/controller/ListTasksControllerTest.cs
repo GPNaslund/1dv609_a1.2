@@ -3,6 +3,7 @@ using Task = TaskManager.src.model.Task;
 using Moq;
 using TaskManager.src.controller;
 using TaskManager.src.model;
+using Xunit.Sdk;
 
 namespace TaskManager.Tests.UnitTests.controller
 {
@@ -104,6 +105,18 @@ namespace TaskManager.Tests.UnitTests.controller
                 allTasks.Add(new Task("A", "B", DateTime.Now));
             }
             return allTasks;
+        }
+
+        [Fact]
+        public void Initialize_ShouldDisplayMessage_OnTaskServiceException()
+        {
+            Queue<string> allInput = new Queue<string>(new[] { "1", "0" });
+            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns(() => allInput.Dequeue());
+            MockTaskService.Setup(obj => obj.ListTasksBy(It.IsAny<ListByCommand>())).Throws<Exception>();
+
+            Sut.Initialize();
+
+            MockView.Verify(obj => obj.DisplayMessage(It.IsAny<string>()), Times.AtLeastOnce());
         }
     }
 }
