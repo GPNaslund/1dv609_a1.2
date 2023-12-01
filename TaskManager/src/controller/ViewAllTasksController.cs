@@ -7,7 +7,8 @@ namespace TaskManager.src.controller
     {
         public ViewAllTasksController(View view, ITaskService service)
         {
-
+            ArgumentNullException.ThrowIfNull(view);
+            ArgumentNullException.ThrowIfNull(service);
         }
     }
 }
