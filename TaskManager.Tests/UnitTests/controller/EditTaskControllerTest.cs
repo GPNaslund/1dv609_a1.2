@@ -109,25 +109,26 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldAllowUserTo_EditStatus_Successfully()
         {
-            SelectTaskInput(["1"]);
-            SetupTaskService_ReturnTasks(1);
-            
-            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("4");
-            MockView.Setup(obj => obj.GetInput("Select new status: ")).Returns("1");
-
-            Sut.Initialize();
-
-            MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
+            TestEditStatus(["1"]);
         }
 
         [Fact]
         public void Initialize_EditStatus_ShouldReprompt_OnInvalidInput()
         {
+            TestEditStatus([null, "1"]);
+        }
+
+        private void TestEditStatus(string[] statusInputs)
+        {
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
             
             MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("4");
-            Queue<string> allStatusInputs = new Queue<string>(new[] { "a", "1"});
+            Queue<string> allStatusInputs = new Queue<string>();
+            foreach (string input in statusInputs)
+            {
+                allStatusInputs.Enqueue(input);
+            }
             MockView.Setup(obj => obj.GetInput("Select new status: ")).Returns(() => allStatusInputs.Dequeue());
 
             Sut.Initialize();
