@@ -7,10 +7,21 @@ namespace TaskManager.Tests.UnitTests.controller
 {
     public class ListTasksControllerTest
     {
+        private readonly ListTasksController Sut;
+        private readonly Mock<View> MockView;
+        private readonly Mock<ITaskService> MockTaskService;
+
+        public ListTasksControllerTest()
+        {
+            MockView = new Mock<View>();
+            MockTaskService = new Mock<ITaskService>();
+            Sut = new(MockView.Object, MockTaskService.Object);
+        }
         [Fact]
         public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
         {
-            Assert.Throws<ArgumentNullException>(() => {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
                 ListTasksController Sut = new(null, null);
             });
         }
@@ -18,8 +29,6 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldDisplayHeaderAndMenu()
         {
-            Mock<View> MockView = new Mock<View>();
-            Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
             MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns("0");
 
             ListTasksController Sut = new(MockView.Object, MockTaskService.Object);
@@ -37,8 +46,6 @@ namespace TaskManager.Tests.UnitTests.controller
         [InlineData("4", ListByCommand.List_Expired_Tasks)]
         public void Initialize_ShouldCallServiceWithListByCommand_BasedOnUserInput(string input, ListByCommand command)
         {
-            Mock<View> MockView = new Mock<View>();
-            Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
             MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns(input);
 
             ListTasksController Sut = new(MockView.Object, MockTaskService.Object);
