@@ -16,7 +16,7 @@ namespace TaskManager.src.controller
             View.DisplayHeader();
             View.DisplayMenu();
             View.GetInput("Your choice: ");
-            return UserCommand.Quit_Application;
+            return UserCommand.Add_Task;
         }
     }
 }
