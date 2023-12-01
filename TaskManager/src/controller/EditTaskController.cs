@@ -68,16 +68,21 @@ namespace TaskManager.src.controller
 
         private void HandleMenuChoice(string choice, Task chosenTask)
         {
-            switch(choice)
+            switch (choice)
             {
                 case "1":
-                    string newName = View.GetInput("New name: ");
-                    chosenTask.Name = newName;
-                    TaskService.UpdateTask(chosenTask);
+                    EditName(chosenTask);
                     return;
                 default:
                     return;
             }
+        }
+
+        private void EditName(Task chosenTask)
+        {
+            string newName = View.GetInput("New name: ");
+            chosenTask.Name = newName;
+            TaskService.UpdateTask(chosenTask);
         }
     }
 }
