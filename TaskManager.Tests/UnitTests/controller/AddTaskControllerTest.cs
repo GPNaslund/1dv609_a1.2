@@ -66,5 +66,17 @@ namespace TaskManager.Tests.UnitTests.controller
 
             Sut.Initialize();
         }
+
+        [Fact]
+        public void Initialize_ShouldReturnMainMenuUserCommand_WhenDone()
+        {
+            MockView.Setup(obj => obj.GetInput("Enter the name: ")).Returns("A");
+            MockView.Setup(obj => obj.GetInput("Enter the description: ")).Returns("B");
+            MockView.Setup(obj => obj.GetInput("Enter due date (yymmdd): ")).Returns(DateTime.Now.ToString("yyMMdd"));
+
+            UserCommand result = Sut.Initialize();
+
+            Assert.Equal(UserCommand.Main_Menu, result);
+        }
     }
 }

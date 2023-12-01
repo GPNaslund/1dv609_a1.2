@@ -16,14 +16,14 @@ namespace TaskManager.src.controller
             TaskService = taskService;
         }
 
-        public void Initialize()
+        public UserCommand Initialize()
         {
             while (true)
             {
                 try
                 {
                     PromptAndCreateNewTask();
-                    return;
+                    return UserCommand.Unkown;
                 }
                 catch (Exception e)
                 {
