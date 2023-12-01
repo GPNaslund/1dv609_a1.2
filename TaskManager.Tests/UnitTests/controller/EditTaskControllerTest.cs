@@ -79,25 +79,26 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldAllowUserTo_EditDescription_Successfully()
         {
-            SetupViewSelectTaskInput(["1"]);
-            SetupServiceGetTasks_ReturnAmountOfTasks(1);
-
-            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("2");
-            MockView.Setup(obj => obj.GetInput("New description: ")).Returns("D");
-
-            Sut.Initialize();
-
-            MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
+            TestEditDescription(["D"]); 
         }
 
         [Fact]
         public void Initialize_ShouldRepromptForDescription_EditDescription_OnInvalidValue()
         {
+            TestEditDescription([null, "D"]);
+        }
+
+        private void TestEditDescription(string[] descriptionInputs)
+        {
             SetupViewSelectTaskInput(["1"]);
             SetupServiceGetTasks_ReturnAmountOfTasks(1);
 
             MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("2");
-            Queue<string> allDescriptionInputs = new Queue<string>(new[] { null, "D" });
+            Queue<string> allDescriptionInputs = new Queue<string>();
+            foreach (string description in descriptionInputs)
+            {
+                allDescriptionInputs.Enqueue(description);
+            }
             MockView.Setup(obj => obj.GetInput("New description: ")).Returns(() => allDescriptionInputs.Dequeue());
 
             Sut.Initialize();
