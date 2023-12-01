@@ -7,6 +7,16 @@ namespace TaskManager.Tests.UnitTests.controller
 {
     public class AddTaskControllerTest
     {
+        private readonly AddTaskController Sut;
+        private readonly Mock<View> MockView;
+        private readonly Mock<ITaskService> MockTaskService;
+
+        public AddTaskControllerTest()
+        {
+            MockView = new Mock<View>();
+            MockTaskService = new Mock<ITaskService>();
+            Sut = new(MockView.Object, MockTaskService.Object);
+        }
         [Fact]
         public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
         {
@@ -19,14 +29,9 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldCollectDataForNewTask_Successfully()
         {
-            Mock<View> MockView = new Mock<View>();
-            Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
             MockView.Setup(obj => obj.GetInput("Enter the name: ")).Returns("A");
             MockView.Setup(obj => obj.GetInput("Enter the description: ")).Returns("B");
             MockView.Setup(obj => obj.GetInput("Enter due date (yymmdd): ")).Returns(DateTime.Now.ToString("yyMMdd"));
-
-
-            AddTaskController Sut = new(MockView.Object, MockTaskService.Object);
 
             Sut.Initialize();
 
@@ -36,21 +41,33 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldReprompt_OnInvalidTaskData()
         {
-            Mock<View> MockView = new Mock<View>();
-            Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
             MockTaskService.Setup(obj => obj.CreateTask("", "B", It.IsAny<DateTime>())).Throws(new ArgumentException());
 
             Queue<string> nameInputs = new Queue<string>(new[] { "", "A" });
             MockView.Setup(obj => obj.GetInput("Enter the name: ")).Returns(() => nameInputs.Dequeue());
-            MockView.Setup(m => m.GetInput("Enter the description: ")).Returns("B");
+            MockView.Setup(obj => obj.GetInput("Enter the description: ")).Returns("B");
             Queue<string> dateInputs = new Queue<string>(new[] {DateTime.Now.AddDays(-1).ToString("yyMMdd"), DateTime.Now.ToString("yyMMdd")});
             MockView.Setup(obj => obj.GetInput("Enter due date (yymmdd): ")).Returns(() => dateInputs.Dequeue());
-
-            AddTaskController Sut = new(MockView.Object, MockTaskService.Object);
 
             Sut.Initialize();
 
             MockTaskService.Verify(obj => obj.CreateTask(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.AtLeast(2));
+        }
+
+        [Fact]
+        public void Initialize_ShouldDisplayMessage_OnInvalidTaskData()
+        {
+            MockTaskService.Setup(obj => obj.CreateTask("", "B", It.IsAny<DateTime>())).Throws(new ArgumentException());
+
+            Queue<string> nameInputs = new Queue<string>(new[] { "", "A" });
+            MockView.Setup(obj => obj.GetInput("Enter the name: ")).Returns(() => nameInputs.Dequeue());
+            MockView.Setup(obj => obj.GetInput("Enter the description: ")).Returns("B");
+            Queue<string> dateInputs = new Queue<string>(new[] {DateTime.Now.AddDays(-1).ToString("yyMMdd"), DateTime.Now.ToString("yyMMdd")});
+            MockView.Setup(obj => obj.GetInput("Enter due date (yymmdd): ")).Returns(() => dateInputs.Dequeue());
+
+            Sut.Initialize();
+
+            MockView.Verify(obj => obj.DisplayMessage(It.IsAny<string>()), Times.Once());
         }
     }
 }
