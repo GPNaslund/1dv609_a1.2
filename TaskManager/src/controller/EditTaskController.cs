@@ -16,11 +16,12 @@ namespace TaskManager.src.controller
             View = view;
         }
 
-        public void Initialize()
+        public UserCommand Initialize()
         {
             View.DisplayMessage("=== SELECT TASK ===");
             int selectedIndex = PromptUserToSelectTask();
             Task selectedTask = TaskService.GetAllTasks()[selectedIndex - 1];
+            return UserCommand.Unkown;
         }
 
         private int PromptUserToSelectTask()

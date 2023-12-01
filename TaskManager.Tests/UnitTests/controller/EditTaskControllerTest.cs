@@ -48,5 +48,20 @@ namespace TaskManager.Tests.UnitTests.controller
             MockTaskService.Verify(obj => obj.GetAllTasks(), Times.AtLeastOnce());
             MockView.Verify(obj => obj.GetInput("Select task: "), Times.AtLeastOnce());
         }
+
+        [Fact]
+        public void Initialize_ShouldReturnUserCommandMainMenu_OnInputBackOption()
+        {
+            Mock<View> MockView = new Mock<View>();
+            MockView.Setup(obj => obj.GetInput("Select task: ")).Returns("0");
+            Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
+            MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([]);
+
+            EditTaskController Sut = new EditTaskController(MockView.Object, MockTaskService.Object);
+
+            UserCommand result = Sut.Initialize();
+
+            Assert.Equal(UserCommand.Main_Menu, result);
+        }
     }
 }
