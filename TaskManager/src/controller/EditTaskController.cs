@@ -80,9 +80,22 @@ namespace TaskManager.src.controller
 
         private void EditName(Task chosenTask)
         {
-            string newName = View.GetInput("New name: ");
-            chosenTask.Name = newName;
-            TaskService.UpdateTask(chosenTask);
+            while (true)
+            {
+                try
+                {
+                    string newName = View.GetInput("New name: ");
+                    chosenTask.Name = newName;
+                    TaskService.UpdateTask(chosenTask);
+                    return;
+                }
+                catch (Exception e)
+                {
+                    View.DisplayMessage("Could not edit name of task!");
+                    View.DisplayMessage(e.Message);
+                    View.DisplayMessage("Try again!");
+                }
+            }
         }
     }
 }
