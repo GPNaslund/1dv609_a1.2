@@ -28,8 +28,14 @@ namespace TaskManager.src.controller
                 return UserCommand.Main_Menu;
             }
             Task selectedTask = TaskService.GetAllTasks()[selectedIndex - 1];
-            string userChoice = View.GetInput("Your choice: ");
-            return HandleMenuChoice(userChoice, selectedTask);
+            
+            UserCommand currentState = UserCommand.Unkown;
+            while (currentState != UserCommand.Main_Menu)
+            {
+                string userChoice = View.GetInput("Your choice: ");
+                currentState = HandleMenuChoice(userChoice, selectedTask);
+            }
+            return currentState;
         }
 
         private int PromptUserToSelectTask()

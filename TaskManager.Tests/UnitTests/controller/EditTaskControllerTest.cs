@@ -32,6 +32,7 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
+            NavigateEditActionMenu(["0"]);
 
             Sut.Initialize();
 
@@ -44,6 +45,7 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             SelectTaskInput(["a", "10", "1"]);
             SetupTaskService_ReturnTasks(1);
+            NavigateEditActionMenu(["0"]);
 
             Sut.Initialize();
 
@@ -79,7 +81,7 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
-            NavigateEditActionMenu([null, "a", "5", "0"]);
+            NavigateEditActionMenu(["a", "5", "0"]);
             MockView.Setup(obj => obj.GetInput("Are you sure? y/n")).Returns("n");
 
             UserCommand result = Sut.Initialize();
@@ -147,7 +149,7 @@ namespace TaskManager.Tests.UnitTests.controller
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
 
-            NavigateEditActionMenu(["5"]);
+            NavigateEditActionMenu(["5", "0"]);
             MockView.Setup(obj => obj.GetInput("Are you sure? y/n")).Returns("y");
 
             Sut.Initialize();
@@ -161,7 +163,7 @@ namespace TaskManager.Tests.UnitTests.controller
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
 
-            NavigateEditActionMenu(["5"]);
+            NavigateEditActionMenu(["5", "0"]);
             Queue<string> deletionInputs = new Queue<string>(new[] {null, "y"});
             MockView.Setup(obj => obj.GetInput("Are you sure? y/n")).Returns(() => deletionInputs.Dequeue());
 
@@ -175,7 +177,7 @@ namespace TaskManager.Tests.UnitTests.controller
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
             
-            NavigateEditActionMenu(["4"]);
+            NavigateEditActionMenu(["4", "0"]);
             Queue<string> allStatusInputs = new Queue<string>();
             foreach (string input in statusInputs)
             {
@@ -192,7 +194,7 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
-            NavigateEditActionMenu(["3"]);
+            NavigateEditActionMenu(["3", "0"]);
             Queue<string> allDateInputs = new Queue<string>();
             foreach (string description in descriptionInputs)
             {
@@ -210,7 +212,7 @@ namespace TaskManager.Tests.UnitTests.controller
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
 
-            NavigateEditActionMenu(["2"]);
+            NavigateEditActionMenu(["2", "0"]);
             Queue<string> allDescriptionInputs = new Queue<string>();
             foreach (string description in descriptionInputs)
             {
@@ -228,7 +230,7 @@ namespace TaskManager.Tests.UnitTests.controller
             SelectTaskInput(["1"]);
             SetupTaskService_ReturnTasks(1);
 
-            NavigateEditActionMenu(["1"]);
+            NavigateEditActionMenu(["1", "0"]);
             Queue<string> allNameInputs = new Queue<string>();
             foreach (string nameInput in nameInputs)
             {
