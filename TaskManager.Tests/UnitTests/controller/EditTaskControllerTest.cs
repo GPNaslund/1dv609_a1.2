@@ -120,6 +120,21 @@ namespace TaskManager.Tests.UnitTests.controller
             MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
         }
 
+        [Fact]
+        public void Initialize_EditStatus_ShouldReprompt_OnInvalidInput()
+        {
+            SelectTaskInput(["1"]);
+            SetupTaskService_ReturnTasks(1);
+            
+            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("4");
+            Queue<string> allStatusInputs = new Queue<string>(new[] { "a", "1"});
+            MockView.Setup(obj => obj.GetInput("Select new status: ")).Returns(() => allStatusInputs.Dequeue());
+
+            Sut.Initialize();
+
+            MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
+        }
+
         private void TestEditDueDate(string[] descriptionInputs)
         {
             SelectTaskInput(["1"]);

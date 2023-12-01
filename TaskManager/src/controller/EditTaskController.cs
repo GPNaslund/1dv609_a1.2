@@ -165,16 +165,18 @@ namespace TaskManager.src.controller
             {
                 case "1":
                     chosenTask.Status = TaskStatus.Not_Completed;
+                    TaskService.UpdateTask(chosenTask);
                     break;
                 case "2":
                     chosenTask.Status = TaskStatus.In_Progress;
+                    TaskService.UpdateTask(chosenTask);
                     break;
                 case "3":
                     chosenTask.Status = TaskStatus.Completed;
+                    TaskService.UpdateTask(chosenTask);
                     break;
             }
 
-            TaskService.UpdateTask(chosenTask);
         }
     }
 }
