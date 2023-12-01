@@ -52,7 +52,8 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldReprompt_OnFaultyInput()
         {
-            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns("a");
+            Queue<string> allInputs = new Queue<string>(new[] { "a", "1" });
+            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns(() => allInputs.Dequeue());
 
             Sut.Initialize();
 

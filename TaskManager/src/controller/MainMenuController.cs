@@ -15,8 +15,14 @@ namespace TaskManager.src.controller
         {
             View.DisplayHeader();
             View.DisplayMenu();
-            string userInput = View.GetInput("Your choice: ");
-            return HandleInput(userInput);
+
+            UserCommand result = UserCommand.Unkown;
+            while (result == UserCommand.Unkown)
+            {
+                string input = View.GetInput("Your choice: ");
+                result = HandleInput(input);
+            }
+            return result;
         }
 
         private UserCommand HandleInput(string input)
