@@ -48,5 +48,15 @@ namespace TaskManager.Tests.UnitTests.controller
 
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void Initialize_ShouldReprompt_OnFaultyInput()
+        {
+            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns("a");
+
+            Sut.Initialize();
+
+            MockView.Verify(obj => obj.GetInput(It.IsAny<string>()), Times.AtLeast(2));
+        }
     }
 }
