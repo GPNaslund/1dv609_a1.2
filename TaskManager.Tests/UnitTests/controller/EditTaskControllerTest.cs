@@ -30,8 +30,8 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldAllowUserToSelectATaskToEdit()
         {
-            SetupViewSelectTaskInput(["1"]);
-            SetupServiceGetTasks_ReturnAmountOfTasks(1);
+            SelectTaskInput(["1"]);
+            SetupTaskService_ReturnTasks(1);
 
             Sut.Initialize();
 
@@ -42,8 +42,8 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldRepromptUserSelection_OnInvalidInput()
         {
-            SetupViewSelectTaskInput(["a", "10", "1"]);
-            SetupServiceGetTasks_ReturnAmountOfTasks(1);
+            SelectTaskInput(["a", "10", "1"]);
+            SetupTaskService_ReturnTasks(1);
 
             EditTaskController Sut = new EditTaskController(MockView.Object, MockTaskService.Object);
 
@@ -56,8 +56,8 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldReturnUserCommandMainMenu_OnInputBackOption()
         {
-            SetupViewSelectTaskInput(["0"]);
-            SetupServiceGetTasks_ReturnAmountOfTasks(0);
+            SelectTaskInput(["0"]);
+            SetupTaskService_ReturnTasks(0);
 
             UserCommand result = Sut.Initialize();
 
@@ -106,10 +106,22 @@ namespace TaskManager.Tests.UnitTests.controller
             MockView.Verify(obj => obj.GetInput("New due date (yymmdd): "), Times.Exactly(2));
         }
 
+        [Fact]
+        public void Initialize_ShouldAllowUserTo_EditStatus_Successfully()
+        {
+            SelectTaskInput(["1"]);
+            SetupTaskService_ReturnTasks(1);
+            
+            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("4");
+            MockView.Setup(obj => obj.GetInput("Select new status: ")).Returns("1");
+
+            MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
+        }
+
         private void TestEditDueDate(string[] descriptionInputs)
         {
-            SetupViewSelectTaskInput(["1"]);
-            SetupServiceGetTasks_ReturnAmountOfTasks(1);
+            SelectTaskInput(["1"]);
+            SetupTaskService_ReturnTasks(1);
 
             MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("3");
             Queue<string> allDateInputs = new Queue<string>();
@@ -126,8 +138,8 @@ namespace TaskManager.Tests.UnitTests.controller
 
         private void TestEditDescription(string[] descriptionInputs)
         {
-            SetupViewSelectTaskInput(["1"]);
-            SetupServiceGetTasks_ReturnAmountOfTasks(1);
+            SelectTaskInput(["1"]);
+            SetupTaskService_ReturnTasks(1);
 
             MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("2");
             Queue<string> allDescriptionInputs = new Queue<string>();
@@ -144,8 +156,8 @@ namespace TaskManager.Tests.UnitTests.controller
 
         private void TestEditName(string[] nameInputs)
         {
-            SetupViewSelectTaskInput(["1"]);
-            SetupServiceGetTasks_ReturnAmountOfTasks(1);
+            SelectTaskInput(["1"]);
+            SetupTaskService_ReturnTasks(1);
 
             MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("1");
             Queue<string> allNameInputs = new Queue<string>();
@@ -161,7 +173,7 @@ namespace TaskManager.Tests.UnitTests.controller
 
         }
 
-        private void SetupViewSelectTaskInput(string[] inputs)
+        private void SelectTaskInput(string[] inputs)
         {
             Queue<string> allInputs = new Queue<string>();
             foreach (string input in inputs)
@@ -171,7 +183,7 @@ namespace TaskManager.Tests.UnitTests.controller
             MockView.Setup(obj => obj.GetInput("Select task: ")).Returns(() => allInputs.Dequeue());
         }
 
-        private void SetupServiceGetTasks_ReturnAmountOfTasks(int amountOfTasks)
+        private void SetupTaskService_ReturnTasks(int amountOfTasks)
         {
             List<Task> allTasks = [];
             for (int i = 0; i < amountOfTasks; i++)
