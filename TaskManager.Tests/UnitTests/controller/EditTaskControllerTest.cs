@@ -115,6 +115,8 @@ namespace TaskManager.Tests.UnitTests.controller
             MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("4");
             MockView.Setup(obj => obj.GetInput("Select new status: ")).Returns("1");
 
+            Sut.Initialize();
+
             MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
         }
 

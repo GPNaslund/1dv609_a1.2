@@ -1,7 +1,7 @@
 using TaskManager.src.model;
 using View = TaskManager.src.view.View;
 using Task = TaskManager.src.model.Task;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using TaskStatus = TaskManager.src.model.TaskStatus;
 using System.Globalization;
 
 namespace TaskManager.src.controller
@@ -80,6 +80,9 @@ namespace TaskManager.src.controller
                 case "3":
                     EditDueDate(chosenTask);
                     return;
+                case "4":
+                    EditStatus(chosenTask);
+                    return;
                 default:
                     return;
             }
@@ -144,6 +147,34 @@ namespace TaskManager.src.controller
                     View.DisplayMessage("Try again!");
                 }
             }
+        }
+
+        private void EditStatus(Task chosenTask)
+        {
+            List<string> statusOptions = [
+                "1. Not completed",
+                "2. In progress",
+                "3. Completed"
+            ];
+            foreach (string option in statusOptions)
+            {
+                View.DisplayMessage(option);
+            }
+            string userSelection = View.GetInput("Select new status: ");
+            switch (userSelection)
+            {
+                case "1":
+                    chosenTask.Status = TaskStatus.Not_Completed;
+                    break;
+                case "2":
+                    chosenTask.Status = TaskStatus.In_Progress;
+                    break;
+                case "3":
+                    chosenTask.Status = TaskStatus.Completed;
+                    break;
+            }
+
+            TaskService.UpdateTask(chosenTask);
         }
     }
 }
