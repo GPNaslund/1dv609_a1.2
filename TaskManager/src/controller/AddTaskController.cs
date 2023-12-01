@@ -6,7 +6,7 @@ namespace TaskManager.src.controller
     {
         public AddTaskController(View view)
         {
-            
+            ArgumentNullException.ThrowIfNull(view);
         }
     }
 }
