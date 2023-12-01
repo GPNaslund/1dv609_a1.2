@@ -27,5 +27,17 @@ namespace TaskManager.Tests.UnitTests.controller
             MockView.Verify(obj => obj.DisplayMenu(), Times.AtLeastOnce());
             MockView.Verify(obj => obj.GetInput(It.IsAny<string>()), Times.AtLeastOnce());
         }
+
+        [Fact]
+        public void Initialize_ShouldReturnUserCommand_BasedOnUserInput()
+        {
+            Mock<View> MockView = new Mock<View>();
+            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns("1");
+            MainMenuController Sut = new(MockView.Object);
+
+            UserCommand result = Sut.Initialize();
+
+            Assert.Equal(UserCommand.Add_Task, result);
+        }
     }
 }

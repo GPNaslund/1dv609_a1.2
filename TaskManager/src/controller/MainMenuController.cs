@@ -11,11 +11,12 @@ namespace TaskManager.src.controller
             View = view;
         }
 
-        public void Initialize()
+        public UserCommand Initialize()
         {
             View.DisplayHeader();
             View.DisplayMenu();
             View.GetInput("Your choice: ");
+            return UserCommand.Quit_Application;
         }
     }
 }
