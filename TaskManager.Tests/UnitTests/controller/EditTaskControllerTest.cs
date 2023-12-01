@@ -95,7 +95,8 @@ namespace TaskManager.Tests.UnitTests.controller
             SetupServiceGetTasks_ReturnAmountOfTasks(1);
 
             MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("3");
-            MockView.Setup(obj => obj.GetInput("New due date (yymmdd): ")).Returns(DateTime.Now.ToString("yyMMdd"));
+            string dateInput = DateTime.Now.ToString("yyMMdd");
+            MockView.Setup(obj => obj.GetInput("New due date (yymmdd): ")).Returns(dateInput);
 
             Sut.Initialize();
 

@@ -2,6 +2,7 @@ using TaskManager.src.model;
 using View = TaskManager.src.view.View;
 using Task = TaskManager.src.model.Task;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Globalization;
 
 namespace TaskManager.src.controller
 {
@@ -75,6 +76,11 @@ namespace TaskManager.src.controller
                     return;
                 case "2":
                     EditDescription(chosenTask);
+                    return;
+                case "3":
+                    string dateInput = View.GetInput("New due date (yymmdd): ");
+                    chosenTask.DueDate = DateTime.ParseExact(dateInput, "yyMMdd", CultureInfo.InvariantCulture);
+                    TaskService.UpdateTask(chosenTask);
                     return;
                 default:
                     return;
