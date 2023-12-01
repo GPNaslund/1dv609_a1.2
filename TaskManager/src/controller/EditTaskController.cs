@@ -160,21 +160,27 @@ namespace TaskManager.src.controller
             {
                 View.DisplayMessage(option);
             }
-            string userSelection = View.GetInput("Select new status: ");
-            switch (userSelection)
+            while (true)
             {
-                case "1":
-                    chosenTask.Status = TaskStatus.Not_Completed;
-                    TaskService.UpdateTask(chosenTask);
-                    break;
-                case "2":
-                    chosenTask.Status = TaskStatus.In_Progress;
-                    TaskService.UpdateTask(chosenTask);
-                    break;
-                case "3":
-                    chosenTask.Status = TaskStatus.Completed;
-                    TaskService.UpdateTask(chosenTask);
-                    break;
+                string userSelection = View.GetInput("Select new status: ");
+                switch (userSelection)
+                {
+                    case "1":
+                        chosenTask.Status = TaskStatus.Not_Completed;
+                        TaskService.UpdateTask(chosenTask);
+                        return;
+                    case "2":
+                        chosenTask.Status = TaskStatus.In_Progress;
+                        TaskService.UpdateTask(chosenTask);
+                        return;
+                    case "3":
+                        chosenTask.Status = TaskStatus.Completed;
+                        TaskService.UpdateTask(chosenTask);
+                        return;
+                    default:
+                        View.DisplayMessage("Input must be one of the options, try again!");
+                        break;
+                }
             }
 
         }
