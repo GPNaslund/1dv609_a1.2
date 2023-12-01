@@ -2,7 +2,7 @@ using TaskManager.src.model.exceptions;
 
 namespace TaskManager.src.model
 {
-    public class TaskService
+    public class TaskService : ITaskService
     {
         private readonly TaskPersistence Persistence;
 

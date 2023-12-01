@@ -1,6 +1,7 @@
 using View = TaskManager.src.view.View;
 using Moq;
 using TaskManager.src.controller;
+using TaskManager.src.model;
 
 namespace TaskManager.Tests.UnitTests.controller
 {
@@ -11,7 +12,7 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                AddTaskController Sut = new(null);
+                AddTaskController Sut = new(null, null);
             });
         }
 
@@ -19,16 +20,17 @@ namespace TaskManager.Tests.UnitTests.controller
         public void Initialize_ShouldCollectDataForNewTask_Successfully()
         {
             Mock<View> MockView = new Mock<View>();
-            MockView.Setup(obj => obj.GetInput("Enter the name: ")).Returns("Test_Name");
-            MockView.Setup(obj => obj.GetInput("Enter the description: ")).Returns("Test_Description");
+            Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
+            MockView.Setup(obj => obj.GetInput("Enter the name: ")).Returns("A");
+            MockView.Setup(obj => obj.GetInput("Enter the description: ")).Returns("B");
             MockView.Setup(obj => obj.GetInput("Enter due date (yymmdd): ")).Returns(DateTime.Now.ToString("yyMMdd"));
 
 
-            AddTaskController Sut = new(MockView.Object);
+            AddTaskController Sut = new(MockView.Object, MockTaskService.Object);
 
             Sut.Initialize();
 
-            MockView.Verify(obj => obj.GetInput(It.IsAny<string>()), Times.AtLeastOnce());
+            MockTaskService.Verify(obj => obj.CreateTask("A", "B", DateTime.Now.Date), Times.AtLeastOnce());
         }
     }
 }
