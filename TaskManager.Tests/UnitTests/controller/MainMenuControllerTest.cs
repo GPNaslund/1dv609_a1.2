@@ -6,6 +6,14 @@ namespace TaskManager.Tests.UnitTests.controller
 {
     public class MainMenuControllerTest
     {
+        private readonly MainMenuController Sut;
+        private readonly Mock<View> MockView;
+
+        public MainMenuControllerTest()
+        {
+            MockView = new Mock<View>();
+            Sut = new(MockView.Object);
+        }
         [Fact]
         public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
         {
@@ -17,9 +25,7 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldCallViewMethods()
         {
-            Mock<View> MockView = new Mock<View>();
             MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns("1");
-            MainMenuController Sut = new(MockView.Object);
 
             Sut.Initialize();
 
@@ -28,16 +34,19 @@ namespace TaskManager.Tests.UnitTests.controller
             MockView.Verify(obj => obj.GetInput(It.IsAny<string>()), Times.AtLeastOnce());
         }
 
-        [Fact]
-        public void Initialize_ShouldReturnUserCommand_BasedOnUserInput()
+        [Theory]
+        [InlineData("1", UserCommand.Add_Task)]
+        [InlineData("2", UserCommand.View_All_Tasks)]
+        [InlineData("3", UserCommand.List_Tasks)]
+        [InlineData("4", UserCommand.Edit_Task)]
+        [InlineData("0", UserCommand.Quit_Application)]
+        public void Initialize_ShouldReturnUserCommand_BasedOnUserInput(string input, UserCommand expected)
         {
-            Mock<View> MockView = new Mock<View>();
-            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns("1");
-            MainMenuController Sut = new(MockView.Object);
+            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns(input);
 
             UserCommand result = Sut.Initialize();
 
-            Assert.Equal(UserCommand.Add_Task, result);
+            Assert.Equal(expected, result);
         }
     }
 }
