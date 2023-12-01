@@ -18,11 +18,14 @@ namespace TaskManager.src.controller
 
         public void Initialize()
         {
-            View.DisplayHeader();
-            View.DisplayMenu();
-            string userInput = View.GetInput("Your choice: ");
-            HandleUserInput(userInput);
-
+            UserCommand nextCommand = UserCommand.Unkown;
+            while (nextCommand == UserCommand.Unkown)
+            {
+                View.DisplayHeader();
+                View.DisplayMenu();
+                string userInput = View.GetInput("Your choice: ");
+                nextCommand = HandleUserInput(userInput);
+            }
         }
 
         private UserCommand HandleUserInput(string input)
@@ -44,7 +47,7 @@ namespace TaskManager.src.controller
                 case "0":
                     return UserCommand.Main_Menu;
                 default:
-                    throw new ArgumentException();
+                    return UserCommand.Unkown;
             }
         }
     }

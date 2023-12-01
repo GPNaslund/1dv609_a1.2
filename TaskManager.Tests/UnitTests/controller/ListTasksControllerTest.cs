@@ -46,19 +46,21 @@ namespace TaskManager.Tests.UnitTests.controller
         [InlineData("4", ListByCommand.List_Expired_Tasks)]
         public void Initialize_ShouldCallServiceWithListByCommand_BasedOnUserInput(string input, ListByCommand command)
         {
-            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns(input);
+            Queue<string> allInputs = new Queue<string>(new[] { input, "0" });
+            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns(() => allInputs.Dequeue());
 
             ListTasksController Sut = new(MockView.Object, MockTaskService.Object);
 
             Sut.Initialize();
 
             MockTaskService.Verify(obj => obj.ListTasksBy(command));
+
         }
 
         [Fact]
         public void Initialize_ShouldRepromptForTypeOfListing_OnInvalidValue()
         {
-            Queue<string> allChoices = new Queue<string>(new[] { "ö", "1" });
+            Queue<string> allChoices = new Queue<string>(new[] { "ö", "1", "0" });
             MockView.Setup(m => m.GetInput("Your choice: ")).Returns(() => allChoices.Dequeue());
 
             Sut.Initialize();
