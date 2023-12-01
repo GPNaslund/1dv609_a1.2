@@ -8,5 +8,10 @@ namespace TaskManager.src.controller
         {
             ArgumentNullException.ThrowIfNull(view);
         }
+
+        public void Initialize()
+        {
+            
+        }
     }
 }
