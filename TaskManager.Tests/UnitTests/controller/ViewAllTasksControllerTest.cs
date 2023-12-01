@@ -76,5 +76,15 @@ namespace TaskManager.Tests.UnitTests.controller
 
             Assert.Equal(UserCommand.Main_Menu, result);
         }
+
+        [Fact]
+        public void Initialize_ShouldDisplayMessage_OnException()
+        {
+            MockTaskService.Setup(obj => obj.GetAllTasks()).Throws<Exception>();
+
+            Sut.Initialize();
+
+            MockView.Verify(obj => obj.DisplayMessage(It.IsAny<string>()), Times.AtLeastOnce());
+        }
     }
 }
