@@ -1,4 +1,5 @@
 using View = TaskManager.src.view.View;
+using Task = TaskManager.src.model.Task;
 using TaskManager.src.model;
 
 namespace TaskManager.src.controller
@@ -18,7 +19,11 @@ namespace TaskManager.src.controller
         public void Initialize()
         {
             View.DisplayHeader();
-            TaskService.GetAllTasks();
+            List<Task> allTasks = TaskService.GetAllTasks();
+            foreach (Task task in allTasks)
+            {
+                View.DisplayMessage(task.ToString());
+            }
         }
     }
 }

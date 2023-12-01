@@ -16,6 +16,7 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             MockView = new Mock<View>();
             MockTaskService = new Mock<ITaskService>();
+            MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([]);
             Sut = new(MockView.Object, MockTaskService.Object);
         }
         [Fact]
