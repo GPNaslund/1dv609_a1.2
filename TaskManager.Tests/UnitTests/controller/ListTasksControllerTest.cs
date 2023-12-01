@@ -1,4 +1,5 @@
 using View = TaskManager.src.view.View;
+using Task = TaskManager.src.model.Task;
 using Moq;
 using TaskManager.src.controller;
 using TaskManager.src.model;
@@ -61,11 +62,24 @@ namespace TaskManager.Tests.UnitTests.controller
         public void Initialize_ShouldRepromptForTypeOfListing_OnInvalidValue()
         {
             Queue<string> allChoices = new Queue<string>(new[] { "ö", "1", "0" });
-            MockView.Setup(m => m.GetInput("Your choice: ")).Returns(() => allChoices.Dequeue());
+            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns(() => allChoices.Dequeue());
 
             Sut.Initialize();
 
             MockTaskService.Verify(obj => obj.ListTasksBy(It.IsAny<ListByCommand>()), Times.Once());
+        }
+
+        [Fact]
+        public void Initialize_ShouldDisplayTheTasksReturnedByService_Correctly()
+        {
+            List<Task> allTasks = [new Task("A", "B", DateTime.Now)];
+            MockTaskService.Setup(obj => obj.ListTasksBy(It.IsAny<ListByCommand>())).Returns(allTasks);
+            Queue<string> allInputs = new Queue<string>(new [] { "1", "0" });
+            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns(() => allInputs.Dequeue());
+
+            Sut.Initialize();
+
+            MockView.Verify(obj => obj.DisplayMessage(It.IsAny<string>()), Times.Once());
         }
     }
 }
