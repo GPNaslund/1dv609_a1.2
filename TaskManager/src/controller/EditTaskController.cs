@@ -20,6 +20,7 @@ namespace TaskManager.src.controller
         {
             View.DisplayMessage("=== SELECT TASK ===");
             int selectedIndex = PromptUserToSelectTask();
+            Task selectedTask = TaskService.GetAllTasks()[selectedIndex - 1];
         }
 
         private int PromptUserToSelectTask()
