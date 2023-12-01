@@ -16,7 +16,7 @@ namespace TaskManager.Tests.UnitTests.controller
         }
 
         [Fact]
-        public void Initialize_ShouldDisplayMenu()
+        public void Initialize_ShouldDisplayHeaderAndMenu()
         {
             Mock<View> MockView = new Mock<View>();
             Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
@@ -25,6 +25,7 @@ namespace TaskManager.Tests.UnitTests.controller
 
             Sut.Initialize();
 
+            MockView.Verify(obj => obj.DisplayHeader(), Times.AtLeastOnce());
             MockView.Verify(obj => obj.DisplayMenu(), Times.AtLeastOnce());
 
         }
