@@ -79,7 +79,7 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldAllowUserTo_EditDescription_Successfully()
         {
-            TestEditDescription(["D"]); 
+            TestEditDescription(["D"]);
         }
 
         [Fact]
@@ -102,7 +102,23 @@ namespace TaskManager.Tests.UnitTests.controller
 
             MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
             MockView.Verify(obj => obj.GetInput("New due date (yymmdd): "), Times.Once());
+        }
 
+        [Fact]
+        public void Initialize_EditDueDate_ShouldRepromptForDueDate_OnInvalidValue()
+        {
+            SetupViewSelectTaskInput(["1"]);
+            SetupServiceGetTasks_ReturnAmountOfTasks(1);
+
+            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("3");
+            string dateInput = DateTime.Now.ToString("yyMMdd");
+            Queue<string> allDateInputs = new Queue<string>(new[] { null, dateInput });
+            MockView.Setup(obj => obj.GetInput("New due date (yymmdd): ")).Returns(() => allDateInputs.Dequeue());
+
+            Sut.Initialize();
+
+            MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
+            MockView.Verify(obj => obj.GetInput("New due date (yymmdd): "), Times.Once());
         }
 
         private void TestEditDescription(string[] descriptionInputs)
