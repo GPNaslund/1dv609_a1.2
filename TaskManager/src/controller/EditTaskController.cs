@@ -83,6 +83,13 @@ namespace TaskManager.src.controller
                 case "4":
                     EditStatus(chosenTask);
                     return;
+                case "5":
+                    string userChoice = View.GetInput("Are you sure? y/n");
+                    if (userChoice.ToLower() == "y")
+                    {
+                        TaskService.DeleteTask(chosenTask);
+                    }
+                    return;
                 default:
                     return;
             }
