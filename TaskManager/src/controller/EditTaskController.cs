@@ -74,7 +74,7 @@ namespace TaskManager.src.controller
                     EditName(chosenTask);
                     return;
                 case "2":
-                    TaskService.UpdateTask(chosenTask);
+                    EditDescription(chosenTask);
                     return;
                 default:
                     return;
@@ -99,6 +99,13 @@ namespace TaskManager.src.controller
                     View.DisplayMessage("Try again!");
                 }
             }
+        }
+
+        private void EditDescription(Task chosenTask)
+        {
+            string newDescription = View.GetInput("New description: ");
+            chosenTask.Description = newDescription;
+            TaskService.UpdateTask(chosenTask);
         }
     }
 }

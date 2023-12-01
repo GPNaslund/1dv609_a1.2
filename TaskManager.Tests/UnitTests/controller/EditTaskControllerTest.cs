@@ -83,6 +83,7 @@ namespace TaskManager.Tests.UnitTests.controller
             SetupServiceGetTasks_ReturnAmountOfTasks(1);
 
             MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns("2");
+            MockView.Setup(obj => obj.GetInput("New description: ")).Returns("D");
 
             Sut.Initialize();
 
