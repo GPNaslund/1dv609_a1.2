@@ -38,6 +38,7 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             Mock<View> MockView = new Mock<View>();
             Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
+            MockTaskService.Setup(obj => obj.CreateTask("", "B", It.IsAny<DateTime>())).Throws(new ArgumentException());
 
             Queue<string> nameInputs = new Queue<string>(new[] { "", "A" });
             MockView.Setup(obj => obj.GetInput("Enter the name: ")).Returns(() => nameInputs.Dequeue());

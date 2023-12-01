@@ -18,8 +18,18 @@ namespace TaskManager.src.controller
 
         public void Initialize()
         {
-            PromptAndCreateNewTask();
+            while (true)
+            {
+                try
+                {
+                    PromptAndCreateNewTask();
+                    return;
+                }
+                catch
+                {
 
+                }
+            }
         }
 
         
