@@ -11,5 +11,10 @@ namespace TaskManager.src.controller
             ArgumentNullException.ThrowIfNull(view);
             ArgumentNullException.ThrowIfNull(service);
         }
+
+        public void Initialize()
+        {
+            
+        }
     }
 }
