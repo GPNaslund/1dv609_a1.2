@@ -19,13 +19,16 @@ namespace TaskManager.Tests.UnitTests.controller
         public void Initialize_ShouldAllowUserToSelectATaskToEdit()
         {
             Mock<View> MockView = new Mock<View>();
+            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns("1");
             Mock<ITaskService> MockTaskService = new Mock<ITaskService>();
+            MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([]);
 
             EditTaskController Sut = new EditTaskController(MockView.Object, MockTaskService.Object);
 
             Sut.Initialize();
 
             MockTaskService.Verify(obj => obj.GetAllTasks(), Times.AtLeastOnce());
+            MockView.Verify(obj => obj.GetInput("Select task: "), Times.AtLeastOnce());
         }
     }
 }
