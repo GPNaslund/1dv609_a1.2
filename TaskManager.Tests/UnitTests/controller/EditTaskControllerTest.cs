@@ -30,7 +30,7 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldAllowUserToSelectATaskToEdit()
         {
-            SelectTaskInput(["1"]);
+            SelectTask_Input(["1"]);
             SetupTaskService_ReturnTasks(1);
             NavigateEditActionMenu(["0"]);
 
@@ -43,7 +43,7 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldRepromptUserSelection_OnInvalidInput()
         {
-            SelectTaskInput(["a", "10", "1"]);
+            SelectTask_Input(["a", "10", "1"]);
             SetupTaskService_ReturnTasks(1);
             NavigateEditActionMenu(["0"]);
 
@@ -56,7 +56,7 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldReturnUserCommandMainMenu_OnInputBackOption()
         {
-            SelectTaskInput(["0"]);
+            SelectTask_Input(["0"]);
             SetupTaskService_ReturnTasks(0);
 
             UserCommand result = Sut.Initialize();
@@ -67,7 +67,7 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldReturnUserCommandMainMenu_OnBackInput_FromEditActionMenu()
         {
-            SelectTaskInput(["1"]);
+            SelectTask_Input(["1"]);
             SetupTaskService_ReturnTasks(1);
             NavigateEditActionMenu(["0"]);
 
@@ -79,7 +79,7 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldRepromptForEditActionInput_Until_UserCommandMainMenu()
         {
-            SelectTaskInput(["1"]);
+            SelectTask_Input(["1"]);
             SetupTaskService_ReturnTasks(1);
             NavigateEditActionMenu(["a", "5", "0"]);
             MockView.Setup(obj => obj.GetInput("Are you sure? y/n")).Returns("n");
@@ -146,7 +146,7 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_ShouldAllowUserTo_DeleteTask_Successfully()
         {
-            SelectTaskInput(["1"]);
+            SelectTask_Input(["1"]);
             SetupTaskService_ReturnTasks(1);
 
             NavigateEditActionMenu(["5", "0"]);
@@ -160,7 +160,7 @@ namespace TaskManager.Tests.UnitTests.controller
         [Fact]
         public void Initialize_DeleteTask_ShouldReprompt_OnInvalidValue()
         {
-            SelectTaskInput(["1"]);
+            SelectTask_Input(["1"]);
             SetupTaskService_ReturnTasks(1);
 
             NavigateEditActionMenu(["5", "0"]);
@@ -174,7 +174,7 @@ namespace TaskManager.Tests.UnitTests.controller
 
         private void TestEditStatus(string[] statusInputs)
         {
-            SelectTaskInput(["1"]);
+            SelectTask_Input(["1"]);
             SetupTaskService_ReturnTasks(1);
             
             NavigateEditActionMenu(["4", "0"]);
@@ -192,7 +192,7 @@ namespace TaskManager.Tests.UnitTests.controller
 
         private void TestEditDueDate(string[] descriptionInputs)
         {
-            SelectTaskInput(["1"]);
+            SelectTask_Input(["1"]);
             SetupTaskService_ReturnTasks(1);
             NavigateEditActionMenu(["3", "0"]);
             Queue<string> allDateInputs = new Queue<string>();
@@ -209,7 +209,7 @@ namespace TaskManager.Tests.UnitTests.controller
 
         private void TestEditDescription(string[] descriptionInputs)
         {
-            SelectTaskInput(["1"]);
+            SelectTask_Input(["1"]);
             SetupTaskService_ReturnTasks(1);
 
             NavigateEditActionMenu(["2", "0"]);
@@ -227,7 +227,7 @@ namespace TaskManager.Tests.UnitTests.controller
 
         private void TestEditName(string[] nameInputs)
         {
-            SelectTaskInput(["1"]);
+            SelectTask_Input(["1"]);
             SetupTaskService_ReturnTasks(1);
 
             NavigateEditActionMenu(["1", "0"]);
@@ -243,7 +243,7 @@ namespace TaskManager.Tests.UnitTests.controller
             MockTaskService.Verify(obj => obj.UpdateTask(It.IsAny<Task>()), Times.Once());
         }
 
-        private void SelectTaskInput(string[] inputs)
+        private void SelectTask_Input(string[] inputs)
         {
             Queue<string> allInputs = new Queue<string>();
             foreach (string input in inputs)
