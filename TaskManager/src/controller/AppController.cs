@@ -1,6 +1,6 @@
 namespace TaskManager.src.controller
 {
-    public class AppController 
+    public class AppController
     {
         private readonly TaskFactory Factory;
         public AppController(TaskFactory factory)
@@ -12,7 +12,12 @@ namespace TaskManager.src.controller
         public void Run()
         {
             ExecutingController currentController = Factory.Create_MainMenuController();
-            currentController.Initialize();
+            UserCommand result = currentController.Initialize();
+            if (result == UserCommand.Add_Task)
+            {
+                ExecutingController addTaskMenuController = Factory.Create_AddTaskMenuController();
+                addTaskMenuController.Initialize();
+            }
         }
     }
 }

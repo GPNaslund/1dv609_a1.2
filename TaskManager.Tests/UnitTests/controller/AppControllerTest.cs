@@ -19,6 +19,7 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             Mock<TaskFactory> MockFactory = new Mock<TaskFactory>();
             Mock<ExecutingController> MockMainMenuController = new Mock<ExecutingController>();
+            MockMainMenuController.Setup(obj => obj.Initialize()).Returns(UserCommand.Main_Menu);
             MockFactory.Setup(obj => obj.Create_MainMenuController()).Returns(MockMainMenuController.Object);
             AppController Sut = new(MockFactory.Object);
 
