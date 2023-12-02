@@ -33,12 +33,20 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns("0");
 
-            ListTasksController Sut = new(MockView.Object, MockTaskService.Object);
-
             Sut.Initialize();
 
             MockView.Verify(obj => obj.DisplayHeader(), Times.AtLeastOnce());
             MockView.Verify(obj => obj.DisplayMenu(), Times.AtLeastOnce());
+        }
+
+        [Fact]
+        public void Initialize_ShouldReturnUserCommandMainMenu_OnSpecificChoice()
+        {
+            MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns("0");
+
+            UserCommand result = Sut.Initialize();
+
+            Assert.Equal(UserCommand.Main_Menu, result);
         }
 
         [Theory]

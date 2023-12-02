@@ -17,7 +17,7 @@ namespace TaskManager.src.controller
             TaskService = service;
         }
 
-        public void Initialize()
+        public UserCommand Initialize()
         {
             UserCommand nextCommand = UserCommand.Unkown;
             while (nextCommand == UserCommand.Unkown)
@@ -27,6 +27,7 @@ namespace TaskManager.src.controller
                 string userInput = View.GetInput("Your choice: ");
                 nextCommand = HandleUserInput(userInput);
             }
+            return UserCommand.Unkown;
         }
 
         private UserCommand HandleUserInput(string input)
