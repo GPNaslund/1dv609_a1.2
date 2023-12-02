@@ -3,5 +3,7 @@ namespace TaskManager.src.controller
     public interface TaskFactory
     {
         public ExecutingController Create_MainMenuController();
+
+        public ExecutingController Create_AddTaskMenuController();
     }
 }
