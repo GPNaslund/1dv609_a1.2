@@ -4,7 +4,7 @@ namespace TaskManager.src.controller
     {
         public AppController(TaskFactory factory)
         {
-
+            ArgumentNullException.ThrowIfNull(factory);
         }
     }
 }
