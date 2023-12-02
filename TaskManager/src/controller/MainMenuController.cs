@@ -2,7 +2,7 @@ using View = TaskManager.src.view.View;
 
 namespace TaskManager.src.controller
 {
-    public class MainMenuController
+    public class MainMenuController : ExecutingController
     {
         private readonly View View;
         public MainMenuController(View view)

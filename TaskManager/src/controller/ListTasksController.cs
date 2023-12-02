@@ -5,7 +5,7 @@ using TaskManager.src.model;
 
 namespace TaskManager.src.controller
 {
-    public class ListTasksController
+    public class ListTasksController : ExecutingController
     {
         private readonly View View;
         private readonly ITaskService TaskService;

@@ -4,7 +4,7 @@ using TaskManager.src.model;
 
 namespace TaskManager.src.controller
 {
-    public class ViewAllTasksController
+    public class ViewAllTasksController : ExecutingController
     {
         private readonly ITaskService TaskService;
         private readonly View View;

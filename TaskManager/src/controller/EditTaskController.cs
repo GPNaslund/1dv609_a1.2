@@ -3,11 +3,10 @@ using View = TaskManager.src.view.View;
 using Task = TaskManager.src.model.Task;
 using TaskStatus = TaskManager.src.model.TaskStatus;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 
 namespace TaskManager.src.controller
 {
-    public class EditTaskController
+    public class EditTaskController : ExecutingController
     {
         private readonly ITaskService TaskService;
         private readonly View View;
