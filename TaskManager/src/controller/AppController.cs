@@ -34,7 +34,7 @@ namespace TaskManager.src.controller
                 case UserCommand.Main_Menu:
                     return Factory.Create_MainMenuController();
                 default:
-                    throw new ArgumentException("UserCommand is not implemented!");
+                    throw new NotImplementedException();
             }
         }
     }

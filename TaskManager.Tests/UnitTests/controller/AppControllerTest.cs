@@ -104,5 +104,14 @@ namespace TaskManager.Tests.UnitTests.controller
                     break;
             }
         }
+
+        
+        [Fact]
+        public void Run_ShouldThrowArgumentException_OnFaultyValue()
+        {
+            MockMainMenuController.Setup(m => m.Initialize()).Returns(UserCommand.Unkown);
+            
+            Assert.Throws<ArgumentException>(() => Sut.Run());
+        }
     }
 }
