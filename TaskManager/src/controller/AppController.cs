@@ -6,5 +6,10 @@ namespace TaskManager.src.controller
         {
             ArgumentNullException.ThrowIfNull(factory);
         }
+
+        public void Run()
+        {
+            
+        }
     }
 }
