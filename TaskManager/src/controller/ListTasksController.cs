@@ -27,7 +27,7 @@ namespace TaskManager.src.controller
                 string userInput = View.GetInput("Your choice: ");
                 nextCommand = HandleUserInput(userInput);
             }
-            return UserCommand.Unkown;
+            return nextCommand;
         }
 
         private UserCommand HandleUserInput(string input)
