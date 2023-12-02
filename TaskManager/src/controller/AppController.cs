@@ -2,8 +2,8 @@ namespace TaskManager.src.controller
 {
     public class AppController
     {
-        private readonly TaskFactory Factory;
-        public AppController(TaskFactory factory)
+        private readonly ControllerFactory Factory;
+        public AppController(ControllerFactory factory)
         {
             ArgumentNullException.ThrowIfNull(factory);
             Factory = factory;
@@ -11,12 +11,30 @@ namespace TaskManager.src.controller
 
         public void Run()
         {
-            ExecutingController currentController = Factory.Create_MainMenuController();
-            UserCommand result = currentController.Initialize();
-            if (result == UserCommand.Add_Task)
+            UserCommand currentCommand = UserCommand.Main_Menu;
+            while (currentCommand != UserCommand.Quit_Application)
             {
-                ExecutingController addTaskMenuController = Factory.Create_AddTaskMenuController();
-                addTaskMenuController.Initialize();
+                ExecutingController currentController = HandleUserCommand(currentCommand);
+                currentCommand = currentController.Initialize();
+            }
+        }
+
+        private ExecutingController HandleUserCommand(UserCommand commandToActOn)
+        {
+            switch (commandToActOn)
+            {
+                case UserCommand.Add_Task:
+                    return Factory.Create_AddTaskMenuController();
+                case UserCommand.View_All_Tasks:
+                    return Factory.Create_ViewAllTasksMenuController();
+                case UserCommand.List_Tasks:
+                    return Factory.Create_ListTasksMenuController();
+                case UserCommand.Edit_Task:
+                    return Factory.Create_EditTaskMenuController();
+                case UserCommand.Main_Menu:
+                    return Factory.Create_MainMenuController();
+                default:
+                    throw new ArgumentException("UserCommand is not implemented!");
             }
         }
     }
