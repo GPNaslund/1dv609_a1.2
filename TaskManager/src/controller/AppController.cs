@@ -11,7 +11,8 @@ namespace TaskManager.src.controller
 
         public void Run()
         {
-            Factory.Create_MainMenuController().Initialize();
+            ExecutingController currentController = Factory.Create_MainMenuController();
+            currentController.Initialize();
         }
     }
 }
