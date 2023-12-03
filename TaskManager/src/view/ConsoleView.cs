@@ -34,6 +34,11 @@ namespace TaskManager.src.view
             }
         }
 
+        public void DisplayMessage(string message)
+        {
+            
+        }
+
         private void SetHeaderAndMenu(ViewType type)
         {
             switch (type)

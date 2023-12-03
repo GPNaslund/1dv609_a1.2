@@ -57,5 +57,15 @@ namespace TaskManager.Tests.UnitTests.view
 
             MockConsoleService.Verify(obj => obj.WriteLine(It.IsAny<string>()), Times.AtLeastOnce());
         }
+
+        [Fact]
+        public void DisplayMessage_ShouldCallConsoleService()
+        {
+            ConsoleView Sut = new ConsoleView(ViewType.Add_Task_View, MockConsoleService.Object);
+
+            Sut.DisplayMessage("A");
+
+            MockConsoleService.Verify(obj => obj.WriteLine("A"), Times.Once());
+        }
     }
 }
