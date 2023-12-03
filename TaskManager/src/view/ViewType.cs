@@ -8,7 +8,8 @@ namespace TaskManager.src.view
 
         List_Tasks,
         Main_Menu,
-        View_All_Tasks
+        View_All_Tasks,
+        Unkown
 
     }
 }

@@ -35,6 +35,14 @@ namespace TaskManager.Tests.UnitTests.view
             Assert.NotNull(Sut.Menu);
         }
 
+        [Fact]
+        public void Constructor_ShouldThrowNotImplementedException_OnUnimplementedViewType()
+        {
+            Assert.Throws<NotImplementedException>(() => {
+                ConsoleView Sut = new ConsoleView(ViewType.Unkown, MockConsoleService.Object);
+            });
+        }
+
         [Theory]
         [InlineData(ViewType.Add_Task_View)]
         [InlineData(ViewType.Edit_Task)]
