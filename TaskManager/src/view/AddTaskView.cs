@@ -13,5 +13,11 @@ namespace TaskManager.src.view
         {
             get => _menu;
         }
+
+        public AddTaskView()
+        {
+            _header = "";
+            _menu = [];
+        }
     }
 }
