@@ -6,5 +6,9 @@ namespace TaskManager.src.view
 
         Edit_Task,
 
+        List_Tasks,
+        Main_Menu,
+        View_All_Tasks
+
     }
 }
