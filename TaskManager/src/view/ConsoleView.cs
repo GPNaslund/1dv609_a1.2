@@ -41,7 +41,7 @@ namespace TaskManager.src.view
 
         public string GetInput(string prompt)
         {
-            return "";
+            return ConsoleService.ReadLine(prompt);
         }
 
         private void SetHeaderAndMenu(ViewType type)

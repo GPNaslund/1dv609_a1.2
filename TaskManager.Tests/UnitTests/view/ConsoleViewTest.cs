@@ -76,7 +76,7 @@ namespace TaskManager.Tests.UnitTests.view
 
             string result = Sut.GetInput("A");
 
-            MockConsoleService.Verify(obj => obj.WriteLine("A"), Times.Once());
+            MockConsoleService.Verify(obj => obj.ReadLine("A"), Times.Once());
             Assert.Equal("B", result);
         }
     }
