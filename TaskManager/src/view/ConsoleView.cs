@@ -13,9 +13,17 @@ namespace TaskManager.src.view
         {
             get => _menu;
         }
-        public ConsoleView(ViewType type)
+
+        private readonly ConsoleService ConsoleService;
+        public ConsoleView(ViewType type, ConsoleService consoleService)
         {
             SetHeaderAndMenu(type);
+            ConsoleService = consoleService;
+        }
+
+        public void DisplayHeader()
+        {
+           
         }
 
         private void SetHeaderAndMenu(ViewType type)
