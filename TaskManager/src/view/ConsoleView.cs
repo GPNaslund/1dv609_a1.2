@@ -28,7 +28,10 @@ namespace TaskManager.src.view
 
         public void DisplayMenu()
         {
-            
+            foreach (string menuItem in _menu)
+            {
+                ConsoleService.WriteLine(menuItem);
+            }
         }
 
         private void SetHeaderAndMenu(ViewType type)
@@ -92,7 +95,7 @@ namespace TaskManager.src.view
         private void ViewAllTasksView_Setup()
         {
             _header = "All Tasks";
-            _menu = [""];
+            _menu = ["Here are all the tasks:"];
         }
 
         private void MainMenuView_Setup()
