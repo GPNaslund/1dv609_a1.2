@@ -64,6 +64,8 @@ namespace TaskManager.src.view
                 case ViewType.Main_Menu:
                     MainMenuView_Setup();
                     break;
+                default:
+                    throw new NotImplementedException("The setup for viewtype: " + type + ", is not implemented.");
             }
         }
 
