@@ -2,12 +2,12 @@ using TaskManager.src.view;
 
 namespace TaskManager.Tests.UnitTests.view
 {
-    public class AddTaskViewTest
+    public class ConsoleViewTest
     {
         [Fact]
-        public void Constructor_ShouldInitializeView_WithHeaderAndMenu()
+        public void Constructor_ShouldBeAbleToInitialize_AddTaskViewData()
         {
-            AddTaskView Sut = new AddTaskView();
+            ConsoleView Sut = new ConsoleView(ViewType.Add_Task_View);
 
             Assert.NotNull(Sut.Header);
             Assert.NotNull(Sut.Menu);
