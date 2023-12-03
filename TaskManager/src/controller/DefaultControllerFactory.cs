@@ -18,7 +18,7 @@ namespace TaskManager.src.controller
         public ExecutingController Create_AddTaskController()
         {
             DefaultConsoleService ConsoleService = new();
-            ConsoleView View = new(ViewType.Main_Menu,ConsoleService);
+            ConsoleView View = new(ViewType.Add_Task_View,ConsoleService);
             var options = new DbContextOptionsBuilder<AppDatabaseContext>()
             .UseInMemoryDatabase(databaseName: "TestDb")
             .Options;
@@ -31,7 +31,16 @@ namespace TaskManager.src.controller
 
         public ExecutingController Create_EditTaskController()
         {
-            return null;
+            DefaultConsoleService ConsoleService = new();
+            ConsoleView View = new(ViewType.Edit_Task,ConsoleService);
+            var options = new DbContextOptionsBuilder<AppDatabaseContext>()
+            .UseInMemoryDatabase(databaseName: "TestDb")
+            .Options;
+            AppDatabaseContext DbContext = new(options);
+            DatabasePersistence databasePersistence = new(DbContext);
+            TaskService TaskService = new(databasePersistence);
+            EditTaskController editTaskController = new(View, TaskService);
+            return editTaskController;
         }
     }
 }
