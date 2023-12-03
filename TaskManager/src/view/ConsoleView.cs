@@ -25,6 +25,9 @@ namespace TaskManager.src.view
                 case ViewType.Add_Task_View:
                     AddTaskView_Setup();
                     break;
+                case ViewType.Edit_Task:
+                    EditTaskView_Setup();
+                    break;
             }
         }
 
@@ -36,6 +39,19 @@ namespace TaskManager.src.view
                 "- An header",
                 "- An optional description",
                 "- A due date, that is not before today"
+            ];
+        }
+
+        private void EditTaskView_Setup()
+        {
+            _header = "Edit Task";
+            _menu = [
+                "1. Edit Name",
+                "2. Edit Description",
+                "3. Edit Status",
+                "4. Edit Due date",
+                "5. Delete Task",
+                "0. Go back"
             ];
         }
     }
