@@ -13,6 +13,13 @@ namespace TaskManager.Tests.UnitTests.view
             MockConsoleService = new Mock<ConsoleService>();
         }
 
+        public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
+        {
+            Assert.Throws<ArgumentNullException>(() => {
+                ConsoleView Sut = new ConsoleView(ViewType.Edit_Task, null);
+            });
+        }
+
         [Theory]
         [InlineData(ViewType.Add_Task_View)]
         [InlineData(ViewType.Edit_Task)]
