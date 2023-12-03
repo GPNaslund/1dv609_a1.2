@@ -7,6 +7,7 @@ namespace TaskManager.Tests.UnitTests.view
     {
 
         private readonly Mock<ConsoleService> MockConsoleService;
+
         public ConsoleViewTest()
         {
             MockConsoleService = new Mock<ConsoleService>();
@@ -26,8 +27,13 @@ namespace TaskManager.Tests.UnitTests.view
             Assert.NotNull(Sut.Menu);
         }
 
-        [Fact]
-        public void PrintHeader_ShouldCallConsoleService()
+        [Theory]
+        [InlineData(ViewType.Add_Task_View)]
+        [InlineData(ViewType.Edit_Task)]
+        [InlineData(ViewType.List_Tasks)]
+        [InlineData(ViewType.View_All_Tasks)]
+        [InlineData(ViewType.Main_Menu)]
+        public void PrintHeader_ShouldCallConsoleService(ViewType type)
         {
             ConsoleView Sut = new ConsoleView(ViewType.Add_Task_View, MockConsoleService.Object);
 
@@ -37,8 +43,13 @@ namespace TaskManager.Tests.UnitTests.view
 
         }
 
-        [Fact]
-        public void PrintMenu_ShouldCallConsoleService()
+        [Theory]
+        [InlineData(ViewType.Add_Task_View)]
+        [InlineData(ViewType.Edit_Task)]
+        [InlineData(ViewType.List_Tasks)]
+        [InlineData(ViewType.View_All_Tasks)]
+        [InlineData(ViewType.Main_Menu)]
+        public void PrintMenu_ShouldCallConsoleService(ViewType type)
         {
             ConsoleView Sut = new ConsoleView(ViewType.Add_Task_View, MockConsoleService.Object);
 
