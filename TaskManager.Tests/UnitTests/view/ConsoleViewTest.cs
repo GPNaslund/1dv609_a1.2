@@ -13,6 +13,7 @@ namespace TaskManager.Tests.UnitTests.view
             MockConsoleService = new Mock<ConsoleService>();
         }
 
+        [Fact]
         public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
         {
             Assert.Throws<ArgumentNullException>(() => {
