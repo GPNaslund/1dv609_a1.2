@@ -1,6 +1,6 @@
 namespace TaskManager.src.view
 {
-    public class ConsoleView
+    public class ConsoleView : View
     {
         private string _header;
         public string Header
