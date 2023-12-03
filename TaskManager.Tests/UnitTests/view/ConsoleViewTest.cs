@@ -35,7 +35,7 @@ namespace TaskManager.Tests.UnitTests.view
         [InlineData(ViewType.Main_Menu)]
         public void PrintHeader_ShouldCallConsoleService(ViewType type)
         {
-            ConsoleView Sut = new ConsoleView(ViewType.Add_Task_View, MockConsoleService.Object);
+            ConsoleView Sut = new ConsoleView(type, MockConsoleService.Object);
 
             Sut.DisplayHeader();
 
@@ -51,7 +51,7 @@ namespace TaskManager.Tests.UnitTests.view
         [InlineData(ViewType.Main_Menu)]
         public void PrintMenu_ShouldCallConsoleService(ViewType type)
         {
-            ConsoleView Sut = new ConsoleView(ViewType.Add_Task_View, MockConsoleService.Object);
+            ConsoleView Sut = new ConsoleView(type, MockConsoleService.Object);
 
             Sut.DisplayMenu();
 
