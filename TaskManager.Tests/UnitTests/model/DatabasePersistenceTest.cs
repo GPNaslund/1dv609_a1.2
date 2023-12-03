@@ -64,7 +64,7 @@ namespace TaskManager.Tests.UnitTests.model
             TestTask.Name = "New";
             TestTask.Description = "New";
 
-            Sut.Update();
+            Sut.Update(TestTask);
 
             Assert.Contains(TestTask, Sut.Read());
 

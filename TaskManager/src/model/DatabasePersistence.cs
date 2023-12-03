@@ -1,6 +1,6 @@
 namespace TaskManager.src.model
 {
-    public class DatabasePersistence
+    public class DatabasePersistence : TaskPersistence
     {
         private readonly AppDatabaseContext Context;
 
@@ -27,7 +27,7 @@ namespace TaskManager.src.model
             Context.SaveChanges();
         }
 
-        public void Update()
+        public void Update(Task taskToUpdate)
         {
             /*
                 EF Core tracks entities (in this case task objects)
