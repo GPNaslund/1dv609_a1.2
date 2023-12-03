@@ -17,6 +17,7 @@ namespace TaskManager.src.view
         private readonly ConsoleService ConsoleService;
         public ConsoleView(ViewType type, ConsoleService consoleService)
         {
+            ArgumentNullException.ThrowIfNull(consoleService);
             SetHeaderAndMenu(type);
             ConsoleService = consoleService;
         }
