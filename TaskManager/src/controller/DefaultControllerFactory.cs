@@ -46,5 +46,10 @@ namespace TaskManager.src.controller
             ViewAllTasksController viewAllTasksController = new(View, TaskService);
             return viewAllTasksController;
         }
+
+        public ExecutingController Create_ListTasksController()
+        {
+            return null;
+        }
     }
 }

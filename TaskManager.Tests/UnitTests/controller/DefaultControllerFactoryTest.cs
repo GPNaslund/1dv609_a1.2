@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using TaskManager.src.model;
 
 namespace TaskManager.src.controller
@@ -47,6 +48,14 @@ namespace TaskManager.src.controller
             ExecutingController result = Sut.Create_ViewAllTasksController();
 
             Assert.IsType<ViewAllTasksController>(result);
+        }
+
+        [Fact]
+        public void Create_ListTasksController_ShouldReturnAnInstanceOfListTasksController()
+        {
+            ExecutingController result = Sut.Create_ListTasksController();
+
+            Assert.IsType<ListTasksController>(result);
         }
     }
 }
