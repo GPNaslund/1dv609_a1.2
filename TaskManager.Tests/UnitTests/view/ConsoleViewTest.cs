@@ -5,6 +5,13 @@ namespace TaskManager.Tests.UnitTests.view
 {
     public class ConsoleViewTest
     {
+
+        private readonly Mock<ConsoleService> MockConsoleService;
+        public ConsoleViewTest()
+        {
+            MockConsoleService = new Mock<ConsoleService>();
+        }
+
         [Theory]
         [InlineData(ViewType.Add_Task_View)]
         [InlineData(ViewType.Edit_Task)]
@@ -13,7 +20,6 @@ namespace TaskManager.Tests.UnitTests.view
         [InlineData(ViewType.Main_Menu)]
         public void Constructor_ShouldBeAbleToInitialize_HeaderAndMenu_BasedOnViewType(ViewType type)
         {
-            Mock<ConsoleService> MockConsoleService = new Mock<ConsoleService>();
             ConsoleView Sut = new ConsoleView(type, MockConsoleService.Object);
 
             Assert.NotNull(Sut.Header);
@@ -23,7 +29,6 @@ namespace TaskManager.Tests.UnitTests.view
         [Fact]
         public void PrintHeader_ShouldCallTheConsoleService_ToPrintHeader()
         {
-            Mock<ConsoleService> MockConsoleService = new Mock<ConsoleService>();
             ConsoleView Sut = new ConsoleView(ViewType.Add_Task_View, MockConsoleService.Object);
 
             Sut.DisplayHeader();
