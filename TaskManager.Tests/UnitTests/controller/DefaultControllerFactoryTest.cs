@@ -21,5 +21,15 @@ namespace TaskManager.src.controller
 
             Assert.IsType<AddTaskController>(result);
         }
+
+        [Fact]
+        public void Create_EditTaskMenuController_ShouldReturnAnInstanceOfEditTaskController()
+        {
+            DefaultControllerFactory Sut = new DefaultControllerFactory();
+
+            ExecutingController result = Sut.Create_EditTaskController();
+
+            Assert.IsType<EditTaskController>(result);
+        }
     }
 }

@@ -28,5 +28,10 @@ namespace TaskManager.src.controller
             AddTaskController addTaskController = new(View, TaskService);
             return addTaskController;
         }
+
+        public ExecutingController Create_EditTaskController()
+        {
+            return null;
+        }
     }
 }
