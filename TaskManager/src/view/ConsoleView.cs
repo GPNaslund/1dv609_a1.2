@@ -23,7 +23,7 @@ namespace TaskManager.src.view
 
         public void DisplayHeader()
         {
-           
+            ConsoleService.WriteLine("=== " + _header.ToUpper() + " ===");
         }
 
         private void SetHeaderAndMenu(ViewType type)

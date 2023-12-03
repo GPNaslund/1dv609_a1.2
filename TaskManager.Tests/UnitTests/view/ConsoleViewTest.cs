@@ -28,7 +28,7 @@ namespace TaskManager.Tests.UnitTests.view
 
             Sut.DisplayHeader();
 
-            MockConsoleService.Verify(obj => obj.ReadLine(It.IsAny<string>()), Times.Once());
+            MockConsoleService.Verify(obj => obj.WriteLine(It.IsAny<string>()), Times.Once());
 
         }
     }
