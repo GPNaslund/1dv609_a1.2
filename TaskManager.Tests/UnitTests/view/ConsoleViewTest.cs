@@ -67,5 +67,17 @@ namespace TaskManager.Tests.UnitTests.view
 
             MockConsoleService.Verify(obj => obj.WriteLine("A"), Times.Once());
         }
+
+        [Fact]
+        public void GetInput_ShouldCallConsoleServic_AndReturnInput()
+        {
+            ConsoleView Sut = new ConsoleView(ViewType.Add_Task_View, MockConsoleService.Object);
+            MockConsoleService.Setup(obj => obj.ReadLine("A")).Returns("B");
+
+            string result = Sut.GetInput("A");
+
+            MockConsoleService.Verify(obj => obj.WriteLine("A"), Times.Once());
+            Assert.Equal("B", result);
+        }
     }
 }

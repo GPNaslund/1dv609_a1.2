@@ -39,6 +39,11 @@ namespace TaskManager.src.view
             ConsoleService.WriteLine(message);
         }
 
+        public string GetInput(string prompt)
+        {
+            return "";
+        }
+
         private void SetHeaderAndMenu(ViewType type)
         {
             switch (type)
