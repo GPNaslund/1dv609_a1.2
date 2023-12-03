@@ -4,5 +4,7 @@ namespace TaskManager.src.view
     {
         Add_Task_View,
 
+        Edit_Task,
+
     }
 }
