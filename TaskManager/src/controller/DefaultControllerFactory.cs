@@ -39,5 +39,12 @@ namespace TaskManager.src.controller
             EditTaskController editTaskController = new(View, TaskService);
             return editTaskController;
         }
+
+        public ExecutingController Create_ViewAllTasksController()
+        {
+            ConsoleView View = new(ViewType.View_All_Tasks, ConsoleService);
+            ViewAllTasksController viewAllTasksController = new(View, TaskService);
+            return viewAllTasksController;
+        }
     }
 }
