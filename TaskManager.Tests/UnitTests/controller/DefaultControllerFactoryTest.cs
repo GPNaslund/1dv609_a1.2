@@ -1,11 +1,23 @@
+using Microsoft.EntityFrameworkCore;
+using TaskManager.src.model;
+
 namespace TaskManager.src.controller
 {
     public class DefaultControllerFactoryTest
     {
+        private readonly DefaultControllerFactory Sut;
+
+        public DefaultControllerFactoryTest()
+        {
+            var options = new DbContextOptionsBuilder<AppDatabaseContext>()
+            .UseInMemoryDatabase(databaseName: "TestDb")
+            .Options;
+            Sut = new DefaultControllerFactory(options);
+        }
+
         [Fact]
         public void Create_MainMenuController_ShouldReturnAnInstanceOfMainMenuController()
         {
-            DefaultControllerFactory Sut = new DefaultControllerFactory();
 
             ExecutingController result = Sut.Create_MainMenuController();
 
@@ -15,8 +27,6 @@ namespace TaskManager.src.controller
         [Fact]
         public void Create_AddTaskMenuController_ShouldReturnAnInstanceOfAddTaskController()
         {
-            DefaultControllerFactory Sut = new DefaultControllerFactory();
-
             ExecutingController result = Sut.Create_AddTaskController();
 
             Assert.IsType<AddTaskController>(result);
@@ -25,7 +35,6 @@ namespace TaskManager.src.controller
         [Fact]
         public void Create_EditTaskMenuController_ShouldReturnAnInstanceOfEditTaskController()
         {
-            DefaultControllerFactory Sut = new DefaultControllerFactory();
 
             ExecutingController result = Sut.Create_EditTaskController();
 
