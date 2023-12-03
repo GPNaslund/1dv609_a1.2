@@ -40,5 +40,13 @@ namespace TaskManager.src.controller
 
             Assert.IsType<EditTaskController>(result);
         }
+
+        [Fact]
+        public void Create_ViewAllTasksMenuController_ShouldReturnAnInstanceOfViewAllTasksController()
+        {
+            ExecutingController result = Sut.Create_ViewAllTasksController();
+
+            Assert.IsType<ViewAllTasksController>(result);
+        }
     }
 }
