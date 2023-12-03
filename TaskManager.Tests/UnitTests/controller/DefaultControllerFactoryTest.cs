@@ -11,5 +11,15 @@ namespace TaskManager.src.controller
 
             Assert.IsType<MainMenuController>(result);
         }
+
+        [Fact]
+        public void Create_AddTaskMenuController_ShouldReturnAnInstanceOfAddTaskController()
+        {
+            DefaultControllerFactory Sut = new DefaultControllerFactory();
+
+            ExecutingController result = Sut.Create_AddTaskController();
+
+            Assert.IsType<AddTaskController>(result);
+        }
     }
 }
