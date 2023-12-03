@@ -49,7 +49,9 @@ namespace TaskManager.src.controller
 
         public ExecutingController Create_ListTasksController()
         {
-            return null;
+            ConsoleView View = new(ViewType.List_Tasks, ConsoleService);
+            ListTasksController listTasksController = new(View, TaskService);
+            return listTasksController;
         }
     }
 }
