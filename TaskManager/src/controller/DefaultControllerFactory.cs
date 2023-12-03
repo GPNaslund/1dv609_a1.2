@@ -28,7 +28,7 @@ namespace TaskManager.src.controller
 
         public ExecutingController Create_AddTaskController()
         {
-            ConsoleView View = new(ViewType.Add_Task_View,ConsoleService);
+            ConsoleView View = new(ViewType.Add_Task,ConsoleService);
             AddTaskController addTaskController = new(View, TaskService);
             return addTaskController;
         }

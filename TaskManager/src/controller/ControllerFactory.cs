@@ -4,12 +4,12 @@ namespace TaskManager.src.controller
     {
         public ExecutingController Create_MainMenuController();
 
-        public ExecutingController Create_AddTaskMenuController();
+        public ExecutingController Create_AddTaskController();
 
-        public ExecutingController Create_ViewAllTasksMenuController();
+        public ExecutingController Create_ViewAllTasksController();
 
-        public ExecutingController Create_ListTasksMenuController();
+        public ExecutingController Create_ListTasksController();
 
-        public ExecutingController Create_EditTaskMenuController();
+        public ExecutingController Create_EditTaskController();
     }
 }

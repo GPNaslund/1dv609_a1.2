@@ -22,7 +22,7 @@ namespace TaskManager.Tests.UnitTests.view
         }
 
         [Theory]
-        [InlineData(ViewType.Add_Task_View)]
+        [InlineData(ViewType.Add_Task)]
         [InlineData(ViewType.Edit_Task)]
         [InlineData(ViewType.List_Tasks)]
         [InlineData(ViewType.View_All_Tasks)]
@@ -44,7 +44,7 @@ namespace TaskManager.Tests.UnitTests.view
         }
 
         [Theory]
-        [InlineData(ViewType.Add_Task_View)]
+        [InlineData(ViewType.Add_Task)]
         [InlineData(ViewType.Edit_Task)]
         [InlineData(ViewType.List_Tasks)]
         [InlineData(ViewType.View_All_Tasks)]
@@ -60,7 +60,7 @@ namespace TaskManager.Tests.UnitTests.view
         }
 
         [Theory]
-        [InlineData(ViewType.Add_Task_View)]
+        [InlineData(ViewType.Add_Task)]
         [InlineData(ViewType.Edit_Task)]
         [InlineData(ViewType.List_Tasks)]
         [InlineData(ViewType.View_All_Tasks)]
@@ -77,7 +77,7 @@ namespace TaskManager.Tests.UnitTests.view
         [Fact]
         public void DisplayMessage_ShouldCallConsoleService()
         {
-            ConsoleView Sut = new ConsoleView(ViewType.Add_Task_View, MockConsoleService.Object);
+            ConsoleView Sut = new ConsoleView(ViewType.Add_Task, MockConsoleService.Object);
 
             Sut.DisplayMessage("A");
 
@@ -87,7 +87,7 @@ namespace TaskManager.Tests.UnitTests.view
         [Fact]
         public void GetInput_ShouldCallConsoleServic_AndReturnInput()
         {
-            ConsoleView Sut = new ConsoleView(ViewType.Add_Task_View, MockConsoleService.Object);
+            ConsoleView Sut = new ConsoleView(ViewType.Add_Task, MockConsoleService.Object);
             MockConsoleService.Setup(obj => obj.ReadLine("A")).Returns("B");
 
             string result = Sut.GetInput("A");

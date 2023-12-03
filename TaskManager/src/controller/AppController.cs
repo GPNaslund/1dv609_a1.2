@@ -24,13 +24,13 @@ namespace TaskManager.src.controller
             switch (commandToActOn)
             {
                 case UserCommand.Add_Task:
-                    return Factory.Create_AddTaskMenuController();
+                    return Factory.Create_AddTaskController();
                 case UserCommand.View_All_Tasks:
-                    return Factory.Create_ViewAllTasksMenuController();
+                    return Factory.Create_ViewAllTasksController();
                 case UserCommand.List_Tasks:
-                    return Factory.Create_ListTasksMenuController();
+                    return Factory.Create_ListTasksController();
                 case UserCommand.Edit_Task:
-                    return Factory.Create_EditTaskMenuController();
+                    return Factory.Create_EditTaskController();
                 case UserCommand.Main_Menu:
                     return Factory.Create_MainMenuController();
                 default:

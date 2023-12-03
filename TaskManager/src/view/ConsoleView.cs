@@ -49,7 +49,7 @@ namespace TaskManager.src.view
         {
             switch (type)
             {
-                case ViewType.Add_Task_View:
+                case ViewType.Add_Task:
                     AddTaskView_Setup();
                     break;
                 case ViewType.Edit_Task:

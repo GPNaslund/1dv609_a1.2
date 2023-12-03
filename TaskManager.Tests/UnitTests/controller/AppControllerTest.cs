@@ -29,11 +29,11 @@ namespace TaskManager.Tests.UnitTests.controller
 
         private void SetupFactory()
         {
-            Factory.Setup(m => m.Create_AddTaskMenuController()).Returns(MockAddTaskController.Object);
-            Factory.Setup(m => m.Create_ViewAllTasksMenuController()).Returns(MockViewAllTasksController.Object);
-            Factory.Setup(m => m.Create_ListTasksMenuController()).Returns(MockListTasksController.Object);
+            Factory.Setup(m => m.Create_AddTaskController()).Returns(MockAddTaskController.Object);
+            Factory.Setup(m => m.Create_ViewAllTasksController()).Returns(MockViewAllTasksController.Object);
+            Factory.Setup(m => m.Create_ListTasksController()).Returns(MockListTasksController.Object);
             Factory.Setup(m => m.Create_MainMenuController()).Returns(MockMainMenuController.Object);
-            Factory.Setup(m => m.Create_EditTaskMenuController()).Returns(MockEditTaskController.Object);
+            Factory.Setup(m => m.Create_EditTaskController()).Returns(MockEditTaskController.Object);
 
         }
 
