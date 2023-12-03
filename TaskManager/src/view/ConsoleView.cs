@@ -36,7 +36,7 @@ namespace TaskManager.src.view
 
         public void DisplayMessage(string message)
         {
-            
+            ConsoleService.WriteLine(message);
         }
 
         private void SetHeaderAndMenu(ViewType type)
