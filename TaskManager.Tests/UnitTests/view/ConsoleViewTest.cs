@@ -27,7 +27,7 @@ namespace TaskManager.Tests.UnitTests.view
         }
 
         [Fact]
-        public void PrintHeader_ShouldCallTheConsoleService_ToPrintHeader()
+        public void PrintHeader_ShouldCallConsoleService()
         {
             ConsoleView Sut = new ConsoleView(ViewType.Add_Task_View, MockConsoleService.Object);
 
@@ -35,6 +35,16 @@ namespace TaskManager.Tests.UnitTests.view
 
             MockConsoleService.Verify(obj => obj.WriteLine(It.IsAny<string>()), Times.Once());
 
+        }
+
+        [Fact]
+        public void PrintMenu_ShouldCallConsoleService()
+        {
+            ConsoleView Sut = new ConsoleView(ViewType.Add_Task_View, MockConsoleService.Object);
+
+            Sut.DisplayMenu();
+
+            MockConsoleService.Verify(obj => obj.WriteLine(It.IsAny<string>()), Times.AtLeastOnce());
         }
     }
 }

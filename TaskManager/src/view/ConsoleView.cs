@@ -26,6 +26,11 @@ namespace TaskManager.src.view
             ConsoleService.WriteLine("=== " + _header.ToUpper() + " ===");
         }
 
+        public void DisplayMenu()
+        {
+            
+        }
+
         private void SetHeaderAndMenu(ViewType type)
         {
             switch (type)
@@ -86,8 +91,8 @@ namespace TaskManager.src.view
 
         private void ViewAllTasksView_Setup()
         {
-            _header = "";
-            _menu = [];
+            _header = "All Tasks";
+            _menu = [""];
         }
 
         private void MainMenuView_Setup()
