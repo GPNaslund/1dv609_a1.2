@@ -11,7 +11,12 @@ namespace TaskManager.src.view
         }
         public ViewData GetViewData(ViewType type)
         {
-            return Views.GetValueOrDefault(type);
+            ViewData data = Views.GetValueOrDefault(type);
+            if (data == null)
+            {
+                throw new NotImplementedException("View data for view type: " + type + "is not implemented!");
+            }
+            return data;
         }
 
         private void InitializeViewData()
