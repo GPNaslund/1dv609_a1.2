@@ -2,9 +2,10 @@ namespace TaskManager.src.view
 {
     public class Prompt
     {
-        public Prompt(string name, string header)
+        public Prompt(string name, string content)
         {
-            throw new ArgumentNullException();
+            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull(content);
         }
     }
 }
