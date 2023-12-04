@@ -1,3 +1,4 @@
+using System.Reflection.Metadata;
 using TaskManager.src.view.exceptions;
 
 namespace TaskManager.src.view
@@ -33,6 +34,8 @@ namespace TaskManager.src.view
 
         public string GetPromptContent(string promptName)
         {
+            ArgumentNullException.ThrowIfNull(promptName);
+            
             Prompt prompt = Prompts.FirstOrDefault(p => p.Name == promptName);
             
             if (prompt == null)
