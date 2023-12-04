@@ -4,7 +4,7 @@ namespace TaskManager.src.view
     {
         public ViewData GetViewData(ViewType type)
         {
-            return null;
+            return new ViewData("A", ["B"], []);
         }
     }
 }
