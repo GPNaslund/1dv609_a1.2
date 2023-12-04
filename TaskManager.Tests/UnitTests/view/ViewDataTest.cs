@@ -31,9 +31,16 @@ namespace TaskManager.Tests.UnitTests.view
         [Fact]
         public void GetPromptContent_ShouldThrowNotImplementedException_IfPromptIsNotPresent()
         {
-
             Assert.Throws<PromptNotFoundException>(() => {
                 Sut.GetPromptContent("X");
+            });
+        }
+
+        [Fact]
+        public void GetPromptContent_ShouldThrowArgumentNullException_OnNullValue()
+        {
+            Assert.Throws<ArgumentNullException>(() => {
+                Sut.GetPromptContent(null);
             });
         }
     }
