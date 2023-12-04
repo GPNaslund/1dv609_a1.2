@@ -18,5 +18,15 @@ namespace TaskManager.Tests.UnitTests.view
 
             Assert.NotNull(result);
         }
+
+        [Fact]
+        public void GetViewData_ShouldReturnNotImplementedException_IfViewType_DoesNotHaveViewData()
+        {
+            ViewManager Sut = new();
+
+            Assert.Throws<NotImplementedException>(() => {
+                Sut.GetViewData(ViewType.Unkown);
+            });
+        }
     }
 }
