@@ -31,7 +31,7 @@ namespace TaskManager.src.view
 
         public string GetPromptContent(string promptName)
         {
-            return null;
+            return "C";
         }
     }
 }
