@@ -1,3 +1,5 @@
+using TaskManager.src.view.exceptions;
+
 namespace TaskManager.src.view
 {
     public class ViewData
@@ -32,6 +34,12 @@ namespace TaskManager.src.view
         public string GetPromptContent(string promptName)
         {
             Prompt prompt = Prompts.FirstOrDefault(p => p.Name == promptName);
+            
+            if (prompt == null)
+            {
+                throw new PromptNotFoundException();
+            }
+
             return prompt.Content;
         }
     }
