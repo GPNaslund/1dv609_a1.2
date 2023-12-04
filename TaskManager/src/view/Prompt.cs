@@ -4,7 +4,7 @@ namespace TaskManager.src.view
     {
         public Prompt(string name, string header)
         {
-            
+            throw new ArgumentNullException();
         }
     }
 }
