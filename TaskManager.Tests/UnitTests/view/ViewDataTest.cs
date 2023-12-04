@@ -19,7 +19,7 @@ namespace TaskManager.Tests.UnitTests.view
 
             string result = Sut.GetPromptContent("C");
 
-            Assert.Equal("C", result);
+            Assert.Equal("D", result);
         }
     }
 }

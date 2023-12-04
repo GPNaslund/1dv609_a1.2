@@ -31,7 +31,8 @@ namespace TaskManager.src.view
 
         public string GetPromptContent(string promptName)
         {
-            return "C";
+            Prompt prompt = Prompts.FirstOrDefault(p => p.Name == promptName);
+            return prompt.Content;
         }
     }
 }
