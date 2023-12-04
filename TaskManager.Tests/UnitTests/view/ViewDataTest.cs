@@ -1,4 +1,5 @@
 using TaskManager.src.view;
+using TaskManager.src.view.exceptions;
 
 namespace TaskManager.Tests.UnitTests.view
 {
@@ -20,6 +21,16 @@ namespace TaskManager.Tests.UnitTests.view
             string result = Sut.GetPromptContent("C");
 
             Assert.Equal("D", result);
+        }
+
+        [Fact]
+        public void GetPromptContent_ShouldThrowNotImplementedException_IfPromptIsNotPresent()
+        {
+            ViewData Sut = new ViewData("A", ["B"], [new Prompt("C", "D")]);
+
+            Assert.Throws<PromptNotFoundException>(() => {
+                Sut.GetPromptContent("X");
+            });
         }
     }
 }
