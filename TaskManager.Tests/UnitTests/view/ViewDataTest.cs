@@ -5,6 +5,12 @@ namespace TaskManager.Tests.UnitTests.view
 {
     public class ViewDataTest
     {
+        private readonly ViewData Sut;
+
+        public ViewDataTest()
+        {
+            Sut = new("A", ["B"], [new Prompt("C", "D")]);
+        }
         [Fact]
         public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
         {
@@ -16,7 +22,6 @@ namespace TaskManager.Tests.UnitTests.view
         [Fact]
         public void GetPromptContent_ShouldReturnContensOfSpecifiedPrompt()
         {
-            ViewData Sut = new("A", ["B"], [new Prompt("C", "D")]);
 
             string result = Sut.GetPromptContent("C");
 
@@ -26,7 +31,6 @@ namespace TaskManager.Tests.UnitTests.view
         [Fact]
         public void GetPromptContent_ShouldThrowNotImplementedException_IfPromptIsNotPresent()
         {
-            ViewData Sut = new ViewData("A", ["B"], [new Prompt("C", "D")]);
 
             Assert.Throws<PromptNotFoundException>(() => {
                 Sut.GetPromptContent("X");
