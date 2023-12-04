@@ -163,36 +163,29 @@ namespace TaskManager.src.controller
 
         private void EditStatus(Task chosenTask)
         {
-            List<string> statusOptions = [
-                "1. Not completed",
-                "2. In progress",
-                "3. Completed"
-            ];
-            foreach (string option in statusOptions)
+            IEnumerable<TaskStatus> allStatuses = Enum.GetValues(typeof(TaskStatus)).Cast<TaskStatus>();
+            int menuOptionNumber = 1;
+            foreach (TaskStatus status in allStatuses)
             {
-                View.DisplayMessage(option);
+                View.DisplayMessage(menuOptionNumber + ". " + status.ToString().Replace("_", " "));
+                menuOptionNumber += 1;
             }
             while (true)
             {
                 try
                 {
                     string userSelection = View.GetInput("Select new status: ");
-                    switch (userSelection)
+                    if (int.TryParse(userSelection, out int selectedIndex) &&
+                        selectedIndex >= 1 && selectedIndex <= allStatuses.Count()
+                    )
                     {
-                        case "1":
-                            chosenTask.Status = TaskStatus.Not_Completed;
-                            TaskService.UpdateTask(chosenTask);
-                            return;
-                        case "2":
-                            chosenTask.Status = TaskStatus.In_Progress;
-                            TaskService.UpdateTask(chosenTask);
-                            return;
-                        case "3":
-                            chosenTask.Status = TaskStatus.Completed;
-                            TaskService.UpdateTask(chosenTask);
-                            return;
-                        default:
-                            throw new ArgumentException("Input must be one of the options, try again!");
+                        chosenTask.Status = allStatuses.ElementAt(selectedIndex - 1);
+                        TaskService.UpdateTask(chosenTask);
+                        return;
+                    }
+                    else
+                    {
+                         throw new ArgumentException("Input must be one of the options, try again!");
                     }
                 }
                 catch (Exception e)
