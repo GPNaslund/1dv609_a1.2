@@ -192,8 +192,7 @@ namespace TaskManager.src.controller
                             TaskService.UpdateTask(chosenTask);
                             return;
                         default:
-                            View.DisplayMessage("Input must be one of the options, try again!");
-                            break;
+                            throw new ArgumentException("Input must be one of the options, try again!");
                     }
                 }
                 catch (Exception e)
@@ -221,8 +220,7 @@ namespace TaskManager.src.controller
                         case "n":
                             return;
                         default:
-                            View.DisplayMessage("Input must be y or n, try again!");
-                            break;
+                            throw new ArgumentException("Input must be y or n, try again!");
                     }
                 }
                 catch (Exception e)

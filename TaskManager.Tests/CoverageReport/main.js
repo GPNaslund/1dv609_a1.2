@@ -221,12 +221,21 @@ var assemblies = [
   {
     "name": "TaskManager",
     "classes": [
-      { "name": "Program", "rp": "TaskManager_Program.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 2, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "TaskManager.Program", "rp": "TaskManager_Program.html", "cl": 0, "ucl": 11, "cal": 11, "tl": 22, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "TaskManager.src.controller.AddTaskController", "rp": "TaskManager_AddTaskController.html", "cl": 30, "ucl": 0, "cal": 30, "tl": 49, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "TaskManager.src.controller.AppController", "rp": "TaskManager_AppController.html", "cl": 22, "ucl": 0, "cal": 22, "tl": 41, "cb": 10, "tb": 10, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "TaskManager.src.controller.DefaultControllerFactory", "rp": "TaskManager_DefaultControllerFactory.html", "cl": 33, "ucl": 0, "cal": 33, "tl": 57, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "TaskManager.src.controller.EditTaskController", "rp": "TaskManager_EditTaskController.html", "cl": 165, "ucl": 0, "cal": 165, "tl": 236, "cb": 35, "tb": 36, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "TaskManager.src.controller.ListTasksController", "rp": "TaskManager_ListTasksController.html", "cl": 52, "ucl": 0, "cal": 52, "tl": 82, "cb": 16, "tb": 16, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "TaskManager.src.controller.MainMenuController", "rp": "TaskManager_MainMenuController.html", "cl": 29, "ucl": 0, "cal": 29, "tl": 51, "cb": 14, "tb": 14, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "TaskManager.src.controller.ViewAllTasksController", "rp": "TaskManager_ViewAllTasksController.html", "cl": 22, "ucl": 0, "cal": 22, "tl": 40, "cb": 2, "tb": 2, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "TaskManager.src.model.AppDatabaseContext", "rp": "TaskManager_AppDatabaseContext.html", "cl": 5, "ucl": 0, "cal": 5, "tl": 14, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "TaskManager.src.model.DatabasePersistence", "rp": "TaskManager_DatabasePersistence.html", "cl": 20, "ucl": 0, "cal": 20, "tl": 40, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "TaskManager.src.model.exceptions.ListByCommandNotImplementedException", "rp": "TaskManager_ListByCommandNotImplementedException.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 7, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "TaskManager.src.model.Task", "rp": "TaskManager_Task.html", "cl": 50, "ucl": 3, "cal": 53, "tl": 104, "cb": 14, "tb": 16, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "TaskManager.src.model.TaskService", "rp": "TaskManager_TaskService.html", "cl": 27, "ucl": 1, "cal": 28, "tl": 54, "cb": 6, "tb": 7, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "TaskManager.src.model.exceptions.ListByCommandNotImplementedException", "rp": "TaskManager_ListByCommandNotImplementedException.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 7, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "TaskManager.src.model.Task", "rp": "TaskManager_Task.html", "cl": 53, "ucl": 3, "cal": 56, "tl": 110, "cb": 11, "tb": 16, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "TaskManager.src.model.TaskService", "rp": "TaskManager_TaskService.html", "cl": 28, "ucl": 0, "cal": 28, "tl": 54, "cb": 7, "tb": 7, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "TaskManager.src.view.ConsoleView", "rp": "TaskManager_ConsoleView.html", "cl": 81, "ucl": 0, "cal": 81, "tl": 126, "cb": 8, "tb": 8, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "TaskManager.src.view.DefaultConsoleService", "rp": "TaskManager_DefaultConsoleService.html", "cl": 7, "ucl": 0, "cal": 7, "tl": 16, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
     ]},
 ];
 

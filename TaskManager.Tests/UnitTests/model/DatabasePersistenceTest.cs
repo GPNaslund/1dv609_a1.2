@@ -4,7 +4,7 @@ using Task = TaskManager.src.model.Task;
 
 namespace TaskManager.Tests.UnitTests.model
 {
-    public class DatabasePerisstenceTest
+    public class DatabasePerisstenceTest : IDisposable
     {
         private readonly DatabasePersistence Sut;
         private readonly AppDatabaseContext Context;

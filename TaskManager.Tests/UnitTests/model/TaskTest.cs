@@ -66,5 +66,24 @@ namespace TaskManager.Tests.UnitTests.model
             sut.Status = newStatus;
             Assert.Equal(newStatus, sut.Status);
         }
+
+        [Fact]
+        public void Id_ShouldExistAndBeAssignable_ForEFCoreUsage()
+        {
+            Task sut = new("A", "B", DateTime.Now);
+            sut.Id = 1;
+            Assert.Equal(1, sut.Id);
+        }
+
+        [Fact]
+        public void Equals_ShouldCompareTasksCorrectly()
+        {
+            Task task1 = new("A", "B", DateTime.Now);
+            Task task2 = new("A", "B", DateTime.Now);
+            string notATask = "";
+
+            Assert.True(task1.Equals(task2));
+            Assert.False(task1.Equals(notATask));
+        }
     }
 }

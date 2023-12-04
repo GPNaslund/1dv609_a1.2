@@ -131,10 +131,13 @@ namespace TaskManager.Tests.UnitTests.controller
             MockView.Verify(obj => obj.GetInput("New due date (yymmdd): "), Times.Exactly(2));
         }
 
-        [Fact]
-        public void Initialize_ShouldAllowUserTo_EditStatus_Successfully()
+        [Theory]
+        [InlineData("1")]
+        [InlineData("2")]
+        [InlineData("3")]
+        public void Initialize_ShouldAllowUserTo_EditStatus_Successfully(string selectStatusInput)
         {
-            TestEditStatus(["1"]);
+            TestEditStatus([selectStatusInput]);
         }
 
         [Fact]

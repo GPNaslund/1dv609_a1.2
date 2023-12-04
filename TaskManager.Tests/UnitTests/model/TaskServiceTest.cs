@@ -1,5 +1,6 @@
 using Moq;
 using TaskManager.src.model;
+using TaskManager.src.model.exceptions;
 using Task = TaskManager.src.model.Task;
 using TaskStatus = TaskManager.src.model.TaskStatus;
 
@@ -65,6 +66,7 @@ namespace TaskManager.Tests.UnitTests.model
         [InlineData(ListByCommand.List_Incomplete_Tasks)]
         [InlineData(ListByCommand.List_Expired_Tasks)]
         [InlineData(ListByCommand.List_By_Due_Date)]
+        [InlineData(ListByCommand.Unkown)]
         public void ListTasksBy_ShouldReturnAllTasksListed_SpecificToListByCommand(ListByCommand command)
         {
             TestListTasksBy(command);
@@ -82,26 +84,31 @@ namespace TaskManager.Tests.UnitTests.model
             unsortedTasks[3].Status = TaskStatus.Completed;
             MockPersistence.Setup(m => m.Read()).Returns(unsortedTasks);
 
-            List<Task> result = Sut.ListTasksBy(listingCommand);
-
             switch (listingCommand)
             {
                 case ListByCommand.List_By_Due_Date:
+                    List<Task> result = Sut.ListTasksBy(listingCommand);
                     for (int i = 0; i < result.Count - 1; i++)
                     {
                         Assert.True(result[i].DueDate <= result[i + 1].DueDate);
                     }
                     break;
                 case ListByCommand.List_Incomplete_Tasks:
-                    Assert.True(result.All(task => task.Status == TaskStatus.Not_Completed));
+                    Assert.True(Sut.ListTasksBy(listingCommand).All(task => task.Status == TaskStatus.Not_Completed));
                     break;
                 case ListByCommand.List_Completed_Tasks:
-                    Assert.True(result.All(task => task.Status == TaskStatus.Completed));
+                    Assert.True(Sut.ListTasksBy(listingCommand).All(task => task.Status == TaskStatus.Completed));
                     break;
                 case ListByCommand.List_Expired_Tasks:
-                    Assert.True(result.All(task => task.DueDate.CompareTo(DateTime.Now) <= 0 ));
+                    Assert.True(Sut.ListTasksBy(listingCommand).All(task => task.DueDate.CompareTo(DateTime.Now) <= 0 ));
+                    break;
+                case ListByCommand.Unkown:
+                    Assert.Throws<ListByCommandNotImplementedException>(() => {
+                        Sut.ListTasksBy(listingCommand);
+                    });
                     break;
             }
+
         }
     }
 }
