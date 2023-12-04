@@ -1,5 +1,6 @@
 using Moq;
 using TaskManager.src.controller;
+using TaskManager.src.view;
 using View = TaskManager.src.view.View;
 
 namespace TaskManager.Tests.UnitTests.controller
@@ -9,16 +10,19 @@ namespace TaskManager.Tests.UnitTests.controller
         private readonly MainMenuController Sut;
         private readonly Mock<View> MockView;
 
+        private readonly ViewData ViewData;
+
         public MainMenuControllerTest()
         {
             MockView = new Mock<View>();
-            Sut = new(MockView.Object);
+            ViewData = new ViewManager().GetViewData(ViewType.Main_Menu);
+            Sut = new(MockView.Object, ViewData);
         }
         [Fact]
         public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
         {
             Assert.Throws<ArgumentNullException>(() => {
-                MainMenuController Sut = new(null);
+                MainMenuController Sut = new(null, null);
             });
         }
 

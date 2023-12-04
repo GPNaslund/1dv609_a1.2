@@ -3,6 +3,7 @@ using Task = TaskManager.src.model.Task;
 using TaskManager.src.controller;
 using Moq;
 using TaskManager.src.model;
+using TaskManager.src.view;
 
 namespace TaskManager.Tests.UnitTests.controller
 {
@@ -12,18 +13,21 @@ namespace TaskManager.Tests.UnitTests.controller
         private readonly Mock<View> MockView;
         private readonly Mock<ITaskService> MockTaskService;
 
+        private readonly ViewData ViewData;
+
         public EditTaskControllerTest()
         {
             MockView = new Mock<View>();
             MockTaskService = new Mock<ITaskService>();
-            Sut = new(MockView.Object, MockTaskService.Object);
+            ViewData = new ViewManager().GetViewData(ViewType.Edit_Task);
+            Sut = new(MockView.Object, MockTaskService.Object, ViewData);
         }
         [Fact]
         public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                EditTaskController Sut = new(null, null);
+                EditTaskController Sut = new(null, null, null);
             });
         }
 
@@ -37,7 +41,7 @@ namespace TaskManager.Tests.UnitTests.controller
             Sut.Initialize();
 
             MockTaskService.Verify(obj => obj.GetAllTasks(), Times.AtLeastOnce());
-            MockView.Verify(obj => obj.GetInput("Select task: "), Times.AtLeastOnce());
+            MockView.Verify(obj => obj.GetInput(ViewData.GetPromptContent("Select task")), Times.AtLeastOnce());
         }
 
         [Fact]
@@ -50,7 +54,7 @@ namespace TaskManager.Tests.UnitTests.controller
             Sut.Initialize();
 
             MockTaskService.Verify(obj => obj.GetAllTasks(), Times.AtLeastOnce());
-            MockView.Verify(obj => obj.GetInput("Select task: "), Times.AtLeastOnce());
+            MockView.Verify(obj => obj.GetInput(ViewData.GetPromptContent("Select task")), Times.AtLeastOnce());
         }
 
         [Fact]
@@ -82,7 +86,7 @@ namespace TaskManager.Tests.UnitTests.controller
             SelectTask_Input(["1"]);
             SetupTaskService_ReturnTasks(1);
             NavigateEditActionMenu(["a", "5", "0"]);
-            MockView.Setup(obj => obj.GetInput("Are you sure? y/n")).Returns("n");
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("Delete confirmation"))).Returns("n");
 
             UserCommand result = Sut.Initialize();
 
@@ -119,7 +123,7 @@ namespace TaskManager.Tests.UnitTests.controller
             string dateInput = DateTime.Now.ToString("yyMMdd");
             TestEditDueDate([dateInput]);
 
-            MockView.Verify(obj => obj.GetInput("New due date (yymmdd): "), Times.Once());
+            MockView.Verify(obj => obj.GetInput(ViewData.GetPromptContent("New due date")), Times.Once());
         }
 
         [Fact]
@@ -128,7 +132,7 @@ namespace TaskManager.Tests.UnitTests.controller
             string dateInput = DateTime.Now.ToString("yyMMdd");
             TestEditDueDate([null, dateInput]);
             
-            MockView.Verify(obj => obj.GetInput("New due date (yymmdd): "), Times.Exactly(2));
+            MockView.Verify(obj => obj.GetInput(ViewData.GetPromptContent("New due date")), Times.Exactly(2));
         }
 
         [Theory]
@@ -153,7 +157,7 @@ namespace TaskManager.Tests.UnitTests.controller
             SetupTaskService_ReturnTasks(1);
 
             NavigateEditActionMenu(["5", "0"]);
-            MockView.Setup(obj => obj.GetInput("Are you sure? y/n")).Returns("y");
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("Delete confirmation"))).Returns("y");
 
             Sut.Initialize();
 
@@ -168,7 +172,7 @@ namespace TaskManager.Tests.UnitTests.controller
 
             NavigateEditActionMenu(["5", "0"]);
             Queue<string> deletionInputs = new Queue<string>(new[] {null, "y"});
-            MockView.Setup(obj => obj.GetInput("Are you sure? y/n")).Returns(() => deletionInputs.Dequeue());
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("Delete confirmation"))).Returns(() => deletionInputs.Dequeue());
 
             Sut.Initialize();
 
@@ -186,7 +190,7 @@ namespace TaskManager.Tests.UnitTests.controller
             {
                 allStatusInputs.Enqueue(input);
             }
-            MockView.Setup(obj => obj.GetInput("Select new status: ")).Returns(() => allStatusInputs.Dequeue());
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("New status"))).Returns(() => allStatusInputs.Dequeue());
 
             Sut.Initialize();
 
@@ -203,7 +207,7 @@ namespace TaskManager.Tests.UnitTests.controller
             {
                 allDateInputs.Enqueue(description);
             }
-            MockView.Setup(obj => obj.GetInput("New due date (yymmdd): ")).Returns(() => allDateInputs.Dequeue());
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("New due date"))).Returns(() => allDateInputs.Dequeue());
 
             Sut.Initialize();
 
@@ -221,7 +225,7 @@ namespace TaskManager.Tests.UnitTests.controller
             {
                 allDescriptionInputs.Enqueue(description);
             }
-            MockView.Setup(obj => obj.GetInput("New description: ")).Returns(() => allDescriptionInputs.Dequeue());
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("New description"))).Returns(() => allDescriptionInputs.Dequeue());
 
             Sut.Initialize();
 
@@ -239,7 +243,7 @@ namespace TaskManager.Tests.UnitTests.controller
             {
                 allNameInputs.Enqueue(nameInput);
             }
-            MockView.Setup(obj => obj.GetInput("New name: ")).Returns(() => allNameInputs.Dequeue());
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("New name"))).Returns(() => allNameInputs.Dequeue());
 
             Sut.Initialize();
 
@@ -253,7 +257,7 @@ namespace TaskManager.Tests.UnitTests.controller
             {
                 allInputs.Enqueue(input);
             }
-            MockView.Setup(obj => obj.GetInput("Select task: ")).Returns(() => allInputs.Dequeue());
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("Select task"))).Returns(() => allInputs.Dequeue());
         }
 
         private void SetupTaskService_ReturnTasks(int amountOfTasks)
@@ -274,7 +278,7 @@ namespace TaskManager.Tests.UnitTests.controller
             {
                 allInputs.Enqueue(input);
             }
-            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns(() => allInputs.Dequeue());
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("Your choice"))).Returns(() => allInputs.Dequeue());
         }
 
 

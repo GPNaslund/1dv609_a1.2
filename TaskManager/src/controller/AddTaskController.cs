@@ -1,5 +1,6 @@
 using System.Globalization;
 using TaskManager.src.model;
+using TaskManager.src.view;
 using View = TaskManager.src.view.View;
 
 namespace TaskManager.src.controller
@@ -8,12 +9,17 @@ namespace TaskManager.src.controller
     {
         private readonly View View;
         private readonly ITaskService TaskService;
-        public AddTaskController(View view, ITaskService taskService)
+
+        private readonly ViewData Data;
+
+        public AddTaskController(View view, ITaskService taskService, ViewData data)
         {
             ArgumentNullException.ThrowIfNull(view);
             ArgumentNullException.ThrowIfNull(taskService);
             View = view;
             TaskService = taskService;
+            Data = data;
+
         }
 
         public UserCommand Initialize()
@@ -29,9 +35,9 @@ namespace TaskManager.src.controller
                 }
                 catch (Exception e)
                 {
-                    View.DisplayMessage("Task creation failed");
+                    View.DisplayMessage(Data.GetPromptContent("Creation failure"));
                     View.DisplayMessage(e.Message);
-                    View.DisplayMessage("Try again!");
+                    View.DisplayMessage(Data.GetPromptContent("Try again"));
                 }
             }
         }
@@ -39,9 +45,9 @@ namespace TaskManager.src.controller
         
         private void PromptAndCreateNewTask()
         {
-            string name = View.GetInput("Enter the name: ");
-            string description = View.GetInput("Enter the description: ");
-            string dueDateString = View.GetInput("Enter due date (yymmdd): ");
+            string name = View.GetInput(Data.GetPromptContent("Name"));
+            string description = View.GetInput(Data.GetPromptContent("Description"));
+            string dueDateString = View.GetInput(Data.GetPromptContent("Due date"));
             DateTime dueDate = DateTime.ParseExact(dueDateString, "yyMMdd", CultureInfo.InvariantCulture);
             TaskService.CreateTask(name, description, dueDate);
         }

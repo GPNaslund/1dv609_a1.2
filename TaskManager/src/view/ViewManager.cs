@@ -1,6 +1,6 @@
 namespace TaskManager.src.view
 {
-    public class ViewManager
+    public class ViewManager : IViewManager
     {
         private Dictionary<ViewType, ViewData> Views;
 
@@ -64,6 +64,7 @@ namespace TaskManager.src.view
                 prompts: [
                     new Prompt("Select task", "=== SELECT TASK ==="),
                     new Prompt("Your choice", "Your choice: "),
+                    new Prompt("Go back", "0. Go Back"),
                     new Prompt("Select task", "Select task: "),
                     new Prompt("New name", "New name: "),
                     new Prompt("Name edit error", "Could not edit name of task!"),
@@ -72,6 +73,8 @@ namespace TaskManager.src.view
                     new Prompt("Descripiton edit error", "Could not edit description!"),
                     new Prompt("New due date", "New due date (yymmdd): "),
                     new Prompt("Due date edit error", "Could not update due date!"),
+                    new Prompt("New status", "Select new status: "),
+                    new Prompt("Status edit error", "Input must be one of the options, try again!"),
                     new Prompt("Status update error", "Could not update status."),
                     new Prompt("Delete confirmation", "Are you sure? y/n"),
                     new Prompt("Delete success", "Task deleted succesfully!"),

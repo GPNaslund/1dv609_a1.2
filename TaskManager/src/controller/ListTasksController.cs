@@ -2,6 +2,7 @@ using View = TaskManager.src.view.View;
 using Task = TaskManager.src.model.Task;
 
 using TaskManager.src.model;
+using TaskManager.src.view;
 
 namespace TaskManager.src.controller
 {
@@ -9,12 +10,14 @@ namespace TaskManager.src.controller
     {
         private readonly View View;
         private readonly ITaskService TaskService;
-        public ListTasksController(View view, ITaskService service)
+        private readonly ViewData Data;
+        public ListTasksController(View view, ITaskService service, ViewData data)
         {
             ArgumentNullException.ThrowIfNull(view);
             ArgumentNullException.ThrowIfNull(service);
             View = view;
             TaskService = service;
+            Data = data;
         }
 
         public UserCommand Initialize()
@@ -24,7 +27,7 @@ namespace TaskManager.src.controller
             {
                 View.DisplayHeader();
                 View.DisplayMenu();
-                string userInput = View.GetInput("Your choice: ");
+                string userInput = View.GetInput(Data.GetPromptContent("Select listing"));
                 nextCommand = HandleUserInput(userInput);
             }
             return nextCommand;
@@ -49,7 +52,7 @@ namespace TaskManager.src.controller
                 case "0":
                     return UserCommand.Main_Menu;
                 default:
-                    View.DisplayMessage("Invalid input: " + input + ". Try again!");
+                    View.DisplayMessage(Data.GetPromptContent("Invalid input") + input + Data.GetPromptContent("Try again"));
                     return UserCommand.Unkown;
             }
         }
@@ -61,7 +64,7 @@ namespace TaskManager.src.controller
                 List<Task> tasks = TaskService.ListTasksBy(command);
                 if (tasks.Count == 0)
                 {
-                    View.DisplayMessage("No tasks fullfilled the list criteria..");
+                    View.DisplayMessage(Data.GetPromptContent("No tasks"));
                 }
                 else
                 {
@@ -73,7 +76,7 @@ namespace TaskManager.src.controller
             }
             catch (Exception e)
             {
-                View.DisplayMessage("Failed to get list of tasks!");
+                View.DisplayMessage(Data.GetPromptContent("Get list fail"));
                 View.DisplayMessage(e.Message);
             }
             

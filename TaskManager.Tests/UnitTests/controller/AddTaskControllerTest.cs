@@ -2,6 +2,7 @@ using View = TaskManager.src.view.View;
 using Moq;
 using TaskManager.src.controller;
 using TaskManager.src.model;
+using TaskManager.src.view;
 
 namespace TaskManager.Tests.UnitTests.controller
 {
@@ -11,11 +12,14 @@ namespace TaskManager.Tests.UnitTests.controller
         private readonly Mock<View> MockView;
         private readonly Mock<ITaskService> MockTaskService;
 
+        private readonly ViewData ViewData;
+
         public AddTaskControllerTest()
         {
             MockView = new Mock<View>();
             MockTaskService = new Mock<ITaskService>();
-            Sut = new(MockView.Object, MockTaskService.Object);
+            ViewData = new ViewManager().GetViewData(ViewType.Add_Task);
+            Sut = new(MockView.Object, MockTaskService.Object, ViewData);
         }
         
         [Fact]
@@ -23,7 +27,7 @@ namespace TaskManager.Tests.UnitTests.controller
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                AddTaskController Sut = new(null, null);
+                AddTaskController Sut = new(null, null, null);
             });
         }
 
@@ -69,10 +73,10 @@ namespace TaskManager.Tests.UnitTests.controller
             MockTaskService.Setup(obj => obj.CreateTask("", "B", It.IsAny<DateTime>())).Throws(new ArgumentException());
 
             Queue<string> nameInputs = new Queue<string>(new[] { "", "A" });
-            MockView.Setup(obj => obj.GetInput("Enter the name: ")).Returns(() => nameInputs.Dequeue());
-            MockView.Setup(obj => obj.GetInput("Enter the description: ")).Returns("B");
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("Name"))).Returns(() => nameInputs.Dequeue());
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("Description"))).Returns("B");
             Queue<string> dateInputs = new Queue<string>(new[] { DateTime.Now.AddDays(-1).ToString("yyMMdd"), DateTime.Now.ToString("yyMMdd") });
-            MockView.Setup(obj => obj.GetInput("Enter due date (yymmdd): ")).Returns(() => dateInputs.Dequeue());
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("Due date"))).Returns(() => dateInputs.Dequeue());
 
             Sut.Initialize();
         }
@@ -89,9 +93,9 @@ namespace TaskManager.Tests.UnitTests.controller
 
         private void MockViewStandardSetUp()
         {
-            MockView.Setup(obj => obj.GetInput("Enter the name: ")).Returns("A");
-            MockView.Setup(obj => obj.GetInput("Enter the description: ")).Returns("B");
-            MockView.Setup(obj => obj.GetInput("Enter due date (yymmdd): ")).Returns(DateTime.Now.ToString("yyMMdd"));
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("Name"))).Returns("A");
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("Description"))).Returns("B");
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("Due date"))).Returns(DateTime.Now.ToString("yyMMdd"));
         }
     }
 }

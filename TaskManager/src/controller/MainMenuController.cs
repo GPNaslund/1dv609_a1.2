@@ -1,3 +1,4 @@
+using TaskManager.src.view;
 using View = TaskManager.src.view.View;
 
 namespace TaskManager.src.controller
@@ -5,10 +6,12 @@ namespace TaskManager.src.controller
     public class MainMenuController : ExecutingController
     {
         private readonly View View;
-        public MainMenuController(View view)
+        private readonly ViewData Data;
+        public MainMenuController(View view, ViewData data)
         {
             ArgumentNullException.ThrowIfNull(view);
             View = view;
+            Data = data;
         }
 
         public UserCommand Initialize()
@@ -19,11 +22,11 @@ namespace TaskManager.src.controller
             UserCommand result = UserCommand.Unkown;
             while (result == UserCommand.Unkown)
             {
-                string input = View.GetInput("Your choice: ");
+                string input = View.GetInput(Data.GetPromptContent("Select option"));
                 result = HandleInput(input);
                 if (result == UserCommand.Unkown)
                 {
-                    View.DisplayMessage("Input must be a number presented in the menu, try again!");
+                    View.DisplayMessage(Data.GetPromptContent("Input error"));
                 }
             }
             return result;

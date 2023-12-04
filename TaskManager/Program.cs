@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskManager.src.controller;
 using TaskManager.src.model;
+using TaskManager.src.view;
 
 namespace TaskManager
 {
@@ -14,7 +15,8 @@ namespace TaskManager
             var options = new DbContextOptionsBuilder<AppDatabaseContext>()
                 .UseSqlite($"Data Source={DbPath}")
                 .Options;
-            DefaultControllerFactory factory = new DefaultControllerFactory(options);
+            ViewManager viewManager = new();
+            DefaultControllerFactory factory = new DefaultControllerFactory(options, viewManager);
             AppController mainController = new AppController(factory);
             mainController.Run();
         }

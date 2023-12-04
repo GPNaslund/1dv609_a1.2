@@ -88,7 +88,7 @@ namespace TaskManager.src.model
 
         public override string ToString()
         {
-            return $"Name: {Name}, Description: {Description}, Due Date: {DueDate}";
+            return $"Name: {Name}, Description: {Description}, Due Date: {DueDate.Date}";
         }
 
         public override bool Equals(object? obj)

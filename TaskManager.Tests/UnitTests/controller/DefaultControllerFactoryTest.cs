@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using TaskManager.src.model;
+using TaskManager.src.view;
 
 namespace TaskManager.src.controller
 {
@@ -7,12 +9,17 @@ namespace TaskManager.src.controller
     {
         private readonly DefaultControllerFactory Sut;
 
+        private readonly Mock<IViewManager> MockViewManager;
+
         public DefaultControllerFactoryTest()
         {
             var options = new DbContextOptionsBuilder<AppDatabaseContext>()
             .UseInMemoryDatabase(databaseName: "TestDb")
             .Options;
-            Sut = new DefaultControllerFactory(options);
+            MockViewManager = new Mock<IViewManager>();
+            ViewData StubViewData = new("A", ["B"], []);
+            MockViewManager.Setup(obj => obj.GetViewData(It.IsAny<ViewType>())).Returns(StubViewData);
+            Sut = new DefaultControllerFactory(options, MockViewManager.Object);
         }
 
         [Fact]

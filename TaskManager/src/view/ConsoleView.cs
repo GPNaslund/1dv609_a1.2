@@ -15,11 +15,12 @@ namespace TaskManager.src.view
         }
 
         private readonly ConsoleService ConsoleService;
-        public ConsoleView(ViewType type, ConsoleService consoleService)
+        public ConsoleView(ViewData data, ConsoleService consoleService)
         {
             ArgumentNullException.ThrowIfNull(consoleService);
-            SetHeaderAndMenu(type);
             ConsoleService = consoleService;
+            _header = data.Header;
+            _menu = data.Menu;
         }
 
         public void DisplayHeader()
@@ -45,82 +46,5 @@ namespace TaskManager.src.view
             return ConsoleService.ReadLine(prompt);
         }
 
-        private void SetHeaderAndMenu(ViewType type)
-        {
-            switch (type)
-            {
-                case ViewType.Add_Task:
-                    AddTaskView_Setup();
-                    break;
-                case ViewType.Edit_Task:
-                    EditTaskView_Setup();
-                    break;
-                case ViewType.List_Tasks:
-                    ListTasksView_Setup();
-                    break;
-                case ViewType.View_All_Tasks:
-                    ViewAllTasksView_Setup();
-                    break;
-                case ViewType.Main_Menu:
-                    MainMenuView_Setup();
-                    break;
-                default:
-                    throw new NotImplementedException("The setup for viewtype: " + type + ", is not implemented.");
-            }
-        }
-
-        private void AddTaskView_Setup()
-        {
-            _header = "Add Task";
-            _menu = [
-                "Each task needs: ",
-                "- An header",
-                "- An optional description",
-                "- A due date, that is not before today"
-            ];
-        }
-
-        private void EditTaskView_Setup()
-        {
-            _header = "Edit Task";
-            _menu = [
-                "1. Edit Name",
-                "2. Edit Description",
-                "3. Edit Due date",
-                "4. Edit Status",
-                "5. Delete Task",
-                "0. Go back"
-            ];
-        }
-
-        private void ListTasksView_Setup()
-        {
-            _header = "List Tasks";
-            _menu = [
-            "1. List by due date",
-            "2. List incompleted tasks",
-            "3. List completed tasks",
-            "4. List expired tasks",
-            "0. Go back"
-        ];
-        }
-
-        private void ViewAllTasksView_Setup()
-        {
-            _header = "All Tasks";
-            _menu = ["Here are all the tasks:"];
-        }
-
-        private void MainMenuView_Setup()
-        {
-            _header = "Main Menu";
-            _menu = [   
-                "1. Add new Task",
-                "2. View all Tasks",
-                "3. List Tasks",
-                "4. Edit Task",
-                "0. Exit"
-            ];
-        }
     }
 }

@@ -3,6 +3,7 @@ using View = TaskManager.src.view.View;
 using Task = TaskManager.src.model.Task;
 using TaskStatus = TaskManager.src.model.TaskStatus;
 using System.Globalization;
+using TaskManager.src.view;
 
 namespace TaskManager.src.controller
 {
@@ -10,17 +11,19 @@ namespace TaskManager.src.controller
     {
         private readonly ITaskService TaskService;
         private readonly View View;
-        public EditTaskController(View view, ITaskService service)
+        private readonly ViewData Data;
+        public EditTaskController(View view, ITaskService service, ViewData data)
         {
             ArgumentNullException.ThrowIfNull(view);
             ArgumentNullException.ThrowIfNull(service);
             TaskService = service;
             View = view;
+            Data = data;
         }
 
         public UserCommand Initialize()
         {
-            View.DisplayMessage("=== SELECT TASK ===");
+            View.DisplayMessage(Data.GetPromptContent("Select task"));
             int selectedIndex = PromptUserToSelectTask();
             if (selectedIndex == 0)
             {
@@ -33,7 +36,7 @@ namespace TaskManager.src.controller
             {
                 View.DisplayMessage("=== " + selectedTask.ToString() + " ===");
                 View.DisplayMenu();
-                string userChoice = View.GetInput("Your choice: ");
+                string userChoice = View.GetInput(Data.GetPromptContent("Your choice"));
                 currentState = HandleMenuChoice(userChoice, selectedTask);
             }
             return currentState;
@@ -46,10 +49,10 @@ namespace TaskManager.src.controller
             {
                 View.DisplayMessage(i + 1 + ". " + allTasks[i].ToString());
             }
-            View.DisplayMessage("0. Go Back");
+            View.DisplayMessage(Data.GetPromptContent("Go back"));
             while (true)
             {
-                string newInput = View.GetInput("Select task: ");
+                string newInput = View.GetInput(Data.GetPromptContent("Select task"));
                 if (ValidateTaskSelectInput(allTasks, newInput))
                 {
                     return int.Parse(newInput);
@@ -106,16 +109,16 @@ namespace TaskManager.src.controller
             {
                 try
                 {
-                    string newName = View.GetInput("New name: ");
+                    string newName = View.GetInput(Data.GetPromptContent("New name"));
                     chosenTask.Name = newName;
                     TaskService.UpdateTask(chosenTask);
                     return;
                 }
                 catch (Exception e)
                 {
-                    View.DisplayMessage("Could not edit name of task!");
+                    View.DisplayMessage(Data.GetPromptContent("Name edit error"));
                     View.DisplayMessage(e.Message);
-                    View.DisplayMessage("Try again!");
+                    View.DisplayMessage(Data.GetPromptContent("Try again"));
                 }
             }
         }
@@ -126,16 +129,16 @@ namespace TaskManager.src.controller
             {
                 try
                 {
-                    string newDescription = View.GetInput("New description: ");
+                    string newDescription = View.GetInput(Data.GetPromptContent("New description"));
                     chosenTask.Description = newDescription;
                     TaskService.UpdateTask(chosenTask);
                     return;
                 }
                 catch (Exception e)
                 {
-                    View.DisplayMessage("Could not edit description!");
+                    View.DisplayMessage(Data.GetPromptContent("Descripiton edit error"));
                     View.DisplayMessage(e.Message);
-                    View.DisplayMessage("Try again!");
+                    View.DisplayMessage(Data.GetPromptContent("Try again"));
                 }
 
             }
@@ -147,16 +150,16 @@ namespace TaskManager.src.controller
             {
                 try
                 {
-                    string dateInput = View.GetInput("New due date (yymmdd): ");
+                    string dateInput = View.GetInput(Data.GetPromptContent("New due date"));
                     chosenTask.DueDate = DateTime.ParseExact(dateInput, "yyMMdd", CultureInfo.InvariantCulture);
                     TaskService.UpdateTask(chosenTask);
                     return;
                 }
                 catch (Exception e)
                 {
-                    View.DisplayMessage("Could not update due date!");
+                    View.DisplayMessage(Data.GetPromptContent("Due date edit error"));
                     View.DisplayMessage(e.Message);
-                    View.DisplayMessage("Try again!");
+                    View.DisplayMessage(Data.GetPromptContent("Try again"));
                 }
             }
         }
@@ -174,7 +177,7 @@ namespace TaskManager.src.controller
             {
                 try
                 {
-                    string userSelection = View.GetInput("Select new status: ");
+                    string userSelection = View.GetInput(Data.GetPromptContent("New status"));
                     if (int.TryParse(userSelection, out int selectedIndex) &&
                         selectedIndex >= 1 && selectedIndex <= allStatuses.Count()
                     )
@@ -185,14 +188,14 @@ namespace TaskManager.src.controller
                     }
                     else
                     {
-                         throw new ArgumentException("Input must be one of the options, try again!");
+                         throw new ArgumentException(Data.GetPromptContent("Status edit error"));
                     }
                 }
                 catch (Exception e)
                 {
-                    View.DisplayMessage("Could not update status.");
+                    View.DisplayMessage(Data.GetPromptContent("Status update error"));
                     View.DisplayMessage(e.Message);
-                    View.DisplayMessage("Try again!");
+                    View.DisplayMessage(Data.GetPromptContent("Try again"));
                 }
             }
         }
@@ -203,24 +206,24 @@ namespace TaskManager.src.controller
             {
                 try
                 {
-                    string userChoice = View.GetInput("Are you sure? y/n");
+                    string userChoice = View.GetInput(Data.GetPromptContent("Delete confirmation"));
                     switch (userChoice)
                     {
                         case "y":
                             TaskService.DeleteTask(taskToDelete);
-                            View.DisplayMessage("Task deleted succesfully!");
+                            View.DisplayMessage(Data.GetPromptContent("Delete success"));
                             return;
                         case "n":
                             return;
                         default:
-                            throw new ArgumentException("Input must be y or n, try again!");
+                            throw new ArgumentException(Data.GetPromptContent("Delete input error"));
                     }
                 }
                 catch (Exception e)
                 {
-                    View.DisplayMessage("Could not delete task!");
+                    View.DisplayMessage(Data.GetPromptContent("Delete error"));
                     View.DisplayMessage(e.Message);
-                    View.DisplayMessage("Try again!");
+                    View.DisplayMessage(Data.GetPromptContent("Try again"));
                 }
 
             }

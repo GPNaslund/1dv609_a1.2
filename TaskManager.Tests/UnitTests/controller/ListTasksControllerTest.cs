@@ -3,6 +3,7 @@ using Task = TaskManager.src.model.Task;
 using Moq;
 using TaskManager.src.controller;
 using TaskManager.src.model;
+using TaskManager.src.view;
 
 namespace TaskManager.Tests.UnitTests.controller
 {
@@ -12,19 +13,22 @@ namespace TaskManager.Tests.UnitTests.controller
         private readonly Mock<View> MockView;
         private readonly Mock<ITaskService> MockTaskService;
 
+        private readonly ViewData ViewData;
+
         public ListTasksControllerTest()
         {
             MockView = new Mock<View>();
             MockTaskService = new Mock<ITaskService>();
             MockTaskService.Setup(obj => obj.ListTasksBy(It.IsAny<ListByCommand>())).Returns([]);
-            Sut = new(MockView.Object, MockTaskService.Object);
+            ViewData = new ViewManager().GetViewData(ViewType.List_Tasks);
+            Sut = new(MockView.Object, MockTaskService.Object, ViewData);
         }
         [Fact]
         public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                ListTasksController Sut = new(null, null);
+                ListTasksController Sut = new(null, null, null);
             });
         }
 
@@ -59,7 +63,7 @@ namespace TaskManager.Tests.UnitTests.controller
             Queue<string> allInputs = new Queue<string>(new[] { input, "0" });
             MockView.Setup(obj => obj.GetInput(It.IsAny<string>())).Returns(() => allInputs.Dequeue());
 
-            ListTasksController Sut = new(MockView.Object, MockTaskService.Object);
+            ListTasksController Sut = new(MockView.Object, MockTaskService.Object, ViewData);
 
             Sut.Initialize();
 
@@ -71,7 +75,7 @@ namespace TaskManager.Tests.UnitTests.controller
         public void Initialize_ShouldRepromptForTypeOfListing_OnInvalidValue()
         {
             Queue<string> allChoices = new Queue<string>(new[] { "ö", "1", "0" });
-            MockView.Setup(obj => obj.GetInput("Your choice: ")).Returns(() => allChoices.Dequeue());
+            MockView.Setup(obj => obj.GetInput(ViewData.GetPromptContent("Select listing"))).Returns(() => allChoices.Dequeue());
 
             Sut.Initialize();
 

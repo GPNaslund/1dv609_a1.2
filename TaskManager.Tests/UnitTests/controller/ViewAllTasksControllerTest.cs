@@ -3,6 +3,7 @@ using Task = TaskManager.src.model.Task;
 using Moq;
 using TaskManager.src.controller;
 using TaskManager.src.model;
+using TaskManager.src.view;
 
 namespace TaskManager.Tests.UnitTests.controller
 {
@@ -11,19 +12,21 @@ namespace TaskManager.Tests.UnitTests.controller
         private readonly ViewAllTasksController Sut;
         private readonly Mock<View> MockView;
         private readonly Mock<ITaskService> MockTaskService;
+        private readonly ViewData ViewData;
 
         public ViewAllTasksControllerTest()
         {
             MockView = new Mock<View>();
             MockTaskService = new Mock<ITaskService>();
             MockTaskService.Setup(obj => obj.GetAllTasks()).Returns([]);
-            Sut = new(MockView.Object, MockTaskService.Object);
+            ViewData = new ViewManager().GetViewData(ViewType.View_All_Tasks);
+            Sut = new(MockView.Object, MockTaskService.Object, ViewData);
         }
         [Fact]
         public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
         {
             Assert.Throws<ArgumentNullException>(() => {
-                ViewAllTasksController Sut = new(null, null);
+                ViewAllTasksController Sut = new(null, null, null);
             });
         }
 
