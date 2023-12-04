@@ -22,6 +22,12 @@ namespace TaskManager.Tests.UnitTests.model
             TestTask = new("A", "B", DateTime.Now);
         }
 
+        public void Dispose()
+        {
+            Context.Database.EnsureDeleted();
+            Context.Dispose();
+        }
+
         [Fact]
         public void Constructor_ShouldThrowArgumentNullException_OnNullValue()
         {

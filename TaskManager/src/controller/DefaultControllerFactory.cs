@@ -4,7 +4,7 @@ using TaskManager.src.view;
 
 namespace TaskManager.src.controller
 {
-    public class DefaultControllerFactory
+    public class DefaultControllerFactory : ControllerFactory
     {
         private readonly DefaultConsoleService ConsoleService;
         private readonly TaskService TaskService;

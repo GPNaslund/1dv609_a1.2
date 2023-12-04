@@ -86,8 +86,8 @@ namespace TaskManager.src.view
             _menu = [
                 "1. Edit Name",
                 "2. Edit Description",
-                "3. Edit Status",
-                "4. Edit Due date",
+                "3. Edit Due date",
+                "4. Edit Status",
                 "5. Delete Task",
                 "0. Go back"
             ];

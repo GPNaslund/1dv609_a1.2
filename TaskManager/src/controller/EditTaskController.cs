@@ -31,6 +31,8 @@ namespace TaskManager.src.controller
             UserCommand currentState = UserCommand.Unkown;
             while (currentState != UserCommand.Main_Menu)
             {
+                View.DisplayMessage("=== " + selectedTask.ToString() + " ===");
+                View.DisplayMenu();
                 string userChoice = View.GetInput("Your choice: ");
                 currentState = HandleMenuChoice(userChoice, selectedTask);
             }

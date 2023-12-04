@@ -1,5 +1,3 @@
-using TaskStatus = TaskManager.src.model.TaskStatus;
-
 namespace TaskManager.src.model
 {
     public class Task
@@ -46,6 +44,14 @@ namespace TaskManager.src.model
             _creationDate = DateTime.Now;
             DueDate = dueDate;
             _status = TaskStatus.Not_Completed;
+
+        }
+
+        
+        // Parameterless constructor for EF-Core to use when materializing
+        // task objects from database.
+        protected Task()
+        {
 
         }
 
