@@ -29,6 +29,9 @@ namespace TaskManager.src.view
             _prompts = prompts;
         }
 
-        
+        public string GetPromptContent(string promptName)
+        {
+            return null;
+        }
     }
 }

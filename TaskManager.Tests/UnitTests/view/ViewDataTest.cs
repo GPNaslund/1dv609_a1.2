@@ -11,5 +11,15 @@ namespace TaskManager.Tests.UnitTests.view
                 ViewData Sut = new(null, null, null);
             });
         }
+
+        [Fact]
+        public void GetPromptContent_ShouldReturnContensOfSpecifiedPrompt()
+        {
+            ViewData Sut = new("A", ["B"], [new Prompt("C", "D")]);
+
+            string result = Sut.GetPromptContent("C");
+
+            Assert.Equal("C", result);
+        }
     }
 }
