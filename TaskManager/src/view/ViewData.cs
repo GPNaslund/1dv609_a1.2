@@ -4,7 +4,7 @@ namespace TaskManager.src.view
     {
         public ViewData(string header, string[] menu, Prompt[] prompts)
         {
-            
+            throw new ArgumentNullException();
         }
     }
 }
