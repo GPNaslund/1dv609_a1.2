@@ -21,21 +21,21 @@ namespace TaskManager.src.controller
         public ExecutingController Create_MainMenuController()
         {
             DefaultConsoleService ConsoleService = new();
-            ConsoleView View = new(ViewType.Main_Menu,ConsoleService);
+            ConsoleView View = new(ViewType.Main_Menu, ConsoleService);
             MainMenuController mainMenuController = new(View);
             return mainMenuController;
         }
 
         public ExecutingController Create_AddTaskController()
         {
-            ConsoleView View = new(ViewType.Add_Task,ConsoleService);
+            ConsoleView View = new(ViewType.Add_Task, ConsoleService);
             AddTaskController addTaskController = new(View, TaskService);
             return addTaskController;
         }
 
         public ExecutingController Create_EditTaskController()
         {
-            ConsoleView View = new(ViewType.Edit_Task,ConsoleService);
+            ConsoleView View = new(ViewType.Edit_Task, ConsoleService);
             EditTaskController editTaskController = new(View, TaskService);
             return editTaskController;
         }
