@@ -95,7 +95,7 @@ namespace TaskManager.src.controller
                     return UserCommand.Edit_Task;
                 case "5":
                     DeleteTask(chosenTask);
-                    return UserCommand.Edit_Task;
+                    return UserCommand.Main_Menu;
                 case "0":
                     return UserCommand.Main_Menu;
                 default:
